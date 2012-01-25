@@ -16,11 +16,11 @@ Lets look at a few examples:
 		.subscribe((i) => print("$i"));
 
 Yields
-    1
-	2
-	3
-	4
-	5
+     1
+	 2
+	 3
+	 4
+	 5
 
 ### Example 2 - DOM Events
 	Observable
@@ -28,8 +28,8 @@ Yields
 		.subscribe((e) => print ("Button Clicked"));
 
 Yields (for each click on the element)
-	Button Clicked
-	Button Clicked
+	 Button Clicked
+	 Button Clicked
 	
 Notice how in both examples we are using a similar approach to express
 our intent.  It's declarative, consistent, and readable.  We like that.
