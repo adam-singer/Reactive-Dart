@@ -56,6 +56,34 @@ class Observable
    });
  }
  
+ static IObservable empty() => Observable.create((IObserver o) => o.complete());
+ 
+ /// Returns an concatentated sequence of a list of IObservables.
+ static ChainableIObservable concat(List<IObservable> oList){
+   
+   if (oList == null || oList.isEmpty()) return Observable.empty();
+  
+   return Observable.create((IObserver o){
+     _concatInternal(o, oList, 0);    
+   });
+ }
+ 
+ static void _concatInternal(IObserver o, List<IObservable> oList, int index){
+
+   oList[index]
+    .subscribe(
+      (v) => o.next(v),
+      (){
+        if (++index < oList.length){
+          _concatInternal(o, oList, index);
+        }else{
+          o.complete();
+        }
+      },
+      (e) => o.error(e)
+    );
+ }
+ 
  /// Returns an observable sequence from a given [List]
  static ChainableIObservable fromList(List l){
    if (l == null) return Observable.throwE(const NullPointerException());
@@ -95,6 +123,17 @@ class Observable
 }
 
 
+
+//
+//
+// INTERNALS
+//
+//
+
+
+//
+// Instantiates a general purpose IObservable with chaining helper methods.
+//
 class _factoryObservable<T> implements ChainableIObservable<T>, IDisposable{
   Function oFunc;
   IObserver<T> mainObserver;
@@ -165,8 +204,9 @@ class _factoryObservable<T> implements ChainableIObservable<T>, IDisposable{
 }
 
 
-
+//
 // wraps an observer so it can dispose of itself from it's observable context
+//
 class _Unsubscriber implements IDisposable{
   final _factoryObservable factoryObservableReference;
   final IObserver observer;
@@ -180,6 +220,9 @@ class _Unsubscriber implements IDisposable{
 }
 
 
+//
+// Instantiates a general-purpose observer.
+//
 class _factoryObserver<T> implements IObserver<T>
 {
   Function nextFunc, completeFunc, errorFunc;
