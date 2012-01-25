@@ -1,5 +1,5 @@
 ## Reactive Dart
-Reactive Dart (RD) is an implementation of the reactive mode on sequences.  
+Reactive Dart (RD) is an implementation of the reactive model on sequences.  
 Plainly stated, this project implements the dual of an enumerable type.  
 RD works on the principle that everything in the environment is a sequence
 of data being pushed at the application.
