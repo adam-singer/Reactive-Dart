@@ -98,10 +98,10 @@ It's easy with the helper method **Observable.create**
 	
 Yields
 
-	The number is 5
+	The number is: 5
 	
 ## How do I unsubscribe?
-Lets modifier our timer observable again to illustrate this.
+Lets modify our timer observable again to illustrate this.
 
 	var counter = 0;
 	var disposer;
