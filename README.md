@@ -145,10 +145,10 @@ Yields (for each mouse click)
 	You clicked the mouse 3 times.
 	...
 
-Chainging gets really powerful when you start to think about merging observable sequences, and so forth...
+Chaining gets really powerful when you start to think about merging observable sequences, and so forth...
 	
 ## More To Come
-I'll be buildig lots more observable wrappers.  Feel free to contribute your own.
+I'll be building lots more observable wrappers.  Feel free to contribute your own.
 	
 ## Some reference Matrial on the reactive model
 * <http://rxwiki.wikidot.com/start> 
