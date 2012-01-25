@@ -127,7 +127,7 @@ Yields
 	Tick!
 	Tick!
 	
-Notice that the complet() function isn't called by the observable in this case,
+Notice that the complete() function isn't called by the observable in this case,
 because the termination did not occur in sequence itself.
 
 ## Observable chaining
