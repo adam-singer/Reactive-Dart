@@ -14,8 +14,25 @@
 //   See the License for the specific language governing permissions and
 //   limitations under the License.
 
-interface IObservable<T>
-{
-  // 'next' can be an observer or a function f(next)
-  IDisposable subscribe(next, [complete(), error(Exception e)]);
+
+//
+// Contract for observables that use the _UnsubscriberWrapper implementation
+//
+interface _FactoryObservable<T>{
+  final List<IObserver<T>> observers;
+}
+
+//
+// wraps an observer so it can dispose of itself from it's observable context
+//
+class _UnsubscriberWrapper implements IDisposable{
+  final _FactoryObservable factoryObservableReference;
+  final IObserver observer;
+  
+  _UnsubscriberWrapper(this.factoryObservableReference, this.observer);
+  
+  void dispose(){
+    if (factoryObservableReference.observers.indexOf(observer) != -1)
+      factoryObservableReference.observers.removeRange(factoryObservableReference.observers.indexOf(observer), 1);
+  }
 }

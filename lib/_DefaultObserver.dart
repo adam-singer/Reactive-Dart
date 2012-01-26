@@ -14,8 +14,25 @@
 //   See the License for the specific language governing permissions and
 //   limitations under the License.
 
-interface IObservable<T>
+//
+// Instantiates a general-purpose observer.
+//
+class _DefaultObserver<T> implements IObserver<T>
 {
-  // 'next' can be an observer or a function f(next)
-  IDisposable subscribe(next, [complete(), error(Exception e)]);
+  Function nextFunc, completeFunc, errorFunc;
+  
+  void next(T value) => nextFunc(value);
+  void error(Exception error) => errorFunc(error);
+  void complete() => completeFunc(); 
+  
+  _DefaultObserver(next, [complete(), error(Exception e)])
+  : _assignedHash = _hashNum++
+  {
+    nextFunc = next;
+    completeFunc = complete == null ? (){} : complete;
+    errorFunc = error == null ? (_){} : error;
+  }
+  
+  static int _hashNum = 0;
+  final int _assignedHash;
 }
