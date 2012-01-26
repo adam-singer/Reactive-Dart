@@ -18,11 +18,14 @@
 * Represents an [IObservable] that provides extended methods for
 * chaining of multiple operations.
 */ 
-interface ChainableIObservable<T> extends IObservable<T>
+interface ChainableIObservable<T> extends IObservable<T> default _ChainableIObservableImplementation
 {
+  final Function oFunc;
+  
   // this is more about the tooling than anything else.
   // we want to surface these methods in the IDE
   // during chained operations.
+  ChainableIObservable(this.oFunc);
   
   ChainableIObservable<T> count();
   ChainableIObservable<T> contains(value);
@@ -34,5 +37,13 @@ interface ChainableIObservable<T> extends IObservable<T>
   ChainableIObservable<T> distinct();
   ChainableIObservable<T> distinctUntilNot();
   ChainableIObservable<T> apply(applyFunction(n));
+  ChainableIObservable<T> merge(List<IObservable> sources);
+  ChainableIObservable<T> zip(IObservable right, f(l, r));
+  ChainableIObservable<T> where(f(n));
+  ChainableIObservable<T> toList();
+  ChainableIObservable<T> timestamp();
+  ChainableIObservable<T> timeout(int milliseconds);
+  ChainableIObservable<T> throttle(int milliseconds);
+  
   
 }

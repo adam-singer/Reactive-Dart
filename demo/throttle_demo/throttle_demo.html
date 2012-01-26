@@ -1,0 +1,16 @@
+<html>
+  <head>
+    <title>throttle_demo</title>
+  </head>
+  <body>
+  	<h1>Reactive Dart - Observable.throttle() Demo</h1>
+    <h2>Type Something That Starts with 'a' in the search box below.</h2>
+    <p>throttle will ignore elements in the sequence (in this case user key presses) until a given time has elapsed.  This is useful in scenarios where you want to limit round trips until the user is 'waiting'.</p>
+    <p>In this demo, you will see that the search results only change if you stop typing for about half a second.</p>
+    <input placeholder='Type something beginning with "a"...' id="tbInput" type='text' style="width:400px"></input>
+    <div>
+	    <ul style="list-style-type:none" id="searchresults"></ul>
+    </div>
+    <script type="text/javascript" src="throttle_demo.dart.app.js"></script>
+  </body>
+</html>

@@ -25,10 +25,100 @@
 */
 class Observable
 {
+ // Support factory implementation if the dev wants to use 'new Observable(...)'
+ factory Observable(f(IObserver o)) => Observable.create(f);
  
- /// Creates an observable with the given function as the primary observer behavior.
- static create(f(IObserver o)) => new _SharedSequenceObservable(f);
+ /// Creates an IObservable with the given implementation function.
+ static create(f(IObserver o)) => new ChainableIObservable(f);
 
+ /// When an element is received, throttle ignores subsequent elements for a 
+ /// given time (in milliseconds).  This is useful for certain UI interactions
+ /// where you only want to trigger when the user action has been idle
+ /// for a certain period of time. 
+ /// 
+ /// For example, search boxes that retrieve on-demand results
+ /// use throttling to reduce query load.
+ static IObservable throttle(IObservable source, int timeInMilliseconds){
+   return Observable.create((IObserver o){
+     var handle;
+     bool ignoreValue = false;
+     var last;
+     
+     void checker() {
+       ignoreValue = false;
+       if (last != null) o.next(last);
+       }
+          
+     source.subscribe(
+       (v) {
+         if (!ignoreValue){
+           last = v;
+           ignoreValue = true;
+           handle = window.setTimeout(checker, timeInMilliseconds);
+         }else{
+           window.clearTimeout(handle);
+           last = v;
+           handle = window.setTimeout(checker, timeInMilliseconds);
+         }
+       },
+       () => o.complete(),
+       (e) => o.error(e)
+     );
+   });
+ }
+ 
+ static IObservable timeout(IObservable source, int timeoutInMilliseconds){
+   return Observable.create((IObserver o){
+     var handler;
+
+     void checker() => o.error(const Exception('Timeout Exceeded.'));
+          
+     source.subscribe(
+       (v) {
+         window.clearTimeout(handler);
+         o.next(v);
+         handler = window.setTimeout(checker, timeoutInMilliseconds);
+       },
+       () => o.complete(),
+       (e) => o.error(e)
+     );
+     
+     handler = window.setTimeout(checker, timeoutInMilliseconds);
+   });
+ }
+ 
+ /// Returns a sequence of [Date] timestamps representing the arrival of
+ /// each element in a given sequence.
+ static IObservable<Date> timestamp(IObservable source){
+   return Observable.create((IObserver o){
+     source.subscribe(
+       (v) => o.next(new Date.now()),
+       () => o.complete(),
+       (e) => o.error(e)
+     );
+   });
+ }
+ 
+ /// Converts a terminating observable sequence into a list.
+ /// next() is only called when the source sequence terminates.
+ /// 
+ /// This function is a more specific version of Obervable.buffer(),
+ /// in that all elements in the sequence are essentially "buffered".
+ static IObservable<List> toList(IObservable source){
+   List l = new List();
+   
+   return Observable.create((IObserver o){
+     source.subscribe(
+       (v) => l.add(v),
+       (){
+         o.next(l);
+         o.complete();
+       },
+       (e) => o.error(e)
+     );
+   });
+ }
+ 
  static ChainableIObservable<Event> fromDOMEvent(EventListenerList event){
    return Observable.create((IObserver o) => event.add((e) => o.next(e)));
  }
@@ -56,7 +146,6 @@ class Observable
  /// Returns the distinct elements from the list until the first repeating element is found.
  static ChainableIObservable distinctUntilNot(IObservable source){
    Set s = new Set();
-   
    return Observable.create((IObserver o){
      source.subscribe(
        (v){
@@ -70,6 +159,79 @@ class Observable
        () => o.complete(),
        (e) => o.error(e)
        );
+   });
+ }
+ 
+ /// Filters elements of an observable sequence where the given
+ /// function returns true for a given element.
+ static ChainableIObservable where(IObservable source, f(n)){
+   return Observable.create((IObserver o){
+     source.subscribe(
+     (v){
+       if (f(v)) o.next(v);
+     },
+     () => o.complete(),
+     (e) => o.error(e)
+     );
+   });
+ }
+ 
+ /// Returns an observable resulting from application of function [f] over
+ /// pairs of elements from two observable streams.  The function is not
+ /// invoked unless a element is present in both streams.
+ /// Orphan elements are cached.
+ static ChainableIObservable zip(IObservable left, IObservable right, f(l, r)){
+   Queue lq = new Queue();
+   Queue rq = new Queue();
+   bool rc = false;
+   bool lc = false;
+   
+   return Observable.create((IObserver o){
+     var ld;
+     var rd;
+     
+     ld = left.subscribe(
+       (v){
+         lq.add(v);
+         if (!rq.isEmpty()) o.next(f(lq.removeFirst(), rq.removeFirst()));
+       },
+       (){
+         if (lq.isEmpty()){
+           o.complete();
+           rd.dispose();
+         }
+       },
+       (e) => o.error(e));
+
+     rd = right.subscribe(
+       (v){
+         rq.add(v);
+         if (!lq.isEmpty()) o.next(f(lq.removeFirst(), rq.removeFirst()));
+       },
+       (){
+         if (rq.isEmpty()){
+           o.complete();
+           ld.dispose();
+         }
+       },
+       (e) => o.error(e));
+   });
+ }
+ 
+ /// Performs an n-ary merge of a given list of sequences into a single sequence.
+ static ChainableIObservable merge(List<IObservable> sources){
+   var t = 0;
+   return Observable.create((IObserver o){
+     //subscribe to tall the sources
+     sources.forEach((source)=>
+       source.subscribe(
+       (v) => o.next(v),
+       () {
+         if (++t == sources.length) o.complete();
+       },
+       (e) => o.error(e)
+       )
+     );
    });
  }
  
@@ -170,16 +332,18 @@ class Observable
  static ChainableIObservable any(IObservable source){
    return Observable.create((IObserver o){
      source.subscribe(
-       (v)
-       {
-         o.next(true);
-         o.complete();
-       },
-       (){
-         o.next(false);
-         o.complete();
-       },
-       (e) => o.error(e)
+         (v)
+         {
+           o.next(true);
+           o.complete();
+         },
+         (){
+           o.next(false);
+           o.complete();
+         },
+         (e){
+           o.error(e);
+         }
        );
    });
  }
@@ -261,7 +425,7 @@ class Observable
        var handler;
        var tickCount = 0;
        handler = window.setInterval((){
-         if (++tickCount >= ticks){
+         if (++tickCount > ticks){
            window.clearInterval(handler);
            o.complete();
            return;

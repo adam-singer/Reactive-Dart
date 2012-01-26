@@ -20,10 +20,7 @@
 #source('IObserver.dart');
 #source('IObservable.dart');
 #source('Observable.dart');
-#source('_sharedSequenceObservable.dart');
+#source('_ChainableIObservableImplementation.dart');
 #source('_UnsubscriberWrapper.dart');
 #source('_DefaultObserver.dart');
 #source('ChainableIObservable.dart');
-
-
-
