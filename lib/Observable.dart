@@ -34,12 +34,69 @@ class Observable
  }
   
  /// Returns a sequence that terminates immediately with an exception.
- static IObservable throwE(Exception e) => Observable.create((IObserver o) {o.error(e); return (){};}); 
+ static IObservable throwE(Exception e) => Observable.create((IObserver o) => o.error(e)); 
  
  /// Returns running total of items in a sequence.
  static ChainableIObservable count(IObservable source){
    int count = 0;
    return Observable.create((IObserver o) => source.subscribe((_)=> o.next(++count), ()=> o.complete(), (e)=> o.error(e)));
+ }
+ 
+ 
+ static ChainableIObservable distinct(IObservable source){
+   Set s = new Set();
+   
+   return Observable.create((IObserver o){
+     source.subscribe(
+       (v){
+         if (!s.contains(v)){
+           s.add(v);
+           o.next(v);
+         }
+       },
+       () => o.complete(),
+       (e) => o.error(e)
+       );
+   });
+ }
+ 
+ /// Delays (shifts in time) the sequence.
+ static ChainableIObservable delay(IObservable source, int milliseconds){
+   List buffer = new List();
+   bool delaying = true;
+   
+   var t = Observable
+    .timer(milliseconds, 1);
+   
+   t.subscribe((v) =>{}, () => delaying = false);
+   
+   
+   return Observable.create((IObserver o){
+     source.subscribe(
+     (v){
+       if (!delaying){
+         if (!buffer.isEmpty()){
+           buffer.forEach((b) => o.next(b));
+           buffer.clear();
+         }else{
+           o.next(v);           
+         }
+       }else{
+         buffer.add(v);
+       }
+     },
+     (){
+        t.subscribe((v)=>{},(){
+          if (!buffer.isEmpty()){
+            buffer.forEach((b) => o.next(b));
+            buffer.clear();
+          }
+          o.complete();
+        });
+     },
+     (e) => o.error(e)
+     );
+   });
  }
  
  static ChainableIObservable contains(IObservable source, value){
@@ -56,7 +113,71 @@ class Observable
    });
  }
  
- static IObservable empty() => Observable.create((IObserver o) => o.complete());
+ static ChainableIObservable empty() => Observable.create((IObserver o) => o.complete());
+ 
+ /// Performs a left fold operation over a sequence.
+ ///
+ /// This is really more like an aggregation or a "scan" from functional list
+ /// operations, where you get each intermediate value of the sequence as it
+ /// is folded in with the accumulator and function.
+ static ChainableIObservable fold(IObservable source, f(v, n), startingValue){
+   var acc = startingValue;
+   return Observable.create((IObserver o){
+     source.subscribe(
+       (v){
+         acc = f(acc, v);
+         o.next(acc);
+       },
+       () => o.complete(),
+       (e) => o.error(e)
+       );
+   });
+ }
+ 
+ /// Returns true if the given sequence produces a value.
+ /// If the sequences terminates without producing a value, returns false.
+ static ChainableIObservable any(IObservable source){
+   return Observable.create((IObserver o){
+     source.subscribe(
+       (v)
+       {
+         o.next(true);
+         o.complete();
+       },
+       (){
+         o.next(false);
+         o.complete();
+       },
+       (e) => o.error(e)
+       );
+   });
+ }
+ 
+ //TODO Add buffering options with time/timeout constraints
+ /// Buffers the sequence into non-overlapping lists based on a given size (default 10)
+ static ChainableIObservable buffer(IObservable source, [int size = 10]){
+   List buffer = new List();
+   return Observable.create((IObserver o)
+   {source.subscribe(
+     (v) {
+       buffer.add(v);
+       if (buffer.length == size){
+         o.next(buffer);
+         buffer.clear();
+       }
+     },
+     (){
+       if (!buffer.isEmpty()){
+         o.next(buffer);
+         buffer.clear();
+       }
+       o.complete();
+     },
+     (e) => o.error(e)
+     );
+   });
+ }
+ 
  
  /// Returns an concatentated sequence of a list of IObservables.
  static ChainableIObservable concat(List<IObservable> oList){
@@ -64,7 +185,7 @@ class Observable
    if (oList == null || oList.isEmpty()) return Observable.empty();
   
    return Observable.create((IObserver o){
-     _concatInternal(o, oList, 0);    
+     _concatInternal(o, oList, 0);
    });
  }
  
@@ -109,7 +230,7 @@ class Observable
        var handler;
        var tickCount = 0;
        handler = window.setInterval((){
-         if (tickCount++ >= ticks){
+         if (++tickCount >= ticks){
            window.clearInterval(handler);
            o.complete();
            return;
@@ -117,7 +238,6 @@ class Observable
          o.next(tickCount);
        }, milliseconds);
      }
-     return (){};
    });
  }
 }
@@ -198,9 +318,28 @@ class _factoryObservable<T> implements ChainableIObservable<T>, IDisposable{
     oFunc = null;
   }
   
+  //*********************************
   //instance wrappers to the Observable statics, to support chaining of certain observables.
+  //************************************
   count() => Observable.count(this);
+  
   contains(value) => Observable.contains(this, value);
+  
+  concat(List list)
+  {
+    list.insertRange(0, 1, this);
+    return Observable.concat(list);
+  }
+  
+  fold(f(v,n), startingValue) => Observable.fold(this, f, startingValue);
+  
+  any() => Observable.any(this);
+  
+  buffer([size = 10]) => Observable.buffer(this, size);
+  
+  delay(int milliseconds) => Observable.delay(this, milliseconds);
+  
+  distinct() => Observable.distinct(this);
 }
 
 

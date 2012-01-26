@@ -76,17 +76,56 @@ class reactivedemo {
       .subscribe((c)=> print(c));
     
     // concat 3 observable sequences into a single sequence
-    header("Observable.concat() Concatinates observable sequences into one sequence.  Here we have 3 ([1,2,3], [4,5,6], [7,8,9])");
+    header("Observable.concat() Concatenates observable sequences into one sequence.  Here we have 3 ([1,2,3], [4,5,6], [7,8,9])");
     Observable
-    .concat([Observable.fromList([1,2,3]), Observable.fromList([4,5,6]), Observable.fromList([7,8,9])])
+      .fromList([1,2,3])
+      .concat([Observable.fromList([4,5,6]), Observable.fromList([7,8,9])]) //concat our list sequence with two more sequences
+      .subscribe((v) => print(v));
+    
+    header("Folding (aggregating really) over a sequence.");
+    Observable
+      .fromList(testlist)
+      .fold((v, n) => v + n, 0)
+      .subscribe((v) => print(v));
+    
+    header("Observable.any() Returns true if there are any values in the sequence, false otherwise.");
+    Observable
+      .fromList(testlist)
+      .any()
+      .subscribe((v)=> print('Should be true: $v.'));
+    
+    Observable
+      .empty()
+      .any()
+      .subscribe((v) => print('Should be false: $v.'));
+    
+    header("Observable.buffer() Returns sequences as a series of buffered lists, based on buffer size provided.");
+    Observable
+    .fromList(testlist)
+    .buffer(2)
+    .subscribe((v)=> print("Received buffered list of size ${v.length} with elements: ${v[0]}, ${v[1]}."));
+    
+    header("Observable.distinct() Returns elements in the sequence that are distinct with respect to other elements.");
+    Observable
+    .fromList(testlist)
+    .concat([Observable.fromList(testlist), Observable.fromList(testlist)])
+    .distinct()
     .subscribe((v) => print(v));
+    
+    
+    
+    header("Observable.delay() Shifts the sequence by a given time in milliseconds.");
+    print("... delay started (3 seconds)");
+    Observable
+    .fromList(testlist)
+    .delay(3000)
+    .subscribe((v) => print(v), () => print("...delay finished"));
   }
   
   void header(String msg){
     print("");
     print(msg);
-    print("-------------------------");
-    
+    print("----------------------------------------------------------------------");
   }
 
 }

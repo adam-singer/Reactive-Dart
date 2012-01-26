@@ -29,4 +29,10 @@ interface ChainableIObservable<T> extends IObservable<T>
 {
   ChainableIObservable<T> count();
   ChainableIObservable<T> contains(value);
+  ChainableIObservable<T> concat(List<IObservable> list);
+  ChainableIObservable<T> fold(f(v,n), startingValue);
+  ChainableIObservable<T> any();
+  ChainableIObservable<T> buffer([size]);
+  ChainableIObservable<T> delay(int milliseconds);
+  ChainableIObservable<T> distinct();
 }
