@@ -35,4 +35,7 @@ interface ChainableIObservable<T> extends IObservable<T>
   ChainableIObservable<T> buffer([size]);
   ChainableIObservable<T> delay(int milliseconds);
   ChainableIObservable<T> distinct();
+  ChainableIObservable<T> distinctUntilNot();
+  ChainableIObservable<T> apply(applyFunction(n));
+  
 }

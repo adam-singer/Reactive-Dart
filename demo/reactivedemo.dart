@@ -101,25 +101,23 @@ class reactivedemo {
     
     header("Observable.buffer() Returns sequences as a series of buffered lists, based on buffer size provided.");
     Observable
-    .fromList(testlist)
-    .buffer(2)
-    .subscribe((v)=> print("Received buffered list of size ${v.length} with elements: ${v[0]}, ${v[1]}."));
+      .fromList(testlist)
+      .buffer(2)
+      .subscribe((v)=> print("Received buffered list of size ${v.length} with elements: ${v[0]}, ${v[1]}."));
     
     header("Observable.distinct() Returns elements in the sequence that are distinct with respect to other elements.");
     Observable
-    .fromList(testlist)
-    .concat([Observable.fromList(testlist), Observable.fromList(testlist)])
-    .distinct()
-    .subscribe((v) => print(v));
-    
-    
+      .fromList(testlist)
+      .concat([Observable.fromList(testlist), Observable.fromList(testlist)]) //add a few copies of the same elements
+      .distinct()
+      .subscribe((v) => print(v));
     
     header("Observable.delay() Shifts the sequence by a given time in milliseconds.");
     print("... delay started (3 seconds)");
     Observable
-    .fromList(testlist)
-    .delay(3000)
-    .subscribe((v) => print(v), () => print("...delay finished"));
+      .fromList(testlist)
+      .delay(3000)
+      .subscribe((v) => print(v), () => print("...delay finished"));
   }
   
   void header(String msg){

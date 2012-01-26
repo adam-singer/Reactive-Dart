@@ -42,7 +42,38 @@ class Observable
    return Observable.create((IObserver o) => source.subscribe((_)=> o.next(++count), ()=> o.complete(), (e)=> o.error(e)));
  }
  
+ /// Applies a given function to each element of the sequence
+ static ChainableIObservable apply(IObservable source, applyFunction(n)){
+   return Observable.create((IObserver o){
+     source.subscribe(
+       (v) => applyFunction(v),
+       () => o.complete(),
+       (e) => o.error(e)
+       );
+   });
+ }
  
+ /// Returns the distinct elements from the list until the first repeating element is found.
+ static ChainableIObservable distinctUntilNot(IObservable source){
+   Set s = new Set();
+   
+   return Observable.create((IObserver o){
+     source.subscribe(
+       (v){
+         if (!s.contains(v)){
+           s.add(v);
+           o.next(v);
+         }else{
+           o.complete();
+         }
+       },
+       () => o.complete(),
+       (e) => o.error(e)
+       );
+   });
+ }
+ 
+ /// Returns the distinct elements from a given [IObservable] sequence.
  static ChainableIObservable distinct(IObservable source){
    Set s = new Set();
    
@@ -340,6 +371,10 @@ class _factoryObservable<T> implements ChainableIObservable<T>, IDisposable{
   delay(int milliseconds) => Observable.delay(this, milliseconds);
   
   distinct() => Observable.distinct(this);
+  
+  distinctUntilNot() => Observable.distinctUntilNot(this);
+  
+  apply(applyFunction(n)) => Observable.apply(this, applyFunction);
 }
 
 
