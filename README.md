@@ -202,6 +202,26 @@ Both will yield (for each mouse click)
 	...
 
 Chaining gets really powerful when you start to think about combining observable sequences in different ways...
+
+### Merging Multiple Observable Streams
+	// Three observables yielding 20 ticks at different intervals
+	// We use then use the .apply() observable to modify the results down the line...
+	var o1 = Observable
+				.timer(100, 20)
+				.apply((v) => 'Timer 1, tick $v');
+	var o2 = Observable
+				.timer(200, 20)
+				.apply((v) => 'Timer 2, tick $v');
+	var o3 = Observable
+				.timer(300, 20)
+				.apply((v) => 'Timer 3, tick $v');
+	
+	o1
+	.merge([o2, o3]) //merging o1 with o2 and o3
+	.subscribe((v) => print(v));
+	
+You'll have to run the above code yourself to see how it works, but basically it does
+all the hard work of merging elements from the three streams into a single stream.
 	
 ## More To Come
 Most of the core operators are built, but I do plan to add more over time. Feel free to contact me if you want to contribute your own.
