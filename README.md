@@ -101,7 +101,7 @@ the sequence terminates on it's own
 * .subscribe(next(v), complete(), error(e)); // an error handler function that
 is provided an Exception whenever the sequence experiences a fault
 
-### Example
+### How .subscribe() works...
 	Observable
 		.timer(500, 5) //implements an interval timer at 500ms for 5 ticks 
 		.subscribe(
