@@ -54,9 +54,45 @@ class reactivedemo {
 //    where();
 //    toList();
 //    timestamp();
+//    apply();
 //    timeout(); //adjust the timeout to see the exception throw.
-    //throttle(); //Throttle has it's own demo, see '/demos/throttle_demo/throttle_demo.dart'
+//    throttle(); //Throttle has it's own demo, see '/demos/throttle_demo/throttle_demo.dart'
+//    unfold();
+//    range();
+
+  
+  }
+  
+  void range(){
+    header("Observable.range() Generates an observable sequence from a given start/end with optional step");
     
+    print('1 to 5 in .5 step');
+    Observable
+      .range(1, 5, .5)
+      .subscribe((v) => print(v));
+    
+    print('5 to 1 in .5 step');
+    Observable
+      .range(5, 1, .5)
+      .subscribe((v) => print(v));
+  }
+  
+  void apply(){
+    header("Observable.apply() Applies a given function to each element in the sequence and returns the result in a new observable sequence");
+    
+    Observable
+      .fromList(testlist)
+      .apply((n) => n * n)
+      .subscribe((v) => print('squared: $v'));
+  }
+  
+  void unfold(){
+    header("Observable.unfold() Generates a sequences from intial state and provides elements until conditional is false");
+    
+    // lets count 1 to 10
+    Observable
+      .unfold(1, (n) => n <= 10, (n) => n + 1, (n) => n)
+      .subscribe((v) => print(v));
   }
   
   void throttle(){

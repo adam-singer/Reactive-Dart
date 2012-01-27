@@ -90,6 +90,14 @@ class _ChainableIObservableImplementation<T> implements ChainableIObservable<T>,
   
   throttle(int milliseconds) => Observable.throttle(this, milliseconds);
   
+  single() => Observable.single(this);
+  
+  first() => Observable.first(this);
+  
+  take(int howMany) => Observable.take(this, howMany);
+  
+  takeWhile(conditional(v)) => Observable.takeWhile(this, conditional);
+  
   //
   // 
   //

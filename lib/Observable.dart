@@ -31,6 +31,109 @@ class Observable
  /// Creates an IObservable with the given implementation function.
  static create(f(IObserver o)) => new ChainableIObservable(f);
 
+ static ChainableIObservable takeWhile(IObservable source, conditional(v)){  
+   return Observable.create((IObserver o){
+     source.subscribe(
+       (v){
+         if (conditional(v) == false){
+           o.next(v);
+           o.complete();
+         }else{
+           o.next(v);
+         }
+       },
+       () => o.complete(),
+       (e) => o.error(e));
+   });
+ }
+ 
+ static ChainableIObservable take(IObservable source, int howMany){
+   if (howMany < 0) return Observable.throwE(const Exception('Illegal take value.  Must be greater than 0.'));
+   
+   if (howMany == 0) return Observable.empty();
+   
+   var count = 0;
+   
+   return Observable.create((IObserver o){
+     source.subscribe(
+       (v){
+         if (++count == howMany){
+           o.next(v);
+           o.complete();
+         }else{
+           o.next(v);
+         }
+       },
+       () => o.complete(),
+       (e) => o.error(e));
+   });
+ }
+ 
+ static ChainableIObservable first(IObservable source){
+   return Observable.create((IObserver o){
+     source.subscribe(
+       (v){
+         o.next(v);
+         o.complete();
+       },
+       () => o.complete(),
+       (e) => o.error(e));
+   });
+ }
+ 
+ static ChainableIObservable single(IObservable source){
+   return Observable.create((IObserver o){
+     bool gotOne = false;
+     source.subscribe(
+       (v){
+         if (gotOne) {
+           o.error(const Exception('source return more than one element in Observable.single().'));
+           return;
+         }
+         gotOne = true;
+         o.next(v);
+       },
+       () => o.complete(),
+       (e) => o.error(e)
+       );
+   });
+ }
+ 
+ static ChainableIObservable returnValue(value) =>
+   Observable.create((IObserver o){
+     o.next(value);
+     o.complete();
+   });
+ 
+ static ChainableIObservable range(num start, num finish, [step = 1]){
+   if (step == 0) return Observable.throwE(const Exception('Invalid step.  Cannot <= 0'));
+   
+   if (start == finish) return Observable.returnValue(start);
+   
+   return (start < finish) 
+     ? Observable.unfold(start, (v) => v <= finish, (v) => v += step, (v) => v)
+     : Observable.unfold(start, (v) => v >= finish, (v) => v -= step, (v) => v);
+   
+ }
+ 
+ /// Unfolds a given initialstate until conditional() returns false;
+ /// Each successful iteration is passed to result() which then returns
+ /// returns the element sent to the sequence.
+ static ChainableIObservable unfold(initialstate, conditional(state), iterate(state), result(state)){
+   return Observable.create((IObserver o){
+     var s = initialstate;
+     try{
+       while(conditional(s) == true){
+         o.next(result(s));
+         s = iterate(s);
+       }
+       o.complete();
+     }catch(Exception e){
+       o.error(e);
+     }
+   });
+ }
+ 
  /// When an element is received, throttle ignores subsequent elements for a 
  /// given time (in milliseconds).  This is useful for certain UI interactions
  /// where you only want to trigger when the user action has been idle
@@ -38,7 +141,7 @@ class Observable
  /// 
  /// For example, search boxes that retrieve on-demand results
  /// use throttling to reduce query load.
- static IObservable throttle(IObservable source, int timeInMilliseconds){
+ static ChainableIObservable throttle(IObservable source, int timeInMilliseconds){
    return Observable.create((IObserver o){
      var handle;
      bool ignoreValue = false;
@@ -67,7 +170,7 @@ class Observable
    });
  }
  
- static IObservable timeout(IObservable source, int timeoutInMilliseconds){
+ static ChainableIObservable timeout(IObservable source, int timeoutInMilliseconds){
    return Observable.create((IObserver o){
      var handler;
 
@@ -89,7 +192,7 @@ class Observable
  
  /// Returns a sequence of [Date] timestamps representing the arrival of
  /// each element in a given sequence.
- static IObservable<Date> timestamp(IObservable source){
+ static ChainableIObservable<Date> timestamp(IObservable source){
    return Observable.create((IObserver o){
      source.subscribe(
        (v) => o.next(new Date.now()),
@@ -104,7 +207,7 @@ class Observable
  /// 
  /// This function is a more specific version of Obervable.buffer(),
  /// in that all elements in the sequence are essentially "buffered".
- static IObservable<List> toList(IObservable source){
+ static ChainableIObservable<List> toList(IObservable source){
    List l = new List();
    
    return Observable.create((IObserver o){
@@ -132,11 +235,13 @@ class Observable
    return Observable.create((IObserver o) => source.subscribe((_)=> o.next(++count), ()=> o.complete(), (e)=> o.error(e)));
  }
  
+ 
+ 
  /// Applies a given function to each element of the sequence
  static ChainableIObservable apply(IObservable source, applyFunction(n)){
    return Observable.create((IObserver o){
      source.subscribe(
-       (v) => applyFunction(v),
+       (v) => o.next(applyFunction(v)),
        () => o.complete(),
        (e) => o.error(e)
        );

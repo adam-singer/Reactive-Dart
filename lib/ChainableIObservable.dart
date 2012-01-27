@@ -44,6 +44,9 @@ interface ChainableIObservable<T> extends IObservable<T> default _ChainableIObse
   ChainableIObservable<T> timestamp();
   ChainableIObservable<T> timeout(int milliseconds);
   ChainableIObservable<T> throttle(int milliseconds);
-  
+  ChainableIObservable<T> single();
+  ChainableIObservable<T> first();
+  ChainableIObservable<T> take(int howMany);
+  ChainableIObservable<T> takeWhile(conditional(v));
   
 }
