@@ -4,6 +4,9 @@ Plainly stated, this project implements the dual of an enumerable type.
 RD works on the principle that everything in the environment is a sequence
 of data being pushed at the application.
 
+## Live Demo of Observable.throttle()
+<http://prujohn.github.com/Reactive-Dart>
+
 ## 32+ Observable Operators to Work With
 The demo app demonstrates nearly all of them:
 
@@ -30,7 +33,7 @@ The demo app demonstrates nearly all of them:
 * .single()
 * .take()
 * .takeWhile()
-* .throttle()  (has it's own demo)
+* .throttle()
 * .throwE()
 * .timeout()
 * .timer()
