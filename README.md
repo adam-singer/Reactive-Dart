@@ -64,7 +64,15 @@ Yields
 	4
 	5
 
-### Example 2 - DOM Events
+We could have also achieved the same result with a generator observable like .range():
+
+	Observable
+		.range(1, 5)
+		.subscribe((i) => print("$i"));
+	
+### Example 2 - Events
+RD sees events coming from the user, or any other event for that matter, as just another sequence:
+
 	Observable
 		.fromEvent(myElement.on.click)
 		.subscribe((e) => print ("Button Clicked"));
@@ -73,6 +81,7 @@ Yields (for each click on the element)
 
 	Button Clicked
 	Button Clicked
+	...
 	
 Notice how in both examples we are using a similar approach to express
 our intent.  It's declarative, consistent, and readable.  We like that.
@@ -96,9 +105,9 @@ is provided an Exception whenever the sequence experiences a fault
 	Observable
 		.timer(500, 5) //implements an interval timer at 500ms for 5 ticks 
 		.subscribe(
-			(_)=> print("Tick!"),   	// next() 
-			()=> print("Complete."), 	// complete()
-			(e)=> print("Error!")		// error()
+			(_)=> print("Tick!"),   	// next() is called for each element in a sequence 
+			()=> print("Complete."), 	// complete() is called when a sequence terminates
+			(e)=> print("Error!")		// error() is called when an Exception occurs in the sequence stream
 		);
 
 Yields (every 500ms)
@@ -110,14 +119,14 @@ Yields (every 500ms)
 	Tick!
 	Complete.
 	
-Now lets suppose we put something invalid for the interval parameter
+Now lets suppose we put something invalid for the interval parameter.  In this case, the error() function of the subscriber will be called.
 
 	Observable
 		.timer(-2, 5) //implements an interval timer at 500ms for 5 ticks 
 		.subscribe(
-			(_)=> print("Tick!"),   	// next() 
-			()=> print("Complete."), 	// complete()
-			(e)=> print("Error!")		// error()
+			(_)=> print("Tick!"),   	
+			()=> print("Complete."), 	
+			(e)=> print("Error!")
 		);
 		
 Yields
@@ -189,7 +198,7 @@ Yields (for each mouse click)
 Chaining gets really powerful when you start to think about merging observable sequences, and so forth...
 	
 ## More To Come
-I'll be building lots more observable wrappers.  Feel free to contribute your own.
+I'll be building lots more observable wrappers.  Feel free to contact me if you want to contribute your own.
 	
-## Some reference Matrial on the reactive model
+## Some reference material on the reactive model
 * <http://rxwiki.wikidot.com/start> 
