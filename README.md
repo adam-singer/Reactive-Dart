@@ -13,7 +13,7 @@ The demo app demonstrates nearly all of them:
 * .concat()
 * .contains()
 * .count()
-* .create()
+* .create() (create your own observable if the built-ins don't suite your needs)
 * .delay()
 * .distinct()
 * .distinctUntilNot()
@@ -62,7 +62,7 @@ Yields
 
 ### Example 2 - DOM Events
 	Observable
-		.fromDOMEvent(myElement.on.click)
+		.fromEvent(myElement.on.click)
 		.subscribe((e) => print ("Button Clicked"));
 
 Yields (for each click on the element)
@@ -76,8 +76,8 @@ our intent.  It's declarative, consistent, and readable.  We like that.
 One can easily see how the same would apply to, lets say, a sequence of
 network messages coming from server-side, or a Dart isolate...
 
-## .subscribe() is a multi-headed beast
-All observables implement a subscribe method, which is "overloaded" such
+## .subscribe() is a Multi-Headed Beast
+All observables implement a **subscribe()** method, which is "overloaded" such
 that it takes the following arguements:
 
 * .subscribe(IObserver o); //Your own observer implementation
