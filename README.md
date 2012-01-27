@@ -181,24 +181,30 @@ Notice that the complete() function isn't called by the observable in this case,
 because the termination did not occur in sequence itself.
 
 ## Observable chaining
-Some observables are chainable. How cool is this:
+Any observable that takes an Observable as it's first parameter is also chainable with any other observable. How cool is this:
 
+### Unchained Example
 	Observable
-		.fromDOMEvent(myElement.on.click)
+		.count(Observable.fromEvent(myElement.on.click))
+		.subscribe((c) => print("You clicked the mouse $c times."));
+
+### Chained Example (more readable, easier to modify)
+	Observable
+		.fromEvent(myElement.on.click)
 		.count()
 		.subscribe((c) => print("You clicked the mouse $c times."));
 		
-Yields (for each mouse click)
+Both will yield (for each mouse click)
 
 	You clicked the mouse 1 times.
 	You clicked the mouse 2 times.
 	You clicked the mouse 3 times.
 	...
 
-Chaining gets really powerful when you start to think about merging observable sequences, and so forth...
+Chaining gets really powerful when you start to think about combining observable sequences in different ways...
 	
 ## More To Come
-I'll be building lots more observable wrappers.  Feel free to contact me if you want to contribute your own.
+Most of the core operators are built, but I do plan to add more over time. Feel free to contact me if you want to contribute your own.
 	
 ## Some reference material on the reactive model
 * <http://rxwiki.wikidot.com/start> 
