@@ -30,13 +30,55 @@ class Observable
  
  /// Creates an IObservable with the given implementation function.
  static create(f(IObserver o)) => new ChainableIObservable(f);
+ 
 
+ /// Executes a simple GET request with the given header/request type and returns the result
+ /// in an observable sequence of a single value (the data).
+ static ChainableIObservable fromXMLHttpRequest(String uri, String requestHeader, String requestValue)
+ {
+  return Observable.create((IObserver o){
+    XMLHttpRequest r = new XMLHttpRequest();
+    
+    Observable
+    .fromEvent(r.on.error)
+    .subscribe((e){
+      o.error(const Exception('error occurred during XMLHttpRequest.'));  
+    });
+        
+    Observable
+    .fromEvent(r.on.abort)
+    .subscribe((e){
+      o.complete();
+    });
+    
+    Observable
+    .fromEvent(r.on.readyStateChange)
+    .subscribe((e){
+      if (r.readyState != 4) return;
+      o.next(r.responseText);
+      o.complete();
+    });
+    
+    try{
+      r.open('GET', uri, true);
+      r.setRequestHeader(requestHeader, requestValue);
+      r.send();
+    }catch(Exception e){
+      o.error(e);
+    }
+    catch(e){
+      o.error(e);
+    }
+  });  
+ }
+ 
+ /// Takes n values from an observable sequence while the conditional function
+ /// returns true.
  static ChainableIObservable takeWhile(IObservable source, conditional(v)){  
    return Observable.create((IObserver o){
      source.subscribe(
        (v){
          if (conditional(v) == false){
-           o.next(v);
            o.complete();
          }else{
            o.next(v);
@@ -47,6 +89,7 @@ class Observable
    });
  }
  
+ /// Takes the first n values from an observable sequence, then terminates.
  static ChainableIObservable take(IObservable source, int howMany){
    if (howMany < 0) return Observable.throwE(const Exception('Illegal take value.  Must be greater than 0.'));
    
@@ -69,6 +112,7 @@ class Observable
    });
  }
  
+ /// Returns the first value received from an observable sequence, then terminates.
  static ChainableIObservable first(IObservable source){
    return Observable.create((IObserver o){
      source.subscribe(
@@ -81,6 +125,8 @@ class Observable
    });
  }
  
+ /// Returns a single value from an observable sequence and an exception
+ /// if more than one value is found in the sequence.
  static ChainableIObservable single(IObservable source){
    return Observable.create((IObserver o){
      bool gotOne = false;
@@ -99,12 +145,15 @@ class Observable
    });
  }
  
+ /// Returns a single value as an observable sequence.
  static ChainableIObservable returnValue(value) =>
    Observable.create((IObserver o){
      o.next(value);
      o.complete();
    });
  
+ /// Returns a numerica range from a given start to a given finish, with optional stepping
+ /// (default step is 1).  If start > finish then range will be high to low.
  static ChainableIObservable range(num start, num finish, [step = 1]){
    if (step == 0) return Observable.throwE(const Exception('Invalid step.  Cannot <= 0'));
    
@@ -170,6 +219,8 @@ class Observable
    });
  }
  
+ /// Propogates an exception if an element isn't received within a given time period.
+ /// Otherwise returns elements from the sequence.
  static ChainableIObservable timeout(IObservable source, int timeoutInMilliseconds){
    return Observable.create((IObserver o){
      var handler;
@@ -220,6 +271,10 @@ class Observable
        (e) => o.error(e)
      );
    });
+ }
+ 
+ static ChainableIObservable<Event> fromEvent(EventListenerList event){
+   return Observable.create((IObserver o) => event.add((e) => o.next(e)));
  }
  
  static ChainableIObservable<Event> fromDOMEvent(EventListenerList event){
@@ -397,20 +452,28 @@ class Observable
    });
  }
  
+ /// Returns an observable sequence that returns false until a given value is found, then terminates.
  static ChainableIObservable contains(IObservable source, value){
    return Observable.create((IObserver o) {
-     source.subscribe((v){
-       if (v != value){
-         o.next(false);
-       }
-       else{
-        o.next(true);
-        o.complete();
-       }
-     });
+     source.subscribe(
+       (v){
+         if (v != value){
+           o.next(false);
+         }
+         else{
+          o.next(true);
+          o.complete();
+         }
+       },
+       (){
+         o.complete();
+       },
+       (e) => o.error(e)
+     );
    });
  }
  
+ /// Returns an observable sequence that terminates immediately.
  static ChainableIObservable empty() => Observable.create((IObserver o) => o.complete());
  
  /// Performs a left fold operation over a sequence.
@@ -540,5 +603,101 @@ class Observable
      }
    });
  }
+ 
+ /// Returns an observable sequence of messages received from a given [Isolate].
+ /// This observable operator assumes that the given isolate is uni-directional
+ /// and can only receive an initialization (or registration) messsage.
+ ///
+ /// ## CAUTION - READ BEFORE USING
+ /// Isolates can only expose state via the DOM, so this observable will only
+ /// work client-side.  Also, sensitive data SHOULD NEVER be accessed this way, because
+ /// it is exposed to the DOM via a hidden field and could be inspected by other
+ /// client-side scripts.
+ ///
+ /// ## Parameters
+ /// * i - The isolate to observe.
+ /// * initMessage - The initialization message that the isolate is to receive.
+ /// * terminationMessage (optional) - A message, that when received from the isolate,
+ /// terminates the sequence.
+ /// * timeOut (optional, default none) Terminates the sequence if a message isn't
+ /// received from the isolate in a given time (in milliseconds).
+ static ChainableIObservable fromIsolate(Isolate i, initMessage, [terminationMessage = ""])
+ {
+   return Observable.create((IObserver o){
+     
+     i.spawn().then((SendPort port){
+       new _ObserverIsolate().spawn().then((SendPort oPort){
+         oPort.send(terminationMessage);
+                  
+         var iostate = document.query("#${_ObserverIsolate.IOSTATE + oPort.hashCode()}");
+         
+         Observable
+         .fromDOMEvent(iostate.on.change)
+         .subscribe(
+           (e){
+             if (iostate.value == _ObserverIsolate.MSG_COMPLETE){
+               iostate.remove();
+               o.complete();
+             }else{
+               o.next(JSON.parse(iostate.value));             
+             }
+         },
+         () => o.complete(),
+         (err) => o.error(err)
+         );
+         
+         
+         port.send(initMessage, oPort);
+       });     
+     });
+   });  
+ }
+ 
+}
+
+// HACK
+// proxy for the Observable.fromIsolate() function.
+// uses DOM hidden field to surface and notify .fromIsolate()
+// of new messages from the target Isolate.
+class _ObserverIsolate extends Isolate {
+  static final MSG_COMPLETE = "___complete___";
+  static final IOSTATE = "___iostate___";
+  
+  _ObserverIsolate() : super.light() {
+
+  }
+
+  void main() {
+    var tMessage;
+
+    String statehash = _ObserverIsolate.IOSTATE + this.port.toSendPort().hashCode();
+
+    var state = document.query("#${statehash}");
+    
+    if (state == null){
+      Element e = new Element.tag('input');
+      e.style.display = 'none';
+      e.id = statehash;
+      document.body.nodes.add(e);
+      state = document.query("#${statehash}");
+    }
+    
+    if (state == null) return;  //TODO throw?
+    
+    this.port.receive((message, SendPort replyTo) {
+      //first two messages will always be from the observable.
+      if (tMessage == null){
+        tMessage = message;
+        return;
+      }
+      
+      if (message == tMessage){
+        state.value = _ObserverIsolate.MSG_COMPLETE;
+      }else{
+        state.value = JSON.stringify(message);
+      }
+      state.on.change.dispatch(new Event('change'));
+    });
+  }
 }
 

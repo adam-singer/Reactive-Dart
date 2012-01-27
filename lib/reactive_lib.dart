@@ -16,6 +16,8 @@
 
 #library('Reactive Dart');
 #import('dart:html');
+#import('dart:json');
+
 #source('IDisposable.dart');
 #source('IObserver.dart');
 #source('IObservable.dart');

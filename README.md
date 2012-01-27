@@ -4,9 +4,46 @@ Plainly stated, this project implements the dual of an enumerable type.
 RD works on the principle that everything in the environment is a sequence
 of data being pushed at the application.
 
+## 32+ Observable Operators to Work With
+The demo app demonstrates nearly all of them:
+
+* .any()
+* .apply()
+* .buffer()
+* .concat()
+* .contains()
+* .count()
+* .create()
+* .delay()
+* .distinct()
+* .distinctUntilNot()
+* .empty()
+* .first()
+* .fold()
+* .fromEvent()
+* .fromIsolate() (hacky, but works)
+* .fromList()
+* .fromXMLHttpRequest()
+* .merge()
+* .range()
+* .returnValue()
+* .single()
+* .take()
+* .takeWhile()
+* .throttle()  (has it's own demo)
+* .throwE()
+* .timeout()
+* .timer()
+* .timestamp()
+* .toList()
+* .unfold()
+* .where()
+* .zip()
+
+
 ## Consistent Idiom Regardless of Sequence Type
 RD sees everything in the same way, so you don't have to remember specific
-syntax in order to "pull" data from the environment.
+imperative implementation in order to "pull" data from the environment.
 
 Lets look at a few examples:
 

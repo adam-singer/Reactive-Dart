@@ -19,10 +19,11 @@
 ///
 /// Demonstrates various Observable operations on sequences.
 ///
-/// Open browser console to see results.
+/// Build with frogc.  Open browser console to see results.
 
 #import('dart:html');
 #import('../lib/reactive_lib.dart');
+#source('DemoIsolate.dart');
 
 class reactivedemo {
 
@@ -34,14 +35,19 @@ class reactivedemo {
   void run() {
     
     /*
-    * Un-comment the demos that you wnat to see, rebuild, and run in browser
-    * with the browser console open.
-    * 
-    * If in Dart Editor, press Alt-O to jump to any demo method.
+    **************************************************************************
+    * Un-comment the demos that you wnat to see, rebuild, and run in browser *
+    * with the browser console open.                                         *
+    *                                                                        *
+    * Builds with:                                                           *
+    * frogc --out=reactivedemo.dart.app.js reactivedemo.dart                 *
+    *                                                                        *
+    * If in Dart Editor, press Alt-O to jump to any demo method.             *
+    **************************************************************************
     */
     
     timer();
-    fromDOMEvents();
+    fromEvent();
 //    contains();
 //    count();
 //    concat();
@@ -59,8 +65,87 @@ class reactivedemo {
 //    throttle(); //Throttle has it's own demo, see '/demos/throttle_demo/throttle_demo.dart'
 //    unfold();
 //    range();
-
+//    fromIsolate();
+//    fromXMLHttpRequest();
+//    take();  
+//    takeWhile();
+//    first();
+//    single();
+//    returnValue();
+//    throwE();
+  }
   
+  throwE(){
+    header("Observable.throwE() Propagates an given Exception.");
+    
+    Observable
+    .throwE(const Exception('Here is an exception.'))
+    .subscribe((e){}, (){}, (e)=> print('Error! $e'));
+  }
+  
+  returnValue(){
+    header("Observable.returnValue() Returns the given value as an observable sequence and then terminates.");
+    
+    Observable
+    .returnValue(42)
+    .subscribe((e)=> print('$e'));
+  }
+  
+  single(){
+    header("Observable.single() Returns the first element from a sequence and propogates an exception if any other elements are present.");
+    
+    Observable
+    .range(1, 100)
+    .single()
+    .subscribe((e)=> print('$e'), (){}, (e) => print('Error! $e'));
+  }
+  
+  first(){
+    header("Observable.first() Returns the first element from the sequence and then terminates.");
+    
+    Observable
+    .range(42, 100)
+    .first()
+    .subscribe((e)=> print('$e'));
+  }
+  
+  takeWhile(){
+    header("Observable.takeWhile() Returns the first n elements while the conditional function returns true.");
+    
+    Observable
+    .range(1, 100)
+    .takeWhile((n) => n < 6)
+    .subscribe((e)=> print('$e'));
+  }
+  
+  take(){
+    header("Observable.take() Returns the first n elements from an observable sequence.");
+    
+    Observable
+    .range(1, 100)
+    .take(5)
+    .subscribe((e)=> print('$e'));
+    
+  }
+  
+  fromXMLHttpRequest(){
+    header("Observable.fromXMLHttpRequest() Performs a GET request and returns the results for the given request type, in an observable sequence (singleton)");
+    
+    var uri = 'reactivedemo.html'; //this should work if running locally...
+    Observable
+    .fromXMLHttpRequest(uri, 'Accept', 'text/plain')
+    .single() //using single to enforce no additional values other than the data we requested...
+    .subscribe((v)=>print('$v'), ()=> print('Request Complete.'), (e) => print ("Error! $e"));
+  }
+  
+  
+  void fromIsolate(){
+    header("Observable.fromIsolate() Generates an observable sequence from an Isolate. Read the comments carefully before using this function.");
+    
+    Observable
+      .fromIsolate(new DemoIsolate(), "")
+      //we know DemoIsolate is sending in the form [n1, n2] so...
+      .subscribe((n) => print('Message from Isolate: ${n[0]}, ${n[1]}'), () => print('Isolate terminated.'));
   }
   
   void range(){
@@ -115,7 +200,7 @@ class reactivedemo {
     Observable
       .timer(1300, 4)
       .timestamp()
-      .subscribe((Date t) => print('Stamp: $t'));
+      .subscribe((Date t) => print('Stamp: $t'),()=>print('Sequence Complete.'));
     
   }
   
@@ -247,13 +332,13 @@ class reactivedemo {
       () => status.text = "Complete.");    
   }
   
-  void fromDOMEvents(){
+  void fromEvent(){
     var button = document.query("#btnClickDemo");
     var buttonStatus = document.query("#btnStatus");
     
     //Lets count mouse clicks...   
     Observable
-      .fromDOMEvent(button.on.click)
+      .fromEvent(button.on.click)
       .count()
       .subscribe((c) => buttonStatus.text = "$c clicks have occurred.");
   }
