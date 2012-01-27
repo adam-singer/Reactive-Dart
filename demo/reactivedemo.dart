@@ -313,12 +313,12 @@ class reactivedemo {
   void merge(){
     header("Observable.merge() Takes n sequences and merges elements into a single stream.");
     
-    var o1 = Observable.timer(100, 15);
-    var o2 = Observable.timer(200, 10);
-    var o3 = Observable.timer(300, 5);
+    var o1 = Observable.timer(100, 10).apply((v) => 'Timer 1, tick $v');
+    var o2 = Observable.timer(200, 10).apply((v) => 'Timer 2, tick $v');
+    var o3 = Observable.timer(300, 10).apply((v) => 'Timer 3, tick $v');
     
     o1.merge([o2, o3]) //merges o1 with o2 and o3...
-      .subscribe((v) => print("Got tick #$v from one of the 3 streams."));
+      .subscribe((v) => print(v));
   }
   
   void timer(){
