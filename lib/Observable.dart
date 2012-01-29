@@ -75,7 +75,7 @@ class Observable
              
              if (howMany == null){
                window.setTimeout(nextNum, iFunc());
-             }else if (howMany != null && ++ticks < howMany){
+             }else if (howMany != null && ++ticks <= howMany){
                window.setTimeout(nextNum, iFunc());
              }else{
                o.complete();
@@ -84,7 +84,7 @@ class Observable
           
            if (howMany == null){
              window.setTimeout(nextNum, iFunc());
-           }else if (howMany != null && ++ticks < howMany){
+           }else if (howMany != null && ++ticks <= howMany){
              window.setTimeout(nextNum, iFunc());
            }else{
              o.complete();
@@ -127,7 +127,7 @@ class Observable
     }catch(Exception e){
       o.error(e);
     }
-    catch(e){
+    catch(var e){
       o.error(e);
     }
   });  
@@ -156,12 +156,12 @@ class Observable
    
    if (howMany == 0) return Observable.empty();
    
-   var count = 0;
+   var cnt = 0;
    
    return Observable.create((IObserver o){
      source.subscribe(
        (v){
-         if (++count == howMany){
+         if (++cnt == howMany){
            o.next(v);
            o.complete();
          }else{
@@ -350,8 +350,8 @@ class Observable
  
  /// Returns running total of items in a sequence.
  static ChainableIObservable count(IObservable source){
-   int count = 0;
-   return Observable.create((IObserver o) => source.subscribe((_)=> o.next(++count), ()=> o.complete(), (e)=> o.error(e)));
+   int cnt = 0;
+   return Observable.create((IObserver o) => source.subscribe((_)=> o.next(++cnt), ()=> o.complete(), (e)=> o.error(e)));
  }
  
  
@@ -479,7 +479,7 @@ class Observable
  
  /// Delays (shifts in time) the sequence.
  static ChainableIObservable delay(IObservable source, int milliseconds){
-   List buffer = new List();
+   List buff = new List();
    bool delaying = true;
    
    var t = Observable
@@ -492,21 +492,21 @@ class Observable
      source.subscribe(
      (v){
        if (!delaying){
-         if (!buffer.isEmpty()){
-           buffer.forEach((b) => o.next(b));
-           buffer.clear();
+         if (!buff.isEmpty()){
+           buff.forEach((b) => o.next(b));
+           buff.clear();
          }else{
            o.next(v);           
          }
        }else{
-         buffer.add(v);
+         buff.add(v);
        }
      },
      (){
         t.subscribe((v)=>{},(){
-          if (!buffer.isEmpty()){
-            buffer.forEach((b) => o.next(b));
-            buffer.clear();
+          if (!buff.isEmpty()){
+            buff.forEach((b) => o.next(b));
+            buff.clear();
           }
           o.complete();
         });
@@ -583,20 +583,20 @@ class Observable
  //TODO Add buffering options with time/timeout constraints
  /// Buffers the sequence into non-overlapping lists based on a given size (default 10)
  static ChainableIObservable buffer(IObservable source, [int size = 10]){
-   List buffer = new List();
+   List buff = new List();
    return Observable.create((IObserver o)
    {source.subscribe(
      (v) {
-       buffer.add(v);
-       if (buffer.length == size){
-         o.next(buffer);
-         buffer.clear();
+       buff.add(v);
+       if (buff.length == size){
+         o.next(buff);
+         buff.clear();
        }
      },
      (){
-       if (!buffer.isEmpty()){
-         o.next(buffer);
-         buffer.clear();
+       if (!buff.isEmpty()){
+         o.next(buff);
+         buff.clear();
        }
        o.complete();
      },

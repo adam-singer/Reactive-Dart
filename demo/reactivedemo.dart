@@ -76,10 +76,11 @@ class reactivedemo {
 //    random();
   }
   
-  //**************************************************************************************
   // How sequence diagrams work.
+  //**************************************************************************************
   //
-  // Sequence diagrams provide a visual representation of an observable's behavioral characteristics.
+  // Sequence diagrams provide a visual representation of an observable's behavioral 
+  // characteristics.
   //
   // - Each horizontal line represents a sequence, and each sequence is numbered 1 - n
   // - The lines represent relative linear time moving from left to right.

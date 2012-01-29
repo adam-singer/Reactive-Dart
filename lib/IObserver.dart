@@ -28,7 +28,5 @@ interface IObserver<T> extends Hashable
   /// Represents completion of an observable sequence.
   void complete();
   
-  static int _hashNum;
-  IObserver(): _assignedHash = _hashNum++;
-  final int _assignedHash;
+  IObserver();
 }
