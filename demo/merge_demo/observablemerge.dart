@@ -16,6 +16,8 @@ class observablemerge {
   //  |  | |   |  |      |      |
   // S|--1-2---2--1------1------#
   
+  // Video about this demo: http://youtu.be/EwKWaZdPoGY
+  
   void run() {
   
     var o1 = Observable
