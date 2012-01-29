@@ -28,9 +28,9 @@ class DemoIsolate extends Isolate
 
   void broadcast(){
     Observable
-    .timer(500, 10)
+    .randomInt(0, 100, 1, 750, 20)
     .subscribe(
-      (v) => sendMessage([v, v + 1]), // Send out each tick count and it's successor in a list.
+      (v) => sendMessage(v), // Send out each random value generated
       () => sendMessage("") // Timer sequence complete.  Send a null message, which is the (vague) terminator signal, in this case.
       );
   }

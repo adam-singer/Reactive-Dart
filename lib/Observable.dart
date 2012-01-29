@@ -32,6 +32,67 @@ class Observable
  static create(f(IObserver o)) => new ChainableIObservable(f);
  
 
+ /// Provides an observable sequence of random integers in the 
+ /// given low(exclusive)/high(inclusive) range at (default) 1ms intervals.
+ ///
+ /// Intervals can also be randomized by providing optional intervalLow/intervalHigh values.
+ ///
+ /// This observable generator is a more specific implementation of [Observable.random()].
+ static ChainableIObservable randomInt(int low, int high, [int intervalLow = 1, int intervalHigh = 1, int howMany]){     
+   return Observable.create((IObserver o){
+      Observable
+        .random(low, high, intervalLow, intervalHigh, howMany)
+        .apply((v) => v.ceil())
+        .subscribe(
+          (v) => o.next(v),
+          () => o.complete(),
+          (e) => o.error(e)
+        );
+   });
+   
+ }
+ 
+ /// Provides an observable sequence of random numbers
+ /// in the given low(inclusive)/high(exclusive) range at (default) 1ms intervals.
+ ///
+ /// Intervals can also be randomized by providing optional intervalLow/intervalHigh values.
+ static ChainableIObservable random(num low, num high, [int intervalLow = 1, int intervalHigh = 1, int howMany]){
+   if (high <= low) return Observable.throwE(const Exception('Parameter "high" must be > parameter "low"'));
+   if (intervalHigh < intervalLow) return Observable.throwE(const Exception('Parameter "intervalHigh" must be > parameter "intervalLow"'));
+   if (intervalLow < 1 || intervalHigh < 1) return Observable.throwE(const Exception('timer interval parameters must be >= 1'));
+   
+   num delta = high - low;
+   num intervalDelta = intervalHigh - intervalLow;
+   num ticks = 0;
+   
+   Function iFunc = (intervalDelta == 0) 
+                    ? () => intervalLow 
+                    : () => (Math.random() * intervalDelta) + intervalLow;
+   
+   return Observable.create((IObserver o){
+           void nextNum(){
+             o.next((Math.random() * delta) + low);
+             
+             if (howMany == null){
+               window.setTimeout(nextNum, iFunc());
+             }else if (howMany != null && ++ticks < howMany){
+               window.setTimeout(nextNum, iFunc());
+             }else{
+               o.complete();
+             }    
+           }
+          
+           if (howMany == null){
+             window.setTimeout(nextNum, iFunc());
+           }else if (howMany != null && ++ticks < howMany){
+             window.setTimeout(nextNum, iFunc());
+           }else{
+             o.complete();
+           }     
+         });
+   
+ }
+ 
  /// Executes a simple GET request with the given header/request type and returns the result
  /// in an observable sequence of a single value (the data).
  static ChainableIObservable fromXMLHttpRequest(String uri, String requestHeader, String requestValue)
@@ -273,11 +334,14 @@ class Observable
    });
  }
  
+ /// Returns an Observable sequence from an [Event] stream.
+ ///
+ /// ## Usage
+ ///     Element myElement = new Element.tag('button');
+ ///     Observable
+ ///         .fromEvent(myElement.on.click)
+ ///         .subscribe((e) => print('clicked!'));
  static ChainableIObservable<Event> fromEvent(EventListenerList event){
-   return Observable.create((IObserver o) => event.add((e) => o.next(e)));
- }
- 
- static ChainableIObservable<Event> fromDOMEvent(EventListenerList event){
    return Observable.create((IObserver o) => event.add((e) => o.next(e)));
  }
   
@@ -632,7 +696,7 @@ class Observable
          var iostate = document.query("#${_ObserverIsolate.IOSTATE + oPort.hashCode()}");
          
          Observable
-         .fromDOMEvent(iostate.on.change)
+         .fromEvent(iostate.on.change)
          .subscribe(
            (e){
              if (iostate.value == _ObserverIsolate.MSG_COMPLETE){

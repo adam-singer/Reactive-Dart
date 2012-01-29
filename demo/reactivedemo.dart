@@ -73,8 +73,53 @@ class reactivedemo {
 //    single();
 //    returnValue();
 //    throwE();
+//    random();
   }
   
+  //**************************************************************************************
+  // How sequence diagrams work.
+  //
+  // Sequence diagrams provide a visual representation of an observable's behavioral characteristics.
+  //
+  // - Each horizontal line represents a sequence, and each sequence is numbered 1 - n
+  // - The lines represent relative linear time moving from left to right.
+  // - Each element emitted by a sequence is represented by the sequence's number.
+  // Symbol Key:
+  // - =  A unit of time.
+  // X = Exceptions
+  // # = Termination of Sequence
+  // f = Between lines represents some function applied.
+  // S = The sequence emitted to the .subscribe() method.
+  //
+  // Example 1 - Single observable which throws an error.
+  // 1|--X---->
+  //  |  |
+  // S|--X
+  //
+  // Example 2 - Two observable sequences which merge and terminate at different times.
+  // 1|--1--------1------1------#
+  //  |  |        |      |      |
+  // 2|----2---2------#  |      |
+  //  |  | |   |  |      |      |
+  // S|--1-2---2--1------1------#
+  //
+  //**************************************************************************************
+  
+  
+  
+  // 1|--1-----1-1-1--1----1--->
+  //  |  |     | | |  |    |
+  // S|--1-----1-1-1--1----1--->
+  random(){
+    header("Observable.randomInt() (and also Observable.random() for Real numbers) generates a range of randum numbers at optionally random time intervals.");
+    Observable
+    .randomInt(0, 10, 1, 1000, 20) //generating ints from 1 - 10 at intervals between 100 & 1000ms for 20 ticks.
+    .subscribe((v) => print('$v'));
+  }
+    
+  // 1|X
+  //  ||
+  // S|X
   throwE(){
     header("Observable.throwE() Propagates an given Exception.");
     
@@ -83,6 +128,9 @@ class reactivedemo {
     .subscribe((e){}, (){}, (e)=> print('Error! $e'));
   }
   
+  // 1|1#
+  //  |||
+  //  |1#
   returnValue(){
     header("Observable.returnValue() Returns the given value as an observable sequence and then terminates.");
     
@@ -91,6 +139,15 @@ class reactivedemo {
     .subscribe((e)=> print('$e'));
   }
   
+  // Succeeds
+  // 1|---1#
+  //  |   ||
+  // S|---1#
+  //
+  // Fails
+  // 1|---1---1--->
+  //  |   |   |
+  // S|---1---X
   single(){
     header("Observable.single() Returns the first element from a sequence and propogates an exception if any other elements are present.");
     
@@ -100,6 +157,9 @@ class reactivedemo {
     .subscribe((e)=> print('$e'), (){}, (e) => print('Error! $e'));
   }
   
+  // 1|----1---->
+  //  |    |
+  // S|----1#
   first(){
     header("Observable.first() Returns the first element from the sequence and then terminates.");
     
@@ -109,6 +169,10 @@ class reactivedemo {
     .subscribe((e)=> print('$e'));
   }
   
+  // 1|----1-------1---1--->
+  //  |    f       f   f
+  // S|----1-------1---#
+  //
   takeWhile(){
     header("Observable.takeWhile() Returns the first n elements while the conditional function returns true.");
     
@@ -118,6 +182,10 @@ class reactivedemo {
     .subscribe((e)=> print('$e'));
   }
   
+  // Given .take(4)
+  // 1|---1--1-1----1---1---->
+  //  |   |  | |    |
+  // S|---1--1-1----1#
   take(){
     header("Observable.take() Returns the first n elements from an observable sequence.");
     
@@ -128,6 +196,9 @@ class reactivedemo {
     
   }
   
+  // 1|---1#
+  //  |   ||
+  // S|---1#
   fromXMLHttpRequest(){
     header("Observable.fromXMLHttpRequest() Performs a GET request and returns the results for the given request type, in an observable sequence (singleton)");
     
@@ -138,16 +209,22 @@ class reactivedemo {
     .subscribe((v)=>print('$v'), ()=> print('Request Complete.'), (e) => print ("Error! $e"));
   }
   
-  
+  // 1|---1--1--1--1--->
+  //  |   |  |  |  |
+  // S|---1--1--1--1--->
   void fromIsolate(){
     header("Observable.fromIsolate() Generates an observable sequence from an Isolate. Read the comments carefully before using this function.");
+    print('DemoIsolate() will issue 20 randomized messages, then terminate.');
     
     Observable
       .fromIsolate(new DemoIsolate(), "")
-      //we know DemoIsolate is sending in the form [n1, n2] so...
-      .subscribe((n) => print('Message from Isolate: ${n[0]}, ${n[1]}'), () => print('Isolate terminated.'));
+      .subscribe((n) => print('Message from Isolate: ${n}'), () => print('Isolate terminated.'));
   }
   
+  // Given range(1, 5, 1)
+  // 1|--1--1--1--1--1#
+  //  |  |  |  |  |  ||
+  // S|--1--1--1--1--1#
   void range(){
     header("Observable.range() Generates an observable sequence from a given start/end with optional step");
     
@@ -162,6 +239,9 @@ class reactivedemo {
       .subscribe((v) => print(v));
   }
   
+  // 1|--1---1-1-----1--1----->
+  //  |  f   f f     f  f
+  // S|--1---1-1-----1--1----->
   void apply(){
     header("Observable.apply() Applies a given function to each element in the sequence and returns the result in a new observable sequence");
     
@@ -171,6 +251,9 @@ class reactivedemo {
       .subscribe((v) => print('squared: $v'));
   }
   
+  // 1|--1--1--1--1--1--1#
+  //  |  |  |  |  |  |  ||
+  // S|--1--1--1--1--1--1#
   void unfold(){
     header("Observable.unfold() Generates a sequences from intial state and provides elements until conditional is false");
     
@@ -183,7 +266,10 @@ class reactivedemo {
   void throttle(){
     print("Throttle has it's own demo, see '/demos/throttle_demo/throttle_demo.dart");
   }
-  
+
+  // 1|--1--1--1------1--1-->
+  //  |  |  |  |
+  // S|--1--1--1-----X
   void timeout(){
     header("Observable.timeout().  Returns an exception if an element in a sequence is not delivered within a given time allotment.");
     
@@ -194,6 +280,10 @@ class reactivedemo {
       .subscribe((t) => print('Tick: $t'), (){}, (e)=> print('error!'));
   }
   
+  // Given 't' = timestamp
+  // 1|--1--1----1--1------1---->
+  //  |  |  |    |  |      |
+  // S|--t--t----t--t------t---->
   void timestamp(){
     header("Observable.timestamp() Returns a sequence of Date timestamps representing the arrival of each element in a given sequence.");
     
@@ -204,9 +294,12 @@ class reactivedemo {
     
   }
   
-  
+  // Given 'L' = the list
+  // 1|--1--1--1--1--1#
+  //  |  |  |  |  |  |#
+  // S|---------------L#
   void toList(){
-    header("Observable.toList() I a singleton sequence that returns all elements in a terminating sequence as a list.");
+    header("Observable.toList() Is a singleton sequence that returns all elements in a terminating sequence as a list.");
     
     // filters the sequence for even numbers and returns as a list
     Observable
@@ -216,6 +309,9 @@ class reactivedemo {
       .subscribe((v) => print("List has ${v.length} elements.  First element is ${v[0]} and last is ${v.last()}"));
   }
   
+  // 1|--1--1--1--1--1--1-->
+  //  |  f  f  f  f  f  f
+  // S|--1--1-----1-----1-->
   void where(){
     header("Observable.where() Returns a sequence of elements that satisfy the given boolean function.");
     
@@ -226,6 +322,12 @@ class reactivedemo {
       .subscribe((v) => print(v));
   }
   
+  // Where 'P' is the result of the function applied to pairs
+  // 1|--1--1----1--------1-->
+  //  |  |   \    \      /|
+  // 2|--2----2----2----2---->
+  //  |  f    f    f      f
+  // S|--P----P----P------P-->
   void zip(){
     header("Observable.zip() Returns the value of a function applied to pairs of two observable sequences.");
     
@@ -241,7 +343,18 @@ class reactivedemo {
       .subscribe((v) => print('These values should be the same: ${v[0]}, ${v[1]}'));
     
   }
-    
+  
+  // Where 'f' = false, 't' = true
+  //
+  // true case
+  // 1|---1---1---1---1---1---1-->
+  //  |   |   |   |   |   |   |
+  // S|---f---f---f---f---f---t#
+  //
+  // false case
+  // 1|---1---1---1---1---1---1#
+  //  |   |   |   |   |   |   |
+  // S|---f---f---f---f---f---f#
   void contains(){
     // false until contains
     header("Observable.contains() Returns false until contained value is found or sequence terminates.");
@@ -251,6 +364,10 @@ class reactivedemo {
       .subscribe((b)=> print(b));
   }
   
+  // Where 'C' = the running count of elements in the sequence
+  // 1|--1-1----1--1---1------>
+  //  |  | |    |  |   |
+  // S|--C-C----C--C---C------>
   void count(){
     // counting contains count iteration
     header("Here we are using Observable.count() tells us the number of attempts that Observable.contains() makes before returning true.");
@@ -261,6 +378,11 @@ class reactivedemo {
       .subscribe((c)=> print(c));
   }
   
+  // 1|--1---1--1--1#
+  //  |  |   |  |  |
+  // 2|  |   |  |  | --2--2-2#
+  //  |  |   |  |  |   |  | ||
+  // S|--1---1--1--1---2--2-2#
   void concat(){
     // concat 3 observable sequences into a single sequence
     header("Observable.concat() Concatenates observable sequences into one sequence.  Here we have 3 ([1,2,3], [4,5,6], [7,8,9])");
@@ -270,6 +392,10 @@ class reactivedemo {
       .subscribe((v) => print(v));
   }
   
+  // Where 'R' = the result of each fold iteration
+  // 1|--1--1--1--1--->
+  //  |  f  f  f  f
+  // S|--R--R--R--R--->
   void fold(){
     header("Folding (aggregating really) over a sequence.");
     Observable
@@ -278,6 +404,15 @@ class reactivedemo {
       .subscribe((v) => print(v));
   }
   
+  // true case
+  // 1|--1--1---1--->
+  //  |  |
+  // S|--T#
+  //
+  // false case
+  // 1|---------#
+  //  |         |
+  // S|---------F#
   void any(){
     header("Observable.any() Returns true if there are any values in the sequence, false otherwise.");
     Observable
@@ -292,6 +427,11 @@ class reactivedemo {
     
   }
   
+  // Where buffer = 2
+  // Where B = the list containing buffered values
+  // 1|--1--1---1------1-1---->
+  //  |     |          |
+  // S|-----B----------B------>
   void buffer(){
     header("Observable.buffer() Returns sequences as a series of buffered lists, based on buffer size provided.");
     Observable
@@ -300,7 +440,10 @@ class reactivedemo {
       .subscribe((v)=> print("Received buffered list of size ${v.length} with elements: ${v[0]}, ${v[1]}."));
   }
   
-
+  // Where D = distinct values in the sequence
+  // 1|--1--1--1--1--1--1----1-->
+  //  |  |  |     |     |    |
+  // S|--D--D-----D-----D----D-->
   void distinct(){
     header("Observable.distinct() Returns elements in the sequence that are distinct with respect to other elements.");
     Observable
@@ -310,6 +453,11 @@ class reactivedemo {
       .subscribe((v) => print(v));    
   }
   
+  // 1|--1--------1------1------#---->
+  //  |  |        |      |      |
+  // 2|----2---2------#  |      |
+  //  |  | |   |  |      |      |
+  // S|--1-2---2--1------1------#
   void merge(){
     header("Observable.merge() Takes n sequences and merges elements into a single stream.");
     

@@ -29,7 +29,7 @@ class throttle_demo {
     // is reached without any elements being received from the previous 
     // observable sequence (the event stream, in this case).    
     Observable
-    .fromDOMEvent(tbInput.on.keyUp)
+    .fromEvent(tbInput.on.keyUp)
     .throttle(400)
     .subscribe((e) => displayResults(tbInput.value));
     

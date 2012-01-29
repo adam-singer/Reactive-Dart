@@ -8,7 +8,7 @@ of data being pushed at the application.
 * Demo: <http://prujohn.github.com/Reactive-Dart>
 * How It Works: [Blog Post](http://phylotic.blogspot.com/2012/01/reactive-dart-series-part-1-of-n-using.html)
 
-## 32+ Observable Operators to Work With
+## 34+ Observable Operators to Work With
 The demo app demonstrates nearly all of them:
 
 * .any()
@@ -29,6 +29,8 @@ The demo app demonstrates nearly all of them:
 * .fromList()
 * .fromXMLHttpRequest()
 * .merge()
+* .random()
+* .randomInt()
 * .range()
 * .returnValue()
 * .single()
