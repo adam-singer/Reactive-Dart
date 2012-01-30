@@ -32,6 +32,48 @@ class Observable
  static create(f(IObserver o)) => new ChainableIObservable(f);
  
 
+ //todo:
+ // .replay()
+ // .repeat()
+ // .allComplete()
+ // .skip()
+ // .switch()
+ // .sample() - every nth element in the sequence, or most recent in a given timespan
+ 
+ /// Of the given [List] of observable sequences, propagates the sequence that
+ /// provides a value first.  Sequences are subscribed in order they are found in the
+ /// sources list; those earlier in the index may have a slight advantage.
+ static firstOf(List<IObservable> sources){  
+   return Observable.create((IObserver o){
+     IObservable first;
+     
+     sources.forEach((source){
+      IDisposable d;
+      d = source.subscribe(
+        (v){
+          if (first == null){
+            first = source;
+            o.next(v);
+          }else{
+            if (first != source){
+              d.dispose();
+            }else{
+              o.next(v);
+            }
+          }
+        },
+        (){
+          if (first != null && source == first){
+            o.complete();
+          }
+        },
+        (e) => o.error(e)
+        );
+    });
+   });
+ }
+ 
+ 
  /// Provides an observable sequence of random integers in the 
  /// given low(exclusive)/high(inclusive) range at (default) 1ms intervals.
  ///
@@ -344,6 +386,9 @@ class Observable
  static ChainableIObservable<Event> fromEvent(EventListenerList event){
    return Observable.create((IObserver o) => event.add((e) => o.next(e)));
  }
+
+ /// Returns an observable sequence that never returns a value and never terminates.
+ static IObservable never() => Observable.create((IObserver o){});
   
  /// Returns a sequence that terminates immediately with an exception.
  static IObservable throwE(Exception e) => Observable.create((IObserver o) => o.error(e)); 
@@ -353,8 +398,7 @@ class Observable
    int cnt = 0;
    return Observable.create((IObserver o) => source.subscribe((_)=> o.next(++cnt), ()=> o.complete(), (e)=> o.error(e)));
  }
- 
- 
+
  
  /// Applies a given function to each element of the sequence
  static ChainableIObservable apply(IObservable source, applyFunction(n)){

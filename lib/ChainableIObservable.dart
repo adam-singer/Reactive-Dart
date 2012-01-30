@@ -48,5 +48,6 @@ interface ChainableIObservable<T> extends IObservable<T> default _ChainableIObse
   ChainableIObservable<T> first();
   ChainableIObservable<T> take(int howMany);
   ChainableIObservable<T> takeWhile(conditional(v));
+  ChainableIObservable<T> firstOf(List<IObservable> sources);
   
 }

@@ -74,6 +74,7 @@ class reactivedemo {
 //    returnValue();
 //    throwE();
 //    random();
+    firstOf();
   }
   
   // How sequence diagrams work.
@@ -106,6 +107,35 @@ class reactivedemo {
   //
   //**************************************************************************************
   
+  
+  // Where 'D' represents the disposal of a sequence
+  // 1|--1--------1------1--->
+  //  |  |        |      |  
+  // 2|---D       |      |     
+  //  |  |        |      |
+  // S|--1--------1------1--->
+  void firstOf(){
+    header("Observable.firstOf() Of a given list of sequences, .firstOf() propagates the first sequence to provide a value, disposing the others.");
+    print('Run this demo several times to see the "winner" change.');
+    
+    var o1 = Observable
+              .randomInt(1, 100, intervalLow:1, intervalHigh:1000, howMany:10)
+              .apply((v)=> 'Sequence 1, value: $v');
+    
+    var o2 = Observable
+              .randomInt(1, 100, intervalLow:1, intervalHigh:1000, howMany:10)
+              .apply((v)=> 'Sequence 2, value: $v');
+    
+    var o3 = Observable
+              .randomInt(1, 100, intervalLow:1, intervalHigh:1000, howMany:10)
+              .apply((v)=> 'Sequence 3, value: $v');
+    
+    // chaining firstOf after o1 means o1 is included in the list automatically
+    o1
+    .firstOf([o2, o3])
+    .subscribe((v) => print('$v'), () => print('Sequence Complete.'));
+    
+  }
   
   
   // 1|--1-----1-1-1--1----1--->

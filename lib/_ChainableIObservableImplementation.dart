@@ -98,6 +98,11 @@ class _ChainableIObservableImplementation<T> implements ChainableIObservable<T>,
   
   takeWhile(conditional(v)) => Observable.takeWhile(this, conditional);
   
+  firstOf(List<IObservable> sources){
+    sources.insertRange(0, 1, this);
+    return Observable.firstOf(sources);
+  }
+  
   //
   // 
   //
