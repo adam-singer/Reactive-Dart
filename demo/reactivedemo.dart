@@ -48,6 +48,8 @@ class reactivedemo {
     
     timer();
     fromEvent();
+    
+    
 //    contains();
 //    count();
 //    concat();
@@ -74,8 +76,13 @@ class reactivedemo {
 //    returnValue();
 //    throwE();
 //    random();
-    firstOf();
+//    firstOf();
+//    sample();
+//    skip();
+//    skipWhile();
+    
   }
+
   
   // How sequence diagrams work.
   //**************************************************************************************
@@ -107,6 +114,35 @@ class reactivedemo {
   //
   //**************************************************************************************
   
+  void skipWhile(){
+    header('Observable.skipWhile() skips the first n number of elements in an observable sequence where given function returns True.');
+    
+    Observable
+    .range(1, 20)
+    .skipWhile((v) => v < 6)
+    .subscribe((v) => print('$v'), () => print('Sequence Complete.'));
+  }
+  
+  void skip(){
+    header('Observable.skip() skips the first n number of elements in an observable sequence, return subsequence elements.');
+    
+    Observable
+    .range(1, 20)
+    .skip(5)
+    .subscribe((v) => print('$v'), () => print('Sequence Complete.'));
+    
+  }
+  
+  void sample(){
+    header('Observable.sample() returns every nth element from a given observable sequence.');
+    
+    //sample every 5th element from the previous sequence
+    Observable
+      .range(1, 100)
+      .sample(5)
+      .subscribe((v) => print('Sampled: $v'), () => print ('Sequence Complete.'));
+    
+  }
   
   // Where 'D' represents the disposal of a sequence
   // 1|--1--------1------1--->

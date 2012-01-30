@@ -20,13 +20,12 @@
 */ 
 interface ChainableIObservable<T> extends IObservable<T> default _ChainableIObservableImplementation
 {
-  final Function oFunc;
   
+  ChainableIObservable(Function oFunc);
+
   // this is more about the tooling than anything else.
   // we want to surface these methods in the IDE
   // during chained operations.
-  ChainableIObservable(this.oFunc);
-  
   ChainableIObservable<T> count();
   ChainableIObservable<T> contains(value);
   ChainableIObservable<T> concat(List<IObservable> list);
@@ -49,5 +48,7 @@ interface ChainableIObservable<T> extends IObservable<T> default _ChainableIObse
   ChainableIObservable<T> take(int howMany);
   ChainableIObservable<T> takeWhile(conditional(v));
   ChainableIObservable<T> firstOf(List<IObservable> sources);
-  
+  ChainableIObservable<T> sample(int sampleFrequency);
+  ChainableIObservable<T> skip(int skip);
+  ChainableIObservable<T> skipWhile(isTrue(v));
 }

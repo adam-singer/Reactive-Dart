@@ -14,16 +14,9 @@
 //   See the License for the specific language governing permissions and
 //   limitations under the License.
 
-#library('Reactive Dart');
-#import('dart:html');
-#import('dart:json');
-
-#source('IDisposable.dart');
-#source('IObserver.dart');
-#source('IObservable.dart');
-#source('Observable.dart');
-#source('_ChainableIObservableImplementation.dart');
-#source('_UnsubscriberWrapper.dart');
-#source('_DefaultObserver.dart');
-#source('ChainableIObservable.dart');
-#source('ObservableException.dart');
+class ObservableException implements Exception {
+  final String message;
+  const ObservableException(this.message);
+  
+  String toString() => message;
+}

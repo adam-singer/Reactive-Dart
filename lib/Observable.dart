@@ -31,19 +31,73 @@ class Observable
  /// Creates an IObservable with the given implementation function.
  static create(f(IObserver o)) => new ChainableIObservable(f);
  
-
- //todo:
- // .replay()
- // .repeat()
- // .allComplete()
- // .skip()
- // .switch()
- // .sample() - every nth element in the sequence, or most recent in a given timespan
+ 
+ 
+ /// Skips elements in an observable sequence until the given fuction returns false.
+ /// All subsequent elements are returned.
+ static skipWhile(IObservable source, isTrue(n)){
+   return Observable.create((IObserver o){
+     int counter = 0;
+     bool trueFlag = true;
+     
+     source.subscribe(
+       (v){
+         if (!trueFlag){
+           o.next(v);
+         }else{
+           if (!isTrue(v)){
+             trueFlag = false;
+             o.next(v);
+           }
+         }
+       },
+       () => o.complete(),
+       (e) => o.error(e));
+     
+   });
+ }
+ 
+ /// Skips [skip] number of elements in a given observable sequence.  Subsequent elements are returned.
+ static ChainableIObservable skip(IObservable source, int skip){
+   if (skip == null || skip < 0) return Observable.throwE(const ObservableException('parameter "skip" must be >= 0.'));
+   
+   return Observable.create((IObserver o){
+     int counter = 0;
+     source.subscribe(
+       (v){
+         if (counter++ >= skip){
+           o.next(v);
+         }
+       },
+       () => o.complete(),
+       (e) => o.error(e));
+     
+   });
+ }
+ 
+ /// Returns an observable sequence sample every nth element of the given sequence.
+ static ChainableIObservable sample(IObservable source, int sampleFrequency){
+   if (sampleFrequency == null || sampleFrequency < 1) return Observable.throwE(const ObservableException('parameter "sampleFrequency" must be >= 1.'));
+   
+   return Observable.create((IObserver o){
+     int counter = 0;
+     
+     source.subscribe((v){
+       if (++counter == sampleFrequency){
+         o.next(v);
+         counter = 0;
+       }
+     },
+     () => o.complete(),
+     (e) => o.error(e)
+     );
+   });
+ }
  
  /// Of the given [List] of observable sequences, propagates the sequence that
  /// provides a value first.  Sequences are subscribed in order they are found in the
  /// sources list; those earlier in the index may have a slight advantage.
- static firstOf(List<IObservable> sources){  
+ static ChainableIObservable firstOf(List<IObservable> sources){  
    return Observable.create((IObserver o){
      IObservable first;
      
@@ -56,7 +110,7 @@ class Observable
             o.next(v);
           }else{
             if (first != source){
-              d.dispose();
+              if (d != null) d.dispose();
             }else{
               o.next(v);
             }
@@ -99,10 +153,10 @@ class Observable
  ///
  /// Intervals can also be randomized by providing optional intervalLow/intervalHigh values.
  static ChainableIObservable random(num low, num high, [int intervalLow = 1, int intervalHigh = 1, int howMany]){
-   if (high <= low) return Observable.throwE(const Exception('Parameter "high" must be > parameter "low"'));
-   if (intervalHigh < intervalLow) return Observable.throwE(const Exception('Parameter "intervalHigh" must be > parameter "intervalLow"'));
-   if (intervalLow < 1 || intervalHigh < 1) return Observable.throwE(const Exception('timer interval parameters must be >= 1'));
-   
+   if (high <= low) return Observable.throwE(const ObservableException('Parameter "high" must be > parameter "low"'));
+   if (intervalHigh < intervalLow) return Observable.throwE(const ObservableException('Parameter "intervalHigh" must be > parameter "intervalLow"'));
+   if (intervalLow < 1 || intervalHigh < 1) return Observable.throwE(const ObservableException('timer interval parameters must be >= 1'));
+
    num delta = high - low;
    num intervalDelta = intervalHigh - intervalLow;
    num ticks = 0;
@@ -145,7 +199,7 @@ class Observable
     Observable
     .fromEvent(r.on.error)
     .subscribe((e){
-      o.error(const Exception('error occurred during XMLHttpRequest.'));  
+      o.error(const ObservableException('error occurred during XMLHttpRequest.'));  
     });
         
     Observable
@@ -194,18 +248,20 @@ class Observable
  
  /// Takes the first n values from an observable sequence, then terminates.
  static ChainableIObservable take(IObservable source, int howMany){
-   if (howMany < 0) return Observable.throwE(const Exception('Illegal take value.  Must be greater than 0.'));
+   if (howMany < 0) return Observable.throwE(const ObservableException('Illegal take value.  Must be greater than 0.'));
    
    if (howMany == 0) return Observable.empty();
    
    var cnt = 0;
    
    return Observable.create((IObserver o){
-     source.subscribe(
+     var d;
+     d = source.subscribe(
        (v){
          if (++cnt == howMany){
            o.next(v);
            o.complete();
+           d.dispose();
          }else{
            o.next(v);
          }
@@ -214,7 +270,7 @@ class Observable
        (e) => o.error(e));
    });
  }
- 
+  
  /// Returns the first value received from an observable sequence, then terminates.
  static ChainableIObservable first(IObservable source){
    return Observable.create((IObserver o){
@@ -236,7 +292,7 @@ class Observable
      source.subscribe(
        (v){
          if (gotOne) {
-           o.error(const Exception('source return more than one element in Observable.single().'));
+           o.error(const ObservableException('source return more than one element in Observable.single().'));
            return;
          }
          gotOne = true;
@@ -258,7 +314,7 @@ class Observable
  /// Returns a numerica range from a given start to a given finish, with optional stepping
  /// (default step is 1).  If start > finish then range will be high to low.
  static ChainableIObservable range(num start, num finish, [step = 1]){
-   if (step == 0) return Observable.throwE(const Exception('Invalid step.  Cannot <= 0'));
+   if (step == 0) return Observable.throwE(const ObservableException('Invalid step.  Cannot <= 0'));
    
    if (start == finish) return Observable.returnValue(start);
    
@@ -328,7 +384,7 @@ class Observable
    return Observable.create((IObserver o){
      var handler;
 
-     void checker() => o.error(const Exception('Timeout Exceeded.'));
+     void checker() => o.error(const ObservableException('Timeout Exceeded.'));
           
      source.subscribe(
        (v) {
@@ -692,7 +748,7 @@ class Observable
  /// parameter to a positive integer value.
  static ChainableIObservable timer(int milliseconds, [int ticks = -1]){
    
-   if (milliseconds < 1) return Observable.throwE(const Exception("Invalid milliseconds value."));
+   if (milliseconds < 1) return Observable.throwE(const ObservableException("Invalid milliseconds value."));
    
    return Observable.create((IObserver o){
      if (ticks <= 0){

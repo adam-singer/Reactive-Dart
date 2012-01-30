@@ -15,9 +15,6 @@
 //   limitations under the License.
 
 
-//TODO need a similar implementation but creates a distinct sequence stream for each observer
-
-//
 // Instantiates a general purpose IObservable with chaining helper methods.
 // This implementation treats the sequences as a shared stream among all 
 // subscribers.  Only the first subscriber is guaranteed to get all elements
@@ -29,7 +26,7 @@ class _ChainableIObservableImplementation<T> implements ChainableIObservable<T>,
   final List<IObserver<T>> observers;
   Exception err;
     
-  _ChainableIObservableImplementation(this.oFunc) 
+  _ChainableIObservableImplementation(Function this.oFunc) 
   : observers = new List<IObserver<T>>()
   {
     mainObserver = new _DefaultObserver(
@@ -45,6 +42,47 @@ class _ChainableIObservableImplementation<T> implements ChainableIObservable<T>,
         }
       );
   }
+  
+  IDisposable subscribe(next, [complete(), error(Exception e)]){
+    if (err != null){
+      //sequence faulted, so return an exception result immediately
+      if (error != null) error(err);
+      return;
+    }
+    
+    if (mainObserver == null){
+      //this sequence is terminated so just return complete immediately
+      if (complete != null) complete();
+      return;
+    }
+    
+    if (next is Function){
+      //create a wrapper observer
+      return _addObserver(new _DefaultObserver(next, complete, error));
+    }
+    else if (next is IObserver<T>)
+    {
+      return _addObserver(next);
+    }else{
+      throw const ObservableException("Parameter 'next' must be a Function f(n) or an IObserver.");
+    }
+  }
+  
+  IDisposable _addObserver(IObserver o){
+    observers.add(o);
+    
+    // don't initiate the main observer on the sequence until the
+    // first observer arrives.
+    if (observers.length == 1) oFunc(mainObserver);
+    return new _UnsubscriberWrapper(this, o);
+  }
+  
+  void dispose(){
+    // TODO remove all subscribers
+    mainObserver = null;
+    observers.clear();
+  }
+  
   
   //***********************************
   //instance wrappers to the Observable statics, to support chaining of certain observables.
@@ -103,48 +141,10 @@ class _ChainableIObservableImplementation<T> implements ChainableIObservable<T>,
     return Observable.firstOf(sources);
   }
   
-  //
-  // 
-  //
-    
-  IDisposable subscribe(next, [complete(), error(Exception e)]){
-    if (err != null){
-      //sequence faulted, so return an exception result immediately
-      if (error != null) error(err);
-      return;
-    }
-    
-    if (mainObserver == null){
-      //this sequence is terminated so just return complete immediately
-      if (complete != null) complete();
-    }
-    
-    if (next is Function){
-      //create a wrapper observer
-      return _addObserver(new _DefaultObserver(next, complete, error));
-    }
-    else if (next is IObserver<T>)
-    {
-      return _addObserver(next);
-    }else{
-      throw new Exception("Parameter 'next' must be a Function or a IObserver.");
-    }
-  }
+  sample(int sampleFrequency) => Observable.sample(this, sampleFrequency);
   
-  IDisposable _addObserver(IObserver o){
-    observers.add(o);
-    
-    // don't initiate the main observer on the sequence until the
-    // first observer arrives.
-    if (observers.length == 1) oFunc(mainObserver);
-    return new _UnsubscriberWrapper(this, o);
-  }
+  skip(int skip) => Observable.skip(this, skip);
   
-  void dispose(){
-    // TODO remove all subscribers
-    observers.clear();
-    mainObserver = null;
-    oFunc = null;
-  }
+  skipWhile(isTrue(v)) => Observable.skipWhile(this, isTrue);  
 }
 
