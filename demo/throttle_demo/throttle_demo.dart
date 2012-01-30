@@ -15,7 +15,9 @@
 
 class throttle_demo {
   Element resultsList;
-  final awords = const ['a','apple','arch','able','apparently','about','awkward','always','are','around','any','anyway','allow','allowance','allowable'];
+  final awords = 
+    const ['a','apple','arch','able','apparently','about','awkward','always','are','around','any','anyway','allow','allowance','allowable',
+           'alas','azure','android','aloof','ardent','abduct','ardvaark','abode','abort','an','and','all','abroad','aboard','assail','arbor'];
   
   throttle_demo() {
     resultsList = document.query("#searchresults");
@@ -31,7 +33,7 @@ class throttle_demo {
     Observable
     .fromEvent(tbInput.on.keyUp)
     .throttle(400)
-    .subscribe((e) => displayResults(tbInput.value));
+    .subscribe((e) => displayResults(tbInput.dynamic.value));
     
   }
 
