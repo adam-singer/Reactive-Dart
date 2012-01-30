@@ -438,13 +438,6 @@ NumImplementation = Number;
 NumImplementation.prototype.hashCode = function() {
   'use strict'; return this & 0x1FFFFFFF;
 }
-// ********** Code for ExceptionImplementation **************
-function ExceptionImplementation(msg) {
-  this._msg = msg;
-}
-ExceptionImplementation.prototype.toString = function() {
-  return (null == this._msg) ? "Exception" : ("Exception: " + this._msg);
-}
 // ********** Code for HashMapImplementation **************
 function HashMapImplementation() {
   this._numberOfEntries = (0);
@@ -683,7 +676,7 @@ function _DoubleLinkedQueueEntrySentinel() {
   this._link(this, this);
 }
 _DoubleLinkedQueueEntrySentinel.prototype.get$element = function() {
-  $throw(const$0005);
+  $throw(const$0006);
 }
 // ********** Code for DoubleLinkedQueue **************
 function DoubleLinkedQueue() {
@@ -5925,7 +5918,7 @@ Observable.throttle = function(source, timeInMilliseconds) {
   })
   );
 }
-Observable.fromDOMEvent = function(event) {
+Observable.fromEvent = function(event) {
   return Observable.create((function (o) {
     return event.add((function (e) {
       return o.next(e);
@@ -5956,7 +5949,7 @@ Observable.where = function(source, f) {
   );
 }
 Observable.fromList = function(l) {
-  if (l == null) return Observable.throwE(const$0006);
+  if (l == null) return Observable.throwE(const$0007);
   return Observable.create((function (o) {
     l.forEach$1((function (el) {
       return o.next(el);
@@ -5994,6 +5987,34 @@ function _ChainableIObservableImplementation(oFunc) {
   })
   );
 }
+_ChainableIObservableImplementation.prototype.subscribe = function(next, complete, error) {
+  if (this.err != null) {
+    if (error != null) error(this.err);
+    return;
+  }
+  if (this.mainObserver == null) {
+    if (complete != null) complete();
+    return;
+  }
+  if ((typeof(next) == 'function')) {
+    return this._addObserver(new _DefaultObserver(next, complete, error));
+  }
+  else if (!!(next && next.is$IObserver())) {
+    return this._addObserver(next);
+  }
+  else {
+    $throw(const$0005);
+  }
+}
+_ChainableIObservableImplementation.prototype._addObserver = function(o) {
+  this.observers.add(o);
+  if (this.observers.get$length() == (1)) this.oFunc.call$1(this.mainObserver);
+  return new _UnsubscriberWrapper(this, o);
+}
+_ChainableIObservableImplementation.prototype.dispose = function() {
+  this.mainObserver = null;
+  this.observers.clear();
+}
 _ChainableIObservableImplementation.prototype.where = function(f) {
   return Observable.where(this, f);
 }
@@ -6005,34 +6026,6 @@ _ChainableIObservableImplementation.prototype.first = function() {
 }
 _ChainableIObservableImplementation.prototype.get$first = function() {
   return this.first.bind(this);
-}
-_ChainableIObservableImplementation.prototype.subscribe = function(next, complete, error) {
-  if (this.err != null) {
-    if (error != null) error(this.err);
-    return;
-  }
-  if (this.mainObserver == null) {
-    if (complete != null) complete();
-  }
-  if ((typeof(next) == 'function')) {
-    return this._addObserver(new _DefaultObserver(next, complete, error));
-  }
-  else if (!!(next && next.is$IObserver())) {
-    return this._addObserver(next);
-  }
-  else {
-    $throw(new ExceptionImplementation("Parameter 'next' must be a Function or a IObserver."));
-  }
-}
-_ChainableIObservableImplementation.prototype._addObserver = function(o) {
-  this.observers.add(o);
-  if (this.observers.get$length() == (1)) this.oFunc.call$1(this.mainObserver);
-  return new _UnsubscriberWrapper(this, o);
-}
-_ChainableIObservableImplementation.prototype.dispose = function() {
-  this.observers.clear();
-  this.mainObserver = null;
-  this.oFunc = null;
 }
 _ChainableIObservableImplementation.prototype.subscribe$1 = function($0) {
   return this.subscribe($0, to$call$0(null), to$call$1(null));
@@ -6071,6 +6064,13 @@ _DefaultObserver.prototype.complete = function() {
 _DefaultObserver.prototype.complete$0 = _DefaultObserver.prototype.complete;
 _DefaultObserver.prototype.error$1 = _DefaultObserver.prototype.error;
 _DefaultObserver.prototype.next$1 = _DefaultObserver.prototype.next;
+// ********** Code for ObservableException **************
+function ObservableException(message) {
+  this.message = message;
+}
+ObservableException.prototype.toString = function() {
+  return this.message;
+}
 // ********** Code for top level **************
 //  ********** Library throttle_demo **************
 // ********** Code for throttle_demo **************
@@ -6081,8 +6081,8 @@ function throttle_demo() {
 throttle_demo.prototype.run = function() {
   var $this = this; // closure support
   var tbInput = html_get$document().query("#tbInput");
-  Observable.fromDOMEvent(tbInput.get$on().get$keyUp()).throttle((400)).subscribe$1((function (e) {
-    return $this.displayResults(tbInput.get$value());
+  Observable.fromEvent(tbInput.get$on().get$keyUp()).throttle((400)).subscribe$1((function (e) {
+    return $this.displayResults(tbInput.get$dynamic().get$value());
   })
   );
 }
@@ -6153,9 +6153,10 @@ function $static_init(){
 var const$0000 = Object.create(_DeletedKeySentinel.prototype, {});
 var const$0001 = Object.create(NoMoreElementsException.prototype, {});
 var const$0002 = Object.create(IllegalAccessException.prototype, {});
-var const$0003 = ImmutableList.ImmutableList$from$factory(["a", "apple", "arch", "able", "apparently", "about", "awkward", "always", "are", "around", "any", "anyway", "allow", "allowance", "allowable"]);
-var const$0005 = Object.create(EmptyQueueException.prototype, {});
-var const$0006 = Object.create(NullPointerException.prototype, {});
+var const$0003 = ImmutableList.ImmutableList$from$factory(["a", "apple", "arch", "able", "apparently", "about", "awkward", "always", "are", "around", "any", "anyway", "allow", "allowance", "allowable", "alas", "azure", "android", "aloof", "ardent", "abduct", "ardvaark", "abode", "abort", "an", "and", "all", "abroad", "aboard", "assail", "arbor"]);
+var const$0005 = Object.create(ObservableException.prototype, {message: {"value": "Parameter 'next' must be a Function f(n) or an IObserver.", writeable: false}});
+var const$0006 = Object.create(EmptyQueueException.prototype, {});
+var const$0007 = Object.create(NullPointerException.prototype, {});
 var $globals = {};
 $static_init();
 main();
