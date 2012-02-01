@@ -61544,7 +61544,7 @@ Reactive_Dart02c664$Observable$Dart.empty$member = function(){
 }
 ;
 function Reactive_Dart02c664$Observable$Dart$concat$c0$35_35$Hoisted(dartc_scp$5, v){
-  return dartc_scp$5.o_1.next$named(1, $noargs, v);
+  return dartc_scp$5.obs.next$named(1, $noargs, v);
 }
 function Reactive_Dart02c664$Observable$Dart$concat$c0$35_35$Hoisted$named($s0, $n, $o, v){
   if ($o.count || $n != 1)
@@ -61554,24 +61554,24 @@ function Reactive_Dart02c664$Observable$Dart$concat$c0$35_35$Hoisted$named($s0, 
 function Reactive_Dart02c664$Observable$Dart$concat$c0$35_35$Hoisted$named$named_$lookupRTT(){
   return RTT.createFunction([RTT.dynamicType.$lookupRTT()], RTT.dynamicType.$lookupRTT());
 }
-function Reactive_Dart02c664$Observable$Dart$concat$c1$35_35$Hoisted(dartc_scp$4, dartc_scp$5){
-  if (LT$operator(dartc_scp$5.index = ADD$operator(dartc_scp$5.index, 1), dartc_scp$5.oList_1.length$getter())) {
-    dartc_scp$4._concatInternal(3, $noargs, dartc_scp$5.o_1, dartc_scp$5.oList_1, dartc_scp$5.index);
+function Reactive_Dart02c664$Observable$Dart$concat$c1$35_35$Hoisted(dartc_scp$3, dartc_scp$4, dartc_scp$5){
+  if (LT$operator(dartc_scp$5.index = ADD$operator(dartc_scp$5.index, 1), dartc_scp$5.ol.length$getter())) {
+    dartc_scp$4._concatInternal(3, $noargs, dartc_scp$3.o, dartc_scp$5.ol, dartc_scp$5.index);
   }
    else {
-    dartc_scp$5.o_1.complete$named(0, $noargs);
+    dartc_scp$5.obs.complete$named(0, $noargs);
   }
 }
-function Reactive_Dart02c664$Observable$Dart$concat$c1$35_35$Hoisted$named($s0, $s1, $n, $o){
+function Reactive_Dart02c664$Observable$Dart$concat$c1$35_35$Hoisted$named($s0, $s1, $s2, $n, $o){
   if ($o.count || $n != 0)
     $nsme();
-  return Reactive_Dart02c664$Observable$Dart$concat$c1$35_35$Hoisted($s0, $s1);
+  return Reactive_Dart02c664$Observable$Dart$concat$c1$35_35$Hoisted($s0, $s1, $s2);
 }
 function Reactive_Dart02c664$Observable$Dart$concat$c1$35_35$Hoisted$named$named_$lookupRTT(){
   return RTT.createFunction(null, RTT.dynamicType.$lookupRTT());
 }
 function Reactive_Dart02c664$Observable$Dart$concat$c2$35_35$Hoisted(dartc_scp$5, e){
-  return dartc_scp$5.o_1.error$named(1, $noargs, e);
+  return dartc_scp$5.obs.error$named(1, $noargs, e);
 }
 function Reactive_Dart02c664$Observable$Dart$concat$c2$35_35$Hoisted$named($s0, $n, $o, e){
   if ($o.count || $n != 1)
@@ -61581,23 +61581,24 @@ function Reactive_Dart02c664$Observable$Dart$concat$c2$35_35$Hoisted$named($s0, 
 function Reactive_Dart02c664$Observable$Dart$concat$c2$35_35$Hoisted$named$named_$lookupRTT(){
   return RTT.createFunction([RTT.dynamicType.$lookupRTT()], RTT.dynamicType.$lookupRTT());
 }
-function Reactive_Dart02c664$Observable$Dart$concat$c3$_concatInternal$35_6_2$Hoisted(dartc_scp$4, o_1, oList_1, index){
-  var dartc_scp$5 = {o_1:o_1, oList_1:oList_1, index:index};
-  dartc_scp$5.oList_1.INDEX$operator(dartc_scp$5.index).subscribe$named(3, $noargs, $bind(Reactive_Dart02c664$Observable$Dart$concat$c0$35_35$Hoisted$named, Reactive_Dart02c664$Observable$Dart$concat$c0$35_35$Hoisted$named$named_$lookupRTT, $Dart$Null, dartc_scp$5), $bind(Reactive_Dart02c664$Observable$Dart$concat$c1$35_35$Hoisted$named, Reactive_Dart02c664$Observable$Dart$concat$c1$35_35$Hoisted$named$named_$lookupRTT, $Dart$Null, dartc_scp$4, dartc_scp$5), $bind(Reactive_Dart02c664$Observable$Dart$concat$c2$35_35$Hoisted$named, Reactive_Dart02c664$Observable$Dart$concat$c2$35_35$Hoisted$named$named_$lookupRTT, $Dart$Null, dartc_scp$5));
+function Reactive_Dart02c664$Observable$Dart$concat$c3$_concatInternal$35_6_2$Hoisted(dartc_scp$3, dartc_scp$4, obs, ol, index){
+  var dartc_scp$5 = {obs:obs, ol:ol, index:index};
+  dartc_scp$5.ol.INDEX$operator(dartc_scp$5.index).subscribe$named(3, $noargs, $bind(Reactive_Dart02c664$Observable$Dart$concat$c0$35_35$Hoisted$named, Reactive_Dart02c664$Observable$Dart$concat$c0$35_35$Hoisted$named$named_$lookupRTT, $Dart$Null, dartc_scp$5), $bind(Reactive_Dart02c664$Observable$Dart$concat$c1$35_35$Hoisted$named, Reactive_Dart02c664$Observable$Dart$concat$c1$35_35$Hoisted$named$named_$lookupRTT, $Dart$Null, dartc_scp$3, dartc_scp$4, dartc_scp$5), $bind(Reactive_Dart02c664$Observable$Dart$concat$c2$35_35$Hoisted$named, Reactive_Dart02c664$Observable$Dart$concat$c2$35_35$Hoisted$named$named_$lookupRTT, $Dart$Null, dartc_scp$5));
 }
-function Reactive_Dart02c664$Observable$Dart$concat$c3$_concatInternal$35_6_2$Hoisted$named($s0, $n, $o, o, oList, index){
+function Reactive_Dart02c664$Observable$Dart$concat$c3$_concatInternal$35_6_2$Hoisted$named($s0, $s1, $n, $o, obs, ol, index){
   if ($o.count || $n != 3)
     $nsme();
-  return Reactive_Dart02c664$Observable$Dart$concat$c3$_concatInternal$35_6_2$Hoisted($s0, o, oList, index);
+  return Reactive_Dart02c664$Observable$Dart$concat$c3$_concatInternal$35_6_2$Hoisted($s0, $s1, obs, ol, index);
 }
 function Reactive_Dart02c664$Observable$Dart$concat$c3$_concatInternal$35_6_2$Hoisted$named$named_$lookupRTT(){
   return RTT.createFunction([Reactive_Dart02c664$IObserver$Dart.$lookupRTT(), List$Dart.$lookupRTT([Reactive_Dart02c664$IObservable$Dart.$lookupRTT()]), int$Dart.$lookupRTT()], RTT.dynamicType.$lookupRTT());
 }
 function Reactive_Dart02c664$Observable$Dart$concat$c4$35_35$Hoisted(dartc_scp$0, o){
+  var dartc_scp$3 = {o:o};
   var dartc_scp$4;
   dartc_scp$4 = {};
-  dartc_scp$4._concatInternal = $bind(Reactive_Dart02c664$Observable$Dart$concat$c3$_concatInternal$35_6_2$Hoisted$named, Reactive_Dart02c664$Observable$Dart$concat$c3$_concatInternal$35_6_2$Hoisted$named$named_$lookupRTT, $Dart$Null, dartc_scp$4);
-  dartc_scp$4._concatInternal(3, $noargs, o, dartc_scp$0.oList, 0);
+  dartc_scp$4._concatInternal = $bind(Reactive_Dart02c664$Observable$Dart$concat$c3$_concatInternal$35_6_2$Hoisted$named, Reactive_Dart02c664$Observable$Dart$concat$c3$_concatInternal$35_6_2$Hoisted$named$named_$lookupRTT, $Dart$Null, dartc_scp$3, dartc_scp$4);
+  dartc_scp$4._concatInternal(3, $noargs, dartc_scp$3.o, dartc_scp$0.oList, 0);
   dartc_scp$4 = $Dart$Null;
 }
 function Reactive_Dart02c664$Observable$Dart$concat$c4$35_35$Hoisted$named($s0, $n, $o, o){

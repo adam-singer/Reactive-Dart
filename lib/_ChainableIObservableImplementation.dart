@@ -147,6 +147,20 @@ class _ChainableIObservableImplementation<T> implements ChainableIObservable<T>,
   
   skipWhile(isTrue(v)) => Observable.skipWhile(this, isTrue);
   
-  fromXMLHttpRequest(String uri, String requestHeader, String requestValue) => Observable.fromXMLHttpRequest(uri, requestHeader, requestValue, this);
+  fromXMLHttpRequest(String uri, String requestHeader, String requestValue) => Observable.fromXMLHttpRequest(uri, requestHeader, requestValue, continuation:this);
+  
+  fromList(List l) => Observable.fromList(l, continuation:this);
+  
+  timer(int milliseconds, [int ticks = -1]) => Observable.timer(milliseconds, ticks, continuation:this);
+  
+  fromIsolate(Isolate i, initMessage, [terminationMessage = ""]) => Observable.fromIsolate(i, initMessage, terminationMessage, continuation:this);
+  
+  unfold(initialstate, conditional(state), iterate(state), result(state)) => Observable.unfold(initialstate, conditional, iterate, result, continuation:this);
+  
+  fromEvent(EventListenerList event) => Observable.fromEvent(event, continuation:this);
+  
+  returnValue(value) => Observable.returnValue(value, continuation:this);
+  
+  range(num start, num finish, [step = 1]) => Observable.range(start, finish, step, continuation:this);
 }
 

@@ -769,19 +769,19 @@ class Observable
    if (oList == null || oList.isEmpty()) return Observable.empty();
   
    return Observable.create((IObserver o){
-     void _concatInternal(IObserver o, List<IObservable> oList, int index){
+     void _concatInternal(IObserver obs, List<IObservable> ol, int index){
 
-       oList[index]
+       ol[index]
         .subscribe(
-          (v) => o.next(v),
+          (v) => obs.next(v),
           (){
-            if (++index < oList.length){
-              _concatInternal(o, oList, index);
+            if (++index < ol.length){
+              _concatInternal(o, ol, index);
             }else{
-              o.complete();
+              obs.complete();
             }
           },
-          (e) => o.error(e)
+          (e) => obs.error(e)
         );
      }
      

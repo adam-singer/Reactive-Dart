@@ -52,4 +52,11 @@ interface ChainableIObservable<T> extends IObservable<T> default _ChainableIObse
   ChainableIObservable<T> skip(int skip);
   ChainableIObservable<T> skipWhile(isTrue(v));
   ChainableIObservable<T> fromXMLHttpRequest(String uri, String requestHeader, String requestValue);
+  ChainableIObservable<T> fromList(List l);
+  ChainableIObservable<T> timer(int milliseconds, [int ticks]);
+  ChainableIObservable<T> fromIsolate(Isolate i, initMessage, [terminationMessage]);
+  ChainableIObservable<T> unfold(initialstate, conditional(state), iterate(state), result(state));
+  ChainableIObservable<T> fromEvent(EventListenerList event);
+  ChainableIObservable<T> returnValue(value);
+  ChainableIObservable<T> range(num start, num finish, [step]);
 }
