@@ -47,13 +47,13 @@ class _ChainableIObservableImplementation<T> implements ChainableIObservable<T>,
     if (err != null){
       //sequence faulted, so return an exception result immediately
       if (error != null) error(err);
-      return;
+      return null;
     }
     
     if (mainObserver == null){
       //this sequence is terminated so just return complete immediately
       if (complete != null) complete();
-      return;
+      return null;
     }
     
     if (next is Function){
@@ -143,8 +143,10 @@ class _ChainableIObservableImplementation<T> implements ChainableIObservable<T>,
   
   sample(int sampleFrequency) => Observable.sample(this, sampleFrequency);
   
-  skip(int skip) => Observable.skip(this, skip);
+  skip(int skipCount) => Observable.skip(this, skipCount);
   
-  skipWhile(isTrue(v)) => Observable.skipWhile(this, isTrue);  
+  skipWhile(isTrue(v)) => Observable.skipWhile(this, isTrue);
+  
+  fromXMLHttpRequest(String uri, String requestHeader, String requestValue) => Observable.fromXMLHttpRequest(uri, requestHeader, requestValue, this);
 }
 

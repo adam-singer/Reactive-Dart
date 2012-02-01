@@ -22,8 +22,8 @@ class _DefaultObserver<T> implements IObserver<T>
   Function nextFunc, completeFunc, errorFunc;
   
   void next(T value) => nextFunc(value);
-  void error(Exception error) => errorFunc(error);
-  void complete() => completeFunc(); 
+  void error(Exception err) => errorFunc(err);
+  void complete() => completeFunc();
   
   _DefaultObserver(next, [complete(), error(Exception e)])
   : _assignedHash = _hashNum++
@@ -35,4 +35,6 @@ class _DefaultObserver<T> implements IObserver<T>
   
   static int _hashNum = 0;
   final int _assignedHash;
+  
+  hashCode() => _assignedHash;
 }

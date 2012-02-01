@@ -80,10 +80,8 @@ class reactivedemo {
 //    sample();
 //    skip();
 //    skipWhile();
-    
   }
 
-  
   // How sequence diagrams work.
   //**************************************************************************************
   //

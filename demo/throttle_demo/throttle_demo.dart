@@ -23,7 +23,8 @@ class throttle_demo {
     resultsList = document.query("#searchresults");
   }
 
-  void run() {
+  void run() {  
+    
     Element tbInput = document.query("#tbInput");
     
     // Here we are building an observable chain, starting from the raw DOM keyUp events

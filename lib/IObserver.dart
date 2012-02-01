@@ -17,7 +17,7 @@
 /**
 * Interface which represents an observer in the reactive model.
 */
-interface IObserver<T> extends Hashable
+interface IObserver<T> extends Hashable default _DefaultObserver
 {
   /// Represents the next value in the observable sequence.
   void next(T value);
@@ -28,5 +28,5 @@ interface IObserver<T> extends Hashable
   /// Represents completion of an observable sequence.
   void complete();
   
-  IObserver();
+  IObserver(next, [complete(), error(Exception e)]);
 }

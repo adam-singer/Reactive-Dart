@@ -51,4 +51,5 @@ interface ChainableIObservable<T> extends IObservable<T> default _ChainableIObse
   ChainableIObservable<T> sample(int sampleFrequency);
   ChainableIObservable<T> skip(int skip);
   ChainableIObservable<T> skipWhile(isTrue(v));
+  ChainableIObservable<T> fromXMLHttpRequest(String uri, String requestHeader, String requestValue);
 }

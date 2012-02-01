@@ -58,14 +58,14 @@ class Observable
  }
  
  /// Skips [skip] number of elements in a given observable sequence.  Subsequent elements are returned.
- static ChainableIObservable skip(IObservable source, int skip){
-   if (skip == null || skip < 0) return Observable.throwE(const ObservableException('parameter "skip" must be >= 0.'));
+ static ChainableIObservable skip(IObservable source, int skipCount){
+   if (skipCount == null || skipCount < 0) return Observable.throwE(const ObservableException('parameter "skipCount" must be >= 0.'));
    
    return Observable.create((IObserver o){
      int counter = 0;
      source.subscribe(
        (v){
-         if (counter++ >= skip){
+         if (counter++ >= skipCount){
            o.next(v);
          }
        },
@@ -99,17 +99,17 @@ class Observable
  /// sources list; those earlier in the index may have a slight advantage.
  static ChainableIObservable firstOf(List<IObservable> sources){  
    return Observable.create((IObserver o){
-     IObservable first;
+     IObservable firstIn;
      
      sources.forEach((source){
       IDisposable d;
       d = source.subscribe(
         (v){
-          if (first == null){
-            first = source;
+          if (firstIn == null){
+            firstIn = source;
             o.next(v);
           }else{
-            if (first != source){
+            if (firstIn != source){
               if (d != null) d.dispose();
             }else{
               o.next(v);
@@ -117,7 +117,7 @@ class Observable
           }
         },
         (){
-          if (first != null && source == first){
+          if (firstIn != null && source == firstIn){
             o.complete();
           }
         },
@@ -134,8 +134,9 @@ class Observable
  /// Intervals can also be randomized by providing optional intervalLow/intervalHigh values.
  ///
  /// This observable generator is a more specific implementation of [Observable.random()].
- static ChainableIObservable randomInt(int low, int high, [int intervalLow = 1, int intervalHigh = 1, int howMany]){     
+ static ChainableIObservable randomInt(int low, int high, [int intervalLow = 1, int intervalHigh = 1, int howMany, IObservable continuation]){     
    return Observable.create((IObserver o){
+     makeit(){     
       Observable
         .random(low, high, intervalLow, intervalHigh, howMany)
         .apply((v) => v.ceil())
@@ -144,6 +145,13 @@ class Observable
           () => o.complete(),
           (e) => o.error(e)
         );
+     }
+     
+     if (continuation == null){
+       makeit();
+     }else{
+       continuation.subscribe((_){},() => makeit(), (e) => o.error(e));
+     }
    });
    
  }
@@ -152,7 +160,7 @@ class Observable
  /// in the given low(inclusive)/high(exclusive) range at (default) 1ms intervals.
  ///
  /// Intervals can also be randomized by providing optional intervalLow/intervalHigh values.
- static ChainableIObservable random(num low, num high, [int intervalLow = 1, int intervalHigh = 1, int howMany]){
+ static ChainableIObservable random(num low, num high, [int intervalLow = 1, int intervalHigh = 1, int howMany, IObservable continuation]){
    if (high <= low) return Observable.throwE(const ObservableException('Parameter "high" must be > parameter "low"'));
    if (intervalHigh < intervalLow) return Observable.throwE(const ObservableException('Parameter "intervalHigh" must be > parameter "intervalLow"'));
    if (intervalLow < 1 || intervalHigh < 1) return Observable.throwE(const ObservableException('timer interval parameters must be >= 1'));
@@ -166,66 +174,84 @@ class Observable
                     : () => (Math.random() * intervalDelta) + intervalLow;
    
    return Observable.create((IObserver o){
-           void nextNum(){
-             o.next((Math.random() * delta) + low);
-             
-             if (howMany == null){
-               window.setTimeout(nextNum, iFunc());
-             }else if (howMany != null && ++ticks <= howMany){
-               window.setTimeout(nextNum, iFunc());
-             }else{
-               o.complete();
-             }    
-           }
-          
-           if (howMany == null){
-             window.setTimeout(nextNum, iFunc());
-           }else if (howMany != null && ++ticks <= howMany){
-             window.setTimeout(nextNum, iFunc());
-           }else{
-             o.complete();
-           }     
-         });
+     makeit(){
+       void nextNum(){
+         o.next((Math.random() * delta) + low);
+         
+         if (howMany == null){
+           window.setTimeout(nextNum, iFunc());
+         }else if (howMany != null && ++ticks <= howMany){
+           window.setTimeout(nextNum, iFunc());
+         }else{
+           o.complete();
+         }    
+       }
+      
+       if (howMany == null){
+         window.setTimeout(nextNum, iFunc());
+       }else if (howMany != null && ++ticks <= howMany){
+         window.setTimeout(nextNum, iFunc());
+       }else{
+         o.complete();
+       }  
+     }
+   
+     if (continuation == null){
+       makeit();
+     }else{
+       continuation.subscribe((_){},() => makeit(), (e) => o.error(e));
+     }
+   });
    
  }
  
  /// Executes a simple GET request with the given header/request type and returns the result
  /// in an observable sequence of a single value (the data).
- static ChainableIObservable fromXMLHttpRequest(String uri, String requestHeader, String requestValue)
+ static ChainableIObservable fromXMLHttpRequest(String uri, String requestHeader, String requestValue, [IObservable continuation])
  {
   return Observable.create((IObserver o){
-    XMLHttpRequest r = new XMLHttpRequest();
-    
-    Observable
-    .fromEvent(r.on.error)
-    .subscribe((e){
-      o.error(const ObservableException('error occurred during XMLHttpRequest.'));  
-    });
-        
-    Observable
-    .fromEvent(r.on.abort)
-    .subscribe((e){
-      o.complete();
-    });
-    
-    Observable
-    .fromEvent(r.on.readyStateChange)
-    .subscribe((e){
-      if (r.readyState != 4) return;
-      o.next(r.responseText);
-      o.complete();
-    });
-    
-    try{
-      r.open('GET', uri, true);
-      r.setRequestHeader(requestHeader, requestValue);
-      r.send();
-    }catch(Exception e){
-      o.error(e);
+    makeit(){
+      XMLHttpRequest r = new XMLHttpRequest();
+      
+      Observable
+      .fromEvent(r.on.error)
+      .subscribe((e){
+        o.error(const ObservableException('error occurred during XMLHttpRequest.'));  
+      });
+          
+      Observable
+      .fromEvent(r.on.abort)
+      .subscribe((e){
+        o.complete();
+      });
+      
+      Observable
+      .fromEvent(r.on.readyStateChange)
+      .subscribe((e){
+        if (r.readyState != 4) return;
+        o.next(r.responseText);
+        o.complete();
+      });
+      
+      try{
+        r.open('GET', uri, true);
+        r.setRequestHeader(requestHeader, requestValue);
+        r.send();
+      }catch(Exception e){
+        o.error(e);
+      }
+      catch(var e){
+        o.error(e);
+      }
     }
-    catch(var e){
-      o.error(e);
+    
+    if (continuation == null){
+      makeit();
     }
+    else{
+      continuation.subscribe((_){},() => makeit(), (e) => o.error(e));
+    }
+      
   });  
  }
  
@@ -305,39 +331,55 @@ class Observable
  }
  
  /// Returns a single value as an observable sequence.
- static ChainableIObservable returnValue(value) =>
+ static ChainableIObservable returnValue(value, [IObservable continuation]) =>
    Observable.create((IObserver o){
-     o.next(value);
-     o.complete();
+     makeit(){
+       o.next(value);
+       o.complete();
+     }
+     
+     if (continuation == null){
+       makeit();
+     }else{
+       continuation.subscribe((_){},() => makeit(), (e) => o.error(e));
+     }
    });
  
  /// Returns a numerica range from a given start to a given finish, with optional stepping
  /// (default step is 1).  If start > finish then range will be high to low.
- static ChainableIObservable range(num start, num finish, [step = 1]){
+ static ChainableIObservable range(num start, num finish, [step = 1, IObservable continuation]){
    if (step == 0) return Observable.throwE(const ObservableException('Invalid step.  Cannot <= 0'));
    
    if (start == finish) return Observable.returnValue(start);
    
    return (start < finish) 
-     ? Observable.unfold(start, (v) => v <= finish, (v) => v += step, (v) => v)
-     : Observable.unfold(start, (v) => v >= finish, (v) => v -= step, (v) => v);
-   
+           ? Observable.unfold(start, (v) => v <= finish, (v) => v += step, (v) => v, continuation)
+           : Observable.unfold(start, (v) => v >= finish, (v) => v -= step, (v) => v, continuation);
+                    
  }
  
  /// Unfolds a given initialstate until conditional() returns false;
  /// Each successful iteration is passed to result() which then returns
  /// returns the element sent to the sequence.
- static ChainableIObservable unfold(initialstate, conditional(state), iterate(state), result(state)){
+ static ChainableIObservable unfold(initialstate, conditional(state), iterate(state), result(state), [IObservable continuation]){
    return Observable.create((IObserver o){
-     var s = initialstate;
-     try{
-       while(conditional(s) == true){
-         o.next(result(s));
-         s = iterate(s);
+     makeit(){
+       var s = initialstate;
+       try{
+         while(conditional(s) == true){
+           o.next(result(s));
+           s = iterate(s);
+         }
+         o.complete();
+       }catch(Exception e){
+         o.error(e);
        }
-       o.complete();
-     }catch(Exception e){
-       o.error(e);
+     }
+     
+     if (continuation == null){
+       makeit();
+     }else{
+       continuation.subscribe((_){},() => makeit(), (e) => o.error(e));
      }
    });
  }
@@ -439,8 +481,16 @@ class Observable
  ///     Observable
  ///         .fromEvent(myElement.on.click)
  ///         .subscribe((e) => print('clicked!'));
- static ChainableIObservable<Event> fromEvent(EventListenerList event){
-   return Observable.create((IObserver o) => event.add((e) => o.next(e)));
+ static ChainableIObservable<Event> fromEvent(EventListenerList event, [IObservable continuation]){
+   return Observable.create((IObserver o) {
+     makeit() => event.add((e) => o.next(e));
+     
+     if (continuation == null){
+       makeit();
+     }else{
+       continuation.subscribe((_){},() => makeit(), (e) => o.error(e));
+     }
+   });
  }
 
  /// Returns an observable sequence that never returns a value and never terminates.
@@ -452,7 +502,14 @@ class Observable
  /// Returns running total of items in a sequence.
  static ChainableIObservable count(IObservable source){
    int cnt = 0;
-   return Observable.create((IObserver o) => source.subscribe((_)=> o.next(++cnt), ()=> o.complete(), (e)=> o.error(e)));
+   return Observable.create((IObserver o) =>
+   source.subscribe(
+     (_)=> ++cnt, 
+     (){
+       o.next(cnt);
+       o.complete();
+       }, 
+     (e)=> o.error(e)));
  }
 
  
@@ -712,33 +769,41 @@ class Observable
    if (oList == null || oList.isEmpty()) return Observable.empty();
   
    return Observable.create((IObserver o){
+     void _concatInternal(IObserver o, List<IObservable> oList, int index){
+
+       oList[index]
+        .subscribe(
+          (v) => o.next(v),
+          (){
+            if (++index < oList.length){
+              _concatInternal(o, oList, index);
+            }else{
+              o.complete();
+            }
+          },
+          (e) => o.error(e)
+        );
+     }
+     
      _concatInternal(o, oList, 0);
    });
  }
  
- static void _concatInternal(IObserver o, List<IObservable> oList, int index){
 
-   oList[index]
-    .subscribe(
-      (v) => o.next(v),
-      (){
-        if (++index < oList.length){
-          _concatInternal(o, oList, index);
-        }else{
-          o.complete();
-        }
-      },
-      (e) => o.error(e)
-    );
- }
- 
  /// Returns an observable sequence from a given [List]
- static ChainableIObservable fromList(List l){
+ static ChainableIObservable fromList(List l, [IObservable continuation]){
    if (l == null) return Observable.throwE(const NullPointerException());
    
    return Observable.create((IObserver o){
-     l.forEach((el) => o.next(el));
-     o.complete();
+     makeit(){
+       l.forEach((el) => o.next(el));
+       o.complete();
+     }
+     if (continuation == null){
+       makeit();
+     }else{
+       continuation.subscribe((_){},() => makeit(), (e) => o.error(e));
+     }
    });
  }
  
@@ -746,25 +811,33 @@ class Observable
  ///
  /// The sequence can be made self-terminating by setting the optional [ticks]
  /// parameter to a positive integer value.
- static ChainableIObservable timer(int milliseconds, [int ticks = -1]){
+ static ChainableIObservable timer(int milliseconds, [int ticks = -1, IObservable continuation]){
    
    if (milliseconds < 1) return Observable.throwE(const ObservableException("Invalid milliseconds value."));
    
    return Observable.create((IObserver o){
-     if (ticks <= 0){
-       window.setInterval(() => o.next(null), milliseconds);
-     }else{
-       var handler;
-       var tickCount = 0;
-       handler = window.setInterval((){
-         if (++tickCount > ticks){
-           window.clearInterval(handler);
-           o.complete();
-           return;
-         }
-         o.next(tickCount);
-       }, milliseconds);
+     makeit(){
+       if (ticks <= 0){
+         window.setInterval(() => o.next(null), milliseconds);
+       }else{
+         var handler;
+         var tickCount = 0;
+         handler = window.setInterval((){
+           if (++tickCount > ticks){
+             window.clearInterval(handler);
+             o.complete();
+             return;
+           }
+           o.next(tickCount);
+         }, milliseconds);
+       }
      }
+     if (continuation == null){
+       makeit();
+     }else{
+       continuation.subscribe((_){},() => makeit(), (e) => o.error(e));
+     }
+     
    });
  }
  
@@ -785,35 +858,42 @@ class Observable
  /// terminates the sequence.
  /// * timeOut (optional, default none) Terminates the sequence if a message isn't
  /// received from the isolate in a given time (in milliseconds).
- static ChainableIObservable fromIsolate(Isolate i, initMessage, [terminationMessage = ""])
+ static ChainableIObservable fromIsolate(Isolate i, initMessage, [terminationMessage = "", IObservable continuation])
  {
    return Observable.create((IObserver o){
+     makeit(){
+       i.spawn().then((SendPort port){
+         new _ObserverIsolate().spawn().then((SendPort oPort){
+           oPort.send(terminationMessage);
+                    
+           var iostate = document.query("#${_ObserverIsolate.IOSTATE + oPort.hashCode()}");
+           
+           Observable
+           .fromEvent(iostate.on.change)
+           .subscribe(
+             (e){
+               if (iostate.value == _ObserverIsolate.MSG_COMPLETE){
+                 iostate.remove();
+                 o.complete();
+               }else{
+                 o.next(JSON.parse(iostate.value));             
+               }
+           },
+           () => o.complete(),
+           (err) => o.error(err)
+           );
+           
+           
+           port.send(initMessage, oPort);
+         });     
+       });
+     }
      
-     i.spawn().then((SendPort port){
-       new _ObserverIsolate().spawn().then((SendPort oPort){
-         oPort.send(terminationMessage);
-                  
-         var iostate = document.query("#${_ObserverIsolate.IOSTATE + oPort.hashCode()}");
-         
-         Observable
-         .fromEvent(iostate.on.change)
-         .subscribe(
-           (e){
-             if (iostate.value == _ObserverIsolate.MSG_COMPLETE){
-               iostate.remove();
-               o.complete();
-             }else{
-               o.next(JSON.parse(iostate.value));             
-             }
-         },
-         () => o.complete(),
-         (err) => o.error(err)
-         );
-         
-         
-         port.send(initMessage, oPort);
-       });     
-     });
+     if (continuation == null){
+       makeit();
+     }else{
+       continuation.subscribe((_){},() => makeit(), (e) => o.error(e));
+     }
    });  
  }
  
