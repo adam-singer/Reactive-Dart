@@ -4,9 +4,14 @@ Plainly stated, this project implements the dual of an enumerable type.
 RD works on the principle that everything in the environment is a sequence
 of data being pushed at the application.
 
-## Live Demo of Observable.throttle()
-* Demo: <http://prujohn.github.com/Reactive-Dart>
-* How It Works: [Blog Post](http://phylotic.blogspot.com/2012/01/reactive-dart-series-part-1-of-n-using.html)
+## Live Demos
+* Observable.throttle(): <http://prujohn.github.com/Reactive-Dart>
+* 'Alphabet Invasion!' A game written entirely with Observables: <http://www.lucastudios.com/demos/alphabetinvasion/>
+
+## Blog Series
+* (Part 1 - Using Observable.throttle() to minimize routh-trips)[http://phylotic.blogspot.com/2012/01/reactive-dart-series-part-1-of-n-using.html]
+* (Part 2 - Merging multiple sequences with Observable.merge())[http://phylotic.blogspot.com/2012/01/reactive-dart-series-part-2-of-n.html]
+* (Part 3 - Creating a simple game with Reactive Dart)[http://phylotic.blogspot.com/2012/02/reactive-dart-series-part-3-of-n.html]
 
 ## 40+ Observable Operators to Work With
 The demo app demonstrates nearly all of them:
