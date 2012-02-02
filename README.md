@@ -5,8 +5,8 @@ RD works on the principle that everything in the environment is a sequence
 of data being pushed at the application.
 
 ## Live Demos
-* Observable.throttle(): <http://prujohn.github.com/Reactive-Dart>
-* 'Alphabet Invasion!' A game written entirely with Observables: <http://www.lucastudios.com/demos/alphabetinvasion/>
+* [Observable.throttle()](http://prujohn.github.com/Reactive-Dart)
+* ['Alphabet Invasion!' A game written entirely with Observables](http://www.lucastudios.com/demos/alphabetinvasion/)
 
 ## Blog Series
 * [Part 1 - Using Observable.throttle() to minimize routh-trips](http://phylotic.blogspot.com/2012/01/reactive-dart-series-part-1-of-n-using.html)
