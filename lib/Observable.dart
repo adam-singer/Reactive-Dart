@@ -36,11 +36,77 @@ class Observable
  /// Creates an IObservable with the given implementation function.
  static create(f(IObserver o)) => new ChainableIObservable(f);
  
+  /// Takes output from a [Future] and returns it in an observable sequence.
+ static ChainableIObservable fromFuture(Future f, [IObservable continuation]){
+   return Observable.create((IObserver o){
+     makeit(){
+       if (f.isComplete){
+         if (f.hasValue){
+           o.next(f.value);
+         }
+         o.complete();
+       }else{        
+         f.then((v){
+           o.next(v);
+           o.complete();
+         }); 
+         
+         f.handleException((e){
+           o.error(e);  
+         });
+       }
+     }
+     
+     if (continuation == null){
+       makeit();
+     }else{
+       continuation.subscribe((_){},() => makeit(), (e) => o.error(e));
+     }
+   });
+ }
  
+ /// Takes input from an observable sequence and imits any values at the given pace
+ /// (or greater if values are received later than pace interval)
+ ///
+ /// FIFO
+ static ChainableIObservable pace(IObservable source, int paceInMilliseconds){
+   
+   if (paceInMilliseconds < 1) return Observable.throwE(const ObservableException('Parameter "paceInMilliseconds" must be >= 1.'));
+                                                                                  
+   return Observable.create((IObserver o){
+     Queue buff = new Queue();
+     bool isComplete = false;
+     
+     void paceIt(){
+       if (buff.isEmpty()){
+         if (isComplete){
+           o.complete();
+           return;
+         }
+       }else{
+         o.next(buff.removeFirst());
+       }
+       
+       window.setTimeout(paceIt, paceInMilliseconds);
+     }
+          
+     source.subscribe(
+     (v){
+       buff.add(v);
+     },
+     (){
+       isComplete = true;
+     },
+     (e) => o.error(e)
+     );
+     
+     paceIt();
+   });
+ }
  
  /// Skips elements in an observable sequence until the given fuction returns false.
  /// All subsequent elements are returned.
- static skipWhile(IObservable source, isTrue(n)){
+ static ChainableIObservable skipWhile(IObservable source, isTrue(n)){
    return Observable.create((IObserver o){
      int counter = 0;
      bool trueFlag = true;

@@ -80,6 +80,8 @@ class reactivedemo {
 //    sample();
 //    skip();
 //    skipWhile();
+//    pace();
+//    fromFuture();
   }
 
   // How sequence diagrams work.
@@ -112,22 +114,44 @@ class reactivedemo {
   //
   //**************************************************************************************
   
+  void fromFuture(){
+    header('Observable.fromFuture() provides a value returned by a Future in an observable sequence.');
+    
+    Observable
+      .fromFuture(document.body.rect) // get the dimensions of the DOM <body> tag (rect returns a Future<ElementRect>)
+      .subscribe(
+        (ElementRect v) => print('<body> dimensions: width: ${v.bounding.width}, height: ${v.bounding.height}'), 
+        () => print('Sequence Complete.')
+      );
+ 
+  }
+  
+  
+  void pace(){
+    header('Observable.pace() takes an observable sequence and emits elements received in a paced interval.');
+    
+    Observable
+      .range(1, 10)
+      .pace(1500) //pacing sequence to 1.5 seconds each.
+      .subscribe((v) => print(v), () => print('Sequence Complete.'));
+  }
+  
   void skipWhile(){
     header('Observable.skipWhile() skips the first n number of elements in an observable sequence where given function returns True.');
     
     Observable
-    .range(1, 20)
-    .skipWhile((v) => v < 6)
-    .subscribe((v) => print('$v'), () => print('Sequence Complete.'));
+      .range(1, 20)
+      .skipWhile((v) => v < 6)
+      .subscribe((v) => print('$v'), () => print('Sequence Complete.'));
   }
   
   void skip(){
     header('Observable.skip() skips the first n number of elements in an observable sequence, return subsequence elements.');
     
     Observable
-    .range(1, 20)
-    .skip(5)
-    .subscribe((v) => print('$v'), () => print('Sequence Complete.'));
+      .range(1, 20)
+      .skip(5)
+      .subscribe((v) => print('$v'), () => print('Sequence Complete.'));
     
   }
   

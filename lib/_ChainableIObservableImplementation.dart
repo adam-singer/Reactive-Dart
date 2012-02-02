@@ -162,5 +162,9 @@ class _ChainableIObservableImplementation<T> implements ChainableIObservable<T>,
   returnValue(value) => Observable.returnValue(value, continuation:this);
   
   range(num start, num finish, [step = 1]) => Observable.range(start, finish, step, continuation:this);
+  
+  fromFuture(Future f) => Observable.fromFuture(f, continuation:this);
+  
+  pace(int paceInMilliseconds) => Observable.pace(this, paceInMilliseconds);
 }
 
