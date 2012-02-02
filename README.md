@@ -1,14 +1,17 @@
+
 ## Reactive Dart
 Reactive Dart (RD) is an implementation of the reactive model on sequences.  
-Plainly stated, this project implements the dual of an enumerable type.  
-RD works on the principle that everything in the environment is a sequence
+
+Plainly stated, this project implements the dual of an Enumerable type: Observable.  
+
+RD stems from the idea that everything in the environment is a sequence
 of data being pushed at the application.
 
 ## Live Demos
 * [Observable.throttle()](http://prujohn.github.com/Reactive-Dart)
 * ['Alphabet Invasion!' A game written entirely with Reactive Dart](http://www.lucastudios.com/demos/alphabetinvasion/)
 
-## Blog Series
+## Reactive Dart Blog Series
 * [Part 1 - Using Observable.throttle() to minimize routh-trips](http://phylotic.blogspot.com/2012/01/reactive-dart-series-part-1-of-n-using.html)
 * [Part 2 - Merging multiple sequences with Observable.merge()](http://phylotic.blogspot.com/2012/01/reactive-dart-series-part-2-of-n.html)
 * [Part 3 - Creating a simple game with Reactive Dart](http://phylotic.blogspot.com/2012/02/reactive-dart-series-part-3-of-n.html)
