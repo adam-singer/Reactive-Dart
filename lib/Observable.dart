@@ -16,6 +16,11 @@
 
 
 /**
+* Alias for [Observable] class (dartc does not like this for static methods)
+*/
+class O extends Observable{}
+
+/**
 * Observable<T> is a helper class for the reactive model.  It is recommended
 * to use this class, rather than trying to implement [IObservable<T>] directly.
 *

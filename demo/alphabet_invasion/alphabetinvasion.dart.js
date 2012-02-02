@@ -1344,16 +1344,16 @@ function _constMap(itemsAndKeys) {
   return new ImmutableMap(itemsAndKeys);
 }
 //  ********** Library dom **************
-// ********** Code for DOMTypeJs **************
+// ********** Code for _DOMTypeJs **************
 $dynamic("get$dartObjectLocalStorage").DOMType = function() { return this.dartObjectLocalStorage; };
 $dynamic("set$dartObjectLocalStorage").DOMType = function(value) { return this.dartObjectLocalStorage = value; };
-// ********** Code for AbstractWorkerJs **************
+// ********** Code for _AbstractWorkerJs **************
 $dynamic("addEventListener$3").AbstractWorker = function($0, $1, $2) {
   return this.addEventListener($0, $wrap_call$1(to$call$1($1)), $2);
 };
-// ********** Code for ArrayBufferJs **************
-// ********** Code for ArrayBufferViewJs **************
-// ********** Code for NodeJs **************
+// ********** Code for _ArrayBufferJs **************
+// ********** Code for _ArrayBufferViewJs **************
+// ********** Code for _NodeJs **************
 $dynamic("get$childNodes").Node = function() {
   return this.childNodes;
 }
@@ -1372,83 +1372,83 @@ $dynamic("addEventListener$3").Node = function($0, $1, $2) {
 $dynamic("contains$1").Node = function($0) {
   return this.contains($0);
 };
-// ********** Code for AttrJs **************
+// ********** Code for _AttrJs **************
 $dynamic("get$value").Attr = function() {
   return this.value;
 }
 $dynamic("set$value").Attr = function(value) {
   this.value = value;
 }
-// ********** Code for AudioBufferJs **************
+// ********** Code for _AudioBufferJs **************
 $dynamic("get$length").AudioBuffer = function() {
   return this.length;
 }
-// ********** Code for AudioNodeJs **************
-// ********** Code for AudioSourceNodeJs **************
-// ********** Code for AudioBufferSourceNodeJs **************
-// ********** Code for AudioChannelMergerJs **************
-// ********** Code for AudioChannelSplitterJs **************
-// ********** Code for AudioContextJs **************
-// ********** Code for AudioDestinationNodeJs **************
-// ********** Code for AudioParamJs **************
+// ********** Code for _AudioNodeJs **************
+// ********** Code for _AudioSourceNodeJs **************
+// ********** Code for _AudioBufferSourceNodeJs **************
+// ********** Code for _AudioChannelMergerJs **************
+// ********** Code for _AudioChannelSplitterJs **************
+// ********** Code for _AudioContextJs **************
+// ********** Code for _AudioDestinationNodeJs **************
+// ********** Code for _AudioParamJs **************
 $dynamic("get$value").AudioParam = function() {
   return this.value;
 }
 $dynamic("set$value").AudioParam = function(value) {
   this.value = value;
 }
-// ********** Code for AudioGainJs **************
-// ********** Code for AudioGainNodeJs **************
-// ********** Code for AudioListenerJs **************
-// ********** Code for AudioPannerNodeJs **************
-// ********** Code for EventJs **************
-// ********** Code for AudioProcessingEventJs **************
-// ********** Code for BarInfoJs **************
-// ********** Code for BeforeLoadEventJs **************
-// ********** Code for BiquadFilterNodeJs **************
-// ********** Code for BlobJs **************
-// ********** Code for CharacterDataJs **************
+// ********** Code for _AudioGainJs **************
+// ********** Code for _AudioGainNodeJs **************
+// ********** Code for _AudioListenerJs **************
+// ********** Code for _AudioPannerNodeJs **************
+// ********** Code for _EventJs **************
+// ********** Code for _AudioProcessingEventJs **************
+// ********** Code for _BarInfoJs **************
+// ********** Code for _BeforeLoadEventJs **************
+// ********** Code for _BiquadFilterNodeJs **************
+// ********** Code for _BlobJs **************
+// ********** Code for _CharacterDataJs **************
 $dynamic("get$length").CharacterData = function() {
   return this.length;
 }
-// ********** Code for TextJs **************
-// ********** Code for CDATASectionJs **************
-// ********** Code for CSSRuleJs **************
-// ********** Code for CSSCharsetRuleJs **************
-// ********** Code for CSSFontFaceRuleJs **************
+// ********** Code for _TextJs **************
+// ********** Code for _CDATASectionJs **************
+// ********** Code for _CSSRuleJs **************
+// ********** Code for _CSSCharsetRuleJs **************
+// ********** Code for _CSSFontFaceRuleJs **************
 $dynamic("get$style").CSSFontFaceRule = function() {
   return this.style;
 }
-// ********** Code for CSSImportRuleJs **************
-// ********** Code for CSSMediaRuleJs **************
-// ********** Code for CSSPageRuleJs **************
+// ********** Code for _CSSImportRuleJs **************
+// ********** Code for _CSSMediaRuleJs **************
+// ********** Code for _CSSPageRuleJs **************
 $dynamic("get$style").CSSPageRule = function() {
   return this.style;
 }
-// ********** Code for CSSValueJs **************
-// ********** Code for CSSPrimitiveValueJs **************
-// ********** Code for CSSRuleListJs **************
+// ********** Code for _CSSValueJs **************
+// ********** Code for _CSSPrimitiveValueJs **************
+// ********** Code for _CSSRuleListJs **************
 $dynamic("get$length").CSSRuleList = function() {
   return this.length;
 }
-// ********** Code for CSSStyleDeclarationJs **************
+// ********** Code for _CSSStyleDeclarationJs **************
 $dynamic("get$length").CSSStyleDeclaration = function() {
   return this.length;
 }
-// ********** Code for CSSStyleRuleJs **************
+// ********** Code for _CSSStyleRuleJs **************
 $dynamic("get$style").CSSStyleRule = function() {
   return this.style;
 }
-// ********** Code for StyleSheetJs **************
-// ********** Code for CSSStyleSheetJs **************
-// ********** Code for CSSUnknownRuleJs **************
-// ********** Code for CSSValueListJs **************
+// ********** Code for _StyleSheetJs **************
+// ********** Code for _CSSStyleSheetJs **************
+// ********** Code for _CSSUnknownRuleJs **************
+// ********** Code for _CSSValueListJs **************
 $dynamic("get$length").CSSValueList = function() {
   return this.length;
 }
-// ********** Code for CanvasGradientJs **************
-// ********** Code for CanvasPatternJs **************
-// ********** Code for CanvasPixelArrayJs **************
+// ********** Code for _CanvasGradientJs **************
+// ********** Code for _CanvasPatternJs **************
+// ********** Code for _CanvasPixelArrayJs **************
 $dynamic("get$length").CanvasPixelArray = function() {
   return this.length;
 }
@@ -1494,9 +1494,9 @@ $dynamic("forEach$1").CanvasPixelArray = function($0) {
 $dynamic("indexOf$1").CanvasPixelArray = function($0) {
   return this.indexOf($0, (0));
 };
-// ********** Code for CanvasRenderingContextJs **************
-// ********** Code for CanvasRenderingContext2DJs **************
-// ********** Code for ClientRectJs **************
+// ********** Code for _CanvasRenderingContextJs **************
+// ********** Code for _CanvasRenderingContext2DJs **************
+// ********** Code for _ClientRectJs **************
 $dynamic("get$height").ClientRect = function() {
   return this.height;
 }
@@ -1509,53 +1509,53 @@ $dynamic("get$top").ClientRect = function() {
 $dynamic("get$width").ClientRect = function() {
   return this.width;
 }
-// ********** Code for ClientRectListJs **************
+// ********** Code for _ClientRectListJs **************
 $dynamic("get$length").ClientRectList = function() {
   return this.length;
 }
-// ********** Code for ClipboardJs **************
-// ********** Code for CloseEventJs **************
-// ********** Code for CommentJs **************
-// ********** Code for UIEventJs **************
+// ********** Code for _ClipboardJs **************
+// ********** Code for _CloseEventJs **************
+// ********** Code for _CommentJs **************
+// ********** Code for _UIEventJs **************
 $dynamic("get$charCode").UIEvent = function() {
   return this.charCode;
 }
-// ********** Code for CompositionEventJs **************
-// ********** Code for ConsoleJs **************
-ConsoleJs = (typeof console == 'undefined' ? {} : console);
-ConsoleJs.get$dartObjectLocalStorage = function() { return this.dartObjectLocalStorage; };
-ConsoleJs.set$dartObjectLocalStorage = function(value) { return this.dartObjectLocalStorage = value; };
-ConsoleJs.error$1 = ConsoleJs.error;
-// ********** Code for ConvolverNodeJs **************
-// ********** Code for CoordinatesJs **************
-// ********** Code for CounterJs **************
-// ********** Code for CryptoJs **************
-// ********** Code for CustomEventJs **************
-// ********** Code for DOMApplicationCacheJs **************
+// ********** Code for _CompositionEventJs **************
+// ********** Code for _ConsoleJs **************
+_ConsoleJs = (typeof console == 'undefined' ? {} : console);
+_ConsoleJs.get$dartObjectLocalStorage = function() { return this.dartObjectLocalStorage; };
+_ConsoleJs.set$dartObjectLocalStorage = function(value) { return this.dartObjectLocalStorage = value; };
+_ConsoleJs.error$1 = _ConsoleJs.error;
+// ********** Code for _ConvolverNodeJs **************
+// ********** Code for _CoordinatesJs **************
+// ********** Code for _CounterJs **************
+// ********** Code for _CryptoJs **************
+// ********** Code for _CustomEventJs **************
+// ********** Code for _DOMApplicationCacheJs **************
 $dynamic("addEventListener$3").DOMApplicationCache = function($0, $1, $2) {
   return this.addEventListener($0, $wrap_call$1(to$call$1($1)), $2);
 };
-// ********** Code for DOMExceptionJs **************
-// ********** Code for DOMFileSystemJs **************
-// ********** Code for DOMFileSystemSyncJs **************
-// ********** Code for DOMFormDataJs **************
-// ********** Code for DOMImplementationJs **************
-// ********** Code for DOMMimeTypeJs **************
-// ********** Code for DOMMimeTypeArrayJs **************
+// ********** Code for _DOMExceptionJs **************
+// ********** Code for _DOMFileSystemJs **************
+// ********** Code for _DOMFileSystemSyncJs **************
+// ********** Code for _DOMFormDataJs **************
+// ********** Code for _DOMImplementationJs **************
+// ********** Code for _DOMMimeTypeJs **************
+// ********** Code for _DOMMimeTypeArrayJs **************
 $dynamic("get$length").DOMMimeTypeArray = function() {
   return this.length;
 }
-// ********** Code for DOMParserJs **************
-// ********** Code for DOMPluginJs **************
+// ********** Code for _DOMParserJs **************
+// ********** Code for _DOMPluginJs **************
 $dynamic("get$length").DOMPlugin = function() {
   return this.length;
 }
-// ********** Code for DOMPluginArrayJs **************
+// ********** Code for _DOMPluginArrayJs **************
 $dynamic("get$length").DOMPluginArray = function() {
   return this.length;
 }
-// ********** Code for DOMSelectionJs **************
-// ********** Code for DOMTokenListJs **************
+// ********** Code for _DOMSelectionJs **************
+// ********** Code for _DOMTokenListJs **************
 $dynamic("get$length").DOMTokenList = function() {
   return this.length;
 }
@@ -1565,17 +1565,20 @@ $dynamic("add$1").DOMTokenList = function($0) {
 $dynamic("contains$1").DOMTokenList = function($0) {
   return this.contains($0);
 };
-// ********** Code for DOMSettableTokenListJs **************
+// ********** Code for _DOMSettableTokenListJs **************
 $dynamic("get$value").DOMSettableTokenList = function() {
   return this.value;
 }
 $dynamic("set$value").DOMSettableTokenList = function(value) {
   this.value = value;
 }
-// ********** Code for DOMURLJs **************
-// ********** Code for DOMWindowJs **************
+// ********** Code for _DOMURLJs **************
+// ********** Code for _DOMWindowJs **************
 $dynamic("get$length").DOMWindow = function() {
   return this.length;
+}
+$dynamic("get$localStorage").DOMWindow = function() {
+  return this.localStorage;
 }
 $dynamic("get$top").DOMWindow = function() {
   return this.top;
@@ -1595,18 +1598,18 @@ $dynamic("setInterval$2").DOMWindow = function($0, $1) {
 $dynamic("setTimeout$2").DOMWindow = function($0, $1) {
   return this.setTimeout($wrap_call$0(to$call$0($0)), $1);
 };
-// ********** Code for DataTransferItemJs **************
-// ********** Code for DataTransferItemListJs **************
+// ********** Code for _DataTransferItemJs **************
+// ********** Code for _DataTransferItemListJs **************
 $dynamic("get$length").DataTransferItemList = function() {
   return this.length;
 }
 $dynamic("add$1").DataTransferItemList = function($0) {
   return this.add($0);
 };
-// ********** Code for DataViewJs **************
-// ********** Code for DatabaseJs **************
-// ********** Code for DatabaseSyncJs **************
-// ********** Code for WorkerContextJs **************
+// ********** Code for _DataViewJs **************
+// ********** Code for _DatabaseJs **************
+// ********** Code for _DatabaseSyncJs **************
+// ********** Code for _WorkerContextJs **************
 $dynamic("addEventListener$3").WorkerContext = function($0, $1, $2) {
   return this.addEventListener($0, $wrap_call$1(to$call$1($1)), $2);
 };
@@ -1616,33 +1619,33 @@ $dynamic("setInterval$2").WorkerContext = function($0, $1) {
 $dynamic("setTimeout$2").WorkerContext = function($0, $1) {
   return this.setTimeout($wrap_call$0(to$call$0($0)), $1);
 };
-// ********** Code for DedicatedWorkerContextJs **************
+// ********** Code for _DedicatedWorkerContextJs **************
 $dynamic("postMessage$1").DedicatedWorkerContext = function($0) {
   return this.postMessage($0);
 };
 $dynamic("postMessage$2").DedicatedWorkerContext = function($0, $1) {
   return this.postMessage($0, $1);
 };
-// ********** Code for DelayNodeJs **************
-// ********** Code for DeviceMotionEventJs **************
-// ********** Code for DeviceOrientationEventJs **************
-// ********** Code for EntryJs **************
-// ********** Code for DirectoryEntryJs **************
-// ********** Code for EntrySyncJs **************
+// ********** Code for _DelayNodeJs **************
+// ********** Code for _DeviceMotionEventJs **************
+// ********** Code for _DeviceOrientationEventJs **************
+// ********** Code for _EntryJs **************
+// ********** Code for _DirectoryEntryJs **************
+// ********** Code for _EntrySyncJs **************
 $dynamic("remove$0").EntrySync = function() {
   return this.remove();
 };
-// ********** Code for DirectoryEntrySyncJs **************
-// ********** Code for DirectoryReaderJs **************
-// ********** Code for DirectoryReaderSyncJs **************
-// ********** Code for DocumentJs **************
+// ********** Code for _DirectoryEntrySyncJs **************
+// ********** Code for _DirectoryReaderJs **************
+// ********** Code for _DirectoryReaderSyncJs **************
+// ********** Code for _DocumentJs **************
 $dynamic("get$documentElement").Document = function() {
   return this.documentElement;
 }
-// ********** Code for DocumentFragmentJs **************
-// ********** Code for DocumentTypeJs **************
-// ********** Code for DynamicsCompressorNodeJs **************
-// ********** Code for ElementJs **************
+// ********** Code for _DocumentFragmentJs **************
+// ********** Code for _DocumentTypeJs **************
+// ********** Code for _DynamicsCompressorNodeJs **************
+// ********** Code for _ElementJs **************
 $dynamic("get$clientHeight").Element = function() {
   return this.clientHeight;
 }
@@ -1685,55 +1688,55 @@ $dynamic("get$scrollWidth").Element = function() {
 $dynamic("get$style").Element = function() {
   return this.style;
 }
-// ********** Code for ElementTimeControlJs **************
-// ********** Code for ElementTraversalJs **************
+// ********** Code for _ElementTimeControlJs **************
+// ********** Code for _ElementTraversalJs **************
 $dynamic("get$firstElementChild").ElementTraversal = function() {
   return this.firstElementChild;
 }
-// ********** Code for EntityJs **************
-// ********** Code for EntityReferenceJs **************
-// ********** Code for EntryArrayJs **************
+// ********** Code for _EntityJs **************
+// ********** Code for _EntityReferenceJs **************
+// ********** Code for _EntryArrayJs **************
 $dynamic("get$length").EntryArray = function() {
   return this.length;
 }
-// ********** Code for EntryArraySyncJs **************
+// ********** Code for _EntryArraySyncJs **************
 $dynamic("get$length").EntryArraySync = function() {
   return this.length;
 }
-// ********** Code for ErrorEventJs **************
-// ********** Code for EventExceptionJs **************
-// ********** Code for EventSourceJs **************
+// ********** Code for _ErrorEventJs **************
+// ********** Code for _EventExceptionJs **************
+// ********** Code for _EventSourceJs **************
 $dynamic("addEventListener$3").EventSource = function($0, $1, $2) {
   return this.addEventListener($0, $wrap_call$1(to$call$1($1)), $2);
 };
-// ********** Code for EventTargetJs **************
+// ********** Code for _EventTargetJs **************
 $dynamic("addEventListener$3").EventTarget = function($0, $1, $2) {
   return this.addEventListener($0, $wrap_call$1(to$call$1($1)), $2);
 };
-// ********** Code for FileJs **************
-// ********** Code for FileEntryJs **************
-// ********** Code for FileEntrySyncJs **************
-// ********** Code for FileErrorJs **************
-// ********** Code for FileExceptionJs **************
-// ********** Code for FileListJs **************
+// ********** Code for _FileJs **************
+// ********** Code for _FileEntryJs **************
+// ********** Code for _FileEntrySyncJs **************
+// ********** Code for _FileErrorJs **************
+// ********** Code for _FileExceptionJs **************
+// ********** Code for _FileListJs **************
 $dynamic("get$length").FileList = function() {
   return this.length;
 }
-// ********** Code for FileReaderJs **************
+// ********** Code for _FileReaderJs **************
 $dynamic("addEventListener$3").FileReader = function($0, $1, $2) {
   return this.addEventListener($0, $wrap_call$1(to$call$1($1)), $2);
 };
-// ********** Code for FileReaderSyncJs **************
-// ********** Code for FileWriterJs **************
+// ********** Code for _FileReaderSyncJs **************
+// ********** Code for _FileWriterJs **************
 $dynamic("get$length").FileWriter = function() {
   return this.length;
 }
-// ********** Code for FileWriterSyncJs **************
+// ********** Code for _FileWriterSyncJs **************
 $dynamic("get$length").FileWriterSync = function() {
   return this.length;
 }
-// ********** Code for Float32ArrayJs **************
-var Float32ArrayJs = {};
+// ********** Code for _Float32ArrayJs **************
+var _Float32ArrayJs = {};
 $dynamic("get$length").Float32Array = function() {
   return this.length;
 }
@@ -1779,8 +1782,8 @@ $dynamic("forEach$1").Float32Array = function($0) {
 $dynamic("indexOf$1").Float32Array = function($0) {
   return this.indexOf($0, (0));
 };
-// ********** Code for Float64ArrayJs **************
-var Float64ArrayJs = {};
+// ********** Code for _Float64ArrayJs **************
+var _Float64ArrayJs = {};
 $dynamic("get$length").Float64Array = function() {
   return this.length;
 }
@@ -1826,13 +1829,13 @@ $dynamic("forEach$1").Float64Array = function($0) {
 $dynamic("indexOf$1").Float64Array = function($0) {
   return this.indexOf($0, (0));
 };
-// ********** Code for GeolocationJs **************
-// ********** Code for GeopositionJs **************
-// ********** Code for HTMLAllCollectionJs **************
+// ********** Code for _GeolocationJs **************
+// ********** Code for _GeopositionJs **************
+// ********** Code for _HTMLAllCollectionJs **************
 $dynamic("get$length").HTMLAllCollection = function() {
   return this.length;
 }
-// ********** Code for HTMLElementJs **************
+// ********** Code for _HTMLElementJs **************
 $dynamic("get$children").HTMLElement = function() {
   return this.children;
 }
@@ -1842,45 +1845,45 @@ $dynamic("get$className").HTMLElement = function() {
 $dynamic("set$className").HTMLElement = function(value) {
   this.className = value;
 }
-// ********** Code for HTMLAnchorElementJs **************
+// ********** Code for _HTMLAnchorElementJs **************
 $dynamic("get$text").HTMLAnchorElement = function() {
   return this.text;
 }
-// ********** Code for HTMLAppletElementJs **************
+// ********** Code for _HTMLAppletElementJs **************
 $dynamic("get$height").HTMLAppletElement = function() {
   return this.height;
 }
 $dynamic("get$width").HTMLAppletElement = function() {
   return this.width;
 }
-// ********** Code for HTMLAreaElementJs **************
-// ********** Code for HTMLMediaElementJs **************
-// ********** Code for HTMLAudioElementJs **************
-// ********** Code for HTMLBRElementJs **************
-// ********** Code for HTMLBaseElementJs **************
-// ********** Code for HTMLBaseFontElementJs **************
-// ********** Code for HTMLBodyElementJs **************
+// ********** Code for _HTMLAreaElementJs **************
+// ********** Code for _HTMLMediaElementJs **************
+// ********** Code for _HTMLAudioElementJs **************
+// ********** Code for _HTMLBRElementJs **************
+// ********** Code for _HTMLBaseElementJs **************
+// ********** Code for _HTMLBaseFontElementJs **************
+// ********** Code for _HTMLBodyElementJs **************
 $dynamic("get$text").HTMLBodyElement = function() {
   return this.text;
 }
 $dynamic("set$text").HTMLBodyElement = function(value) {
   this.text = value;
 }
-// ********** Code for HTMLButtonElementJs **************
+// ********** Code for _HTMLButtonElementJs **************
 $dynamic("get$value").HTMLButtonElement = function() {
   return this.value;
 }
 $dynamic("set$value").HTMLButtonElement = function(value) {
   this.value = value;
 }
-// ********** Code for HTMLCanvasElementJs **************
+// ********** Code for _HTMLCanvasElementJs **************
 $dynamic("get$height").HTMLCanvasElement = function() {
   return this.height;
 }
 $dynamic("get$width").HTMLCanvasElement = function() {
   return this.width;
 }
-// ********** Code for HTMLCollectionJs **************
+// ********** Code for _HTMLCollectionJs **************
 $dynamic("get$length").HTMLCollection = function() {
   return this.length;
 }
@@ -1926,76 +1929,76 @@ $dynamic("forEach$1").HTMLCollection = function($0) {
 $dynamic("indexOf$1").HTMLCollection = function($0) {
   return this.indexOf($0, (0));
 };
-// ********** Code for HTMLContentElementJs **************
-// ********** Code for HTMLDListElementJs **************
-// ********** Code for HTMLDataListElementJs **************
-// ********** Code for HTMLDetailsElementJs **************
-// ********** Code for HTMLDirectoryElementJs **************
-// ********** Code for HTMLDivElementJs **************
-// ********** Code for HTMLDocumentJs **************
-// ********** Code for HTMLEmbedElementJs **************
+// ********** Code for _HTMLContentElementJs **************
+// ********** Code for _HTMLDListElementJs **************
+// ********** Code for _HTMLDataListElementJs **************
+// ********** Code for _HTMLDetailsElementJs **************
+// ********** Code for _HTMLDirectoryElementJs **************
+// ********** Code for _HTMLDivElementJs **************
+// ********** Code for _HTMLDocumentJs **************
+// ********** Code for _HTMLEmbedElementJs **************
 $dynamic("get$height").HTMLEmbedElement = function() {
   return this.height;
 }
 $dynamic("get$width").HTMLEmbedElement = function() {
   return this.width;
 }
-// ********** Code for HTMLFieldSetElementJs **************
-// ********** Code for HTMLFontElementJs **************
-// ********** Code for HTMLFormElementJs **************
+// ********** Code for _HTMLFieldSetElementJs **************
+// ********** Code for _HTMLFontElementJs **************
+// ********** Code for _HTMLFormElementJs **************
 $dynamic("get$length").HTMLFormElement = function() {
   return this.length;
 }
-// ********** Code for HTMLFrameElementJs **************
+// ********** Code for _HTMLFrameElementJs **************
 $dynamic("get$height").HTMLFrameElement = function() {
   return this.height;
 }
 $dynamic("get$width").HTMLFrameElement = function() {
   return this.width;
 }
-// ********** Code for HTMLFrameSetElementJs **************
-// ********** Code for HTMLHRElementJs **************
+// ********** Code for _HTMLFrameSetElementJs **************
+// ********** Code for _HTMLHRElementJs **************
 $dynamic("get$width").HTMLHRElement = function() {
   return this.width;
 }
-// ********** Code for HTMLHeadElementJs **************
-// ********** Code for HTMLHeadingElementJs **************
-// ********** Code for HTMLHtmlElementJs **************
-// ********** Code for HTMLIFrameElementJs **************
+// ********** Code for _HTMLHeadElementJs **************
+// ********** Code for _HTMLHeadingElementJs **************
+// ********** Code for _HTMLHtmlElementJs **************
+// ********** Code for _HTMLIFrameElementJs **************
 $dynamic("get$height").HTMLIFrameElement = function() {
   return this.height;
 }
 $dynamic("get$width").HTMLIFrameElement = function() {
   return this.width;
 }
-// ********** Code for HTMLImageElementJs **************
+// ********** Code for _HTMLImageElementJs **************
 $dynamic("get$height").HTMLImageElement = function() {
   return this.height;
 }
 $dynamic("get$width").HTMLImageElement = function() {
   return this.width;
 }
-// ********** Code for HTMLInputElementJs **************
+// ********** Code for _HTMLInputElementJs **************
 $dynamic("get$value").HTMLInputElement = function() {
   return this.value;
 }
 $dynamic("set$value").HTMLInputElement = function(value) {
   this.value = value;
 }
-// ********** Code for HTMLIsIndexElementJs **************
-// ********** Code for HTMLKeygenElementJs **************
-// ********** Code for HTMLLIElementJs **************
+// ********** Code for _HTMLIsIndexElementJs **************
+// ********** Code for _HTMLKeygenElementJs **************
+// ********** Code for _HTMLLIElementJs **************
 $dynamic("get$value").HTMLLIElement = function() {
   return this.value;
 }
 $dynamic("set$value").HTMLLIElement = function(value) {
   this.value = value;
 }
-// ********** Code for HTMLLabelElementJs **************
-// ********** Code for HTMLLegendElementJs **************
-// ********** Code for HTMLLinkElementJs **************
-// ********** Code for HTMLMapElementJs **************
-// ********** Code for HTMLMarqueeElementJs **************
+// ********** Code for _HTMLLabelElementJs **************
+// ********** Code for _HTMLLegendElementJs **************
+// ********** Code for _HTMLLinkElementJs **************
+// ********** Code for _HTMLMapElementJs **************
+// ********** Code for _HTMLMarqueeElementJs **************
 $dynamic("get$height").HTMLMarqueeElement = function() {
   return this.height;
 }
@@ -2005,26 +2008,26 @@ $dynamic("get$width").HTMLMarqueeElement = function() {
 $dynamic("start$0").HTMLMarqueeElement = function() {
   return this.start();
 };
-// ********** Code for HTMLMenuElementJs **************
-// ********** Code for HTMLMetaElementJs **************
-// ********** Code for HTMLMeterElementJs **************
+// ********** Code for _HTMLMenuElementJs **************
+// ********** Code for _HTMLMetaElementJs **************
+// ********** Code for _HTMLMeterElementJs **************
 $dynamic("get$value").HTMLMeterElement = function() {
   return this.value;
 }
 $dynamic("set$value").HTMLMeterElement = function(value) {
   this.value = value;
 }
-// ********** Code for HTMLModElementJs **************
-// ********** Code for HTMLOListElementJs **************
-// ********** Code for HTMLObjectElementJs **************
+// ********** Code for _HTMLModElementJs **************
+// ********** Code for _HTMLOListElementJs **************
+// ********** Code for _HTMLObjectElementJs **************
 $dynamic("get$height").HTMLObjectElement = function() {
   return this.height;
 }
 $dynamic("get$width").HTMLObjectElement = function() {
   return this.width;
 }
-// ********** Code for HTMLOptGroupElementJs **************
-// ********** Code for HTMLOptionElementJs **************
+// ********** Code for _HTMLOptGroupElementJs **************
+// ********** Code for _HTMLOptionElementJs **************
 $dynamic("get$text").HTMLOptionElement = function() {
   return this.text;
 }
@@ -2037,49 +2040,49 @@ $dynamic("get$value").HTMLOptionElement = function() {
 $dynamic("set$value").HTMLOptionElement = function(value) {
   this.value = value;
 }
-// ********** Code for HTMLOptionsCollectionJs **************
+// ********** Code for _HTMLOptionsCollectionJs **************
 $dynamic("get$length").HTMLOptionsCollection = function() {
   return this.length;
 }
-// ********** Code for HTMLOutputElementJs **************
+// ********** Code for _HTMLOutputElementJs **************
 $dynamic("get$value").HTMLOutputElement = function() {
   return this.value;
 }
 $dynamic("set$value").HTMLOutputElement = function(value) {
   this.value = value;
 }
-// ********** Code for HTMLParagraphElementJs **************
-// ********** Code for HTMLParamElementJs **************
+// ********** Code for _HTMLParagraphElementJs **************
+// ********** Code for _HTMLParamElementJs **************
 $dynamic("get$value").HTMLParamElement = function() {
   return this.value;
 }
 $dynamic("set$value").HTMLParamElement = function(value) {
   this.value = value;
 }
-// ********** Code for HTMLPreElementJs **************
+// ********** Code for _HTMLPreElementJs **************
 $dynamic("get$width").HTMLPreElement = function() {
   return this.width;
 }
-// ********** Code for HTMLProgressElementJs **************
+// ********** Code for _HTMLProgressElementJs **************
 $dynamic("get$value").HTMLProgressElement = function() {
   return this.value;
 }
 $dynamic("set$value").HTMLProgressElement = function(value) {
   this.value = value;
 }
-// ********** Code for HTMLPropertiesCollectionJs **************
+// ********** Code for _HTMLPropertiesCollectionJs **************
 $dynamic("get$length").HTMLPropertiesCollection = function() {
   return this.length;
 }
-// ********** Code for HTMLQuoteElementJs **************
-// ********** Code for HTMLScriptElementJs **************
+// ********** Code for _HTMLQuoteElementJs **************
+// ********** Code for _HTMLScriptElementJs **************
 $dynamic("get$text").HTMLScriptElement = function() {
   return this.text;
 }
 $dynamic("set$text").HTMLScriptElement = function(value) {
   this.text = value;
 }
-// ********** Code for HTMLSelectElementJs **************
+// ********** Code for _HTMLSelectElementJs **************
 $dynamic("get$length").HTMLSelectElement = function() {
   return this.length;
 }
@@ -2089,98 +2092,98 @@ $dynamic("get$value").HTMLSelectElement = function() {
 $dynamic("set$value").HTMLSelectElement = function(value) {
   this.value = value;
 }
-// ********** Code for HTMLSourceElementJs **************
-// ********** Code for HTMLSpanElementJs **************
-// ********** Code for HTMLStyleElementJs **************
-// ********** Code for HTMLTableCaptionElementJs **************
-// ********** Code for HTMLTableCellElementJs **************
+// ********** Code for _HTMLSourceElementJs **************
+// ********** Code for _HTMLSpanElementJs **************
+// ********** Code for _HTMLStyleElementJs **************
+// ********** Code for _HTMLTableCaptionElementJs **************
+// ********** Code for _HTMLTableCellElementJs **************
 $dynamic("get$height").HTMLTableCellElement = function() {
   return this.height;
 }
 $dynamic("get$width").HTMLTableCellElement = function() {
   return this.width;
 }
-// ********** Code for HTMLTableColElementJs **************
+// ********** Code for _HTMLTableColElementJs **************
 $dynamic("get$width").HTMLTableColElement = function() {
   return this.width;
 }
-// ********** Code for HTMLTableElementJs **************
+// ********** Code for _HTMLTableElementJs **************
 $dynamic("get$width").HTMLTableElement = function() {
   return this.width;
 }
-// ********** Code for HTMLTableRowElementJs **************
-// ********** Code for HTMLTableSectionElementJs **************
-// ********** Code for HTMLTextAreaElementJs **************
+// ********** Code for _HTMLTableRowElementJs **************
+// ********** Code for _HTMLTableSectionElementJs **************
+// ********** Code for _HTMLTextAreaElementJs **************
 $dynamic("get$value").HTMLTextAreaElement = function() {
   return this.value;
 }
 $dynamic("set$value").HTMLTextAreaElement = function(value) {
   this.value = value;
 }
-// ********** Code for HTMLTitleElementJs **************
+// ********** Code for _HTMLTitleElementJs **************
 $dynamic("get$text").HTMLTitleElement = function() {
   return this.text;
 }
 $dynamic("set$text").HTMLTitleElement = function(value) {
   this.text = value;
 }
-// ********** Code for HTMLTrackElementJs **************
-// ********** Code for HTMLUListElementJs **************
-// ********** Code for HTMLUnknownElementJs **************
-// ********** Code for HTMLVideoElementJs **************
+// ********** Code for _HTMLTrackElementJs **************
+// ********** Code for _HTMLUListElementJs **************
+// ********** Code for _HTMLUnknownElementJs **************
+// ********** Code for _HTMLVideoElementJs **************
 $dynamic("get$height").HTMLVideoElement = function() {
   return this.height;
 }
 $dynamic("get$width").HTMLVideoElement = function() {
   return this.width;
 }
-// ********** Code for HashChangeEventJs **************
-// ********** Code for HighPass2FilterNodeJs **************
-// ********** Code for HistoryJs **************
+// ********** Code for _HashChangeEventJs **************
+// ********** Code for _HighPass2FilterNodeJs **************
+// ********** Code for _HistoryJs **************
 $dynamic("get$length").History = function() {
   return this.length;
 }
-// ********** Code for IDBAnyJs **************
-// ********** Code for IDBCursorJs **************
-// ********** Code for IDBCursorWithValueJs **************
+// ********** Code for _IDBAnyJs **************
+// ********** Code for _IDBCursorJs **************
+// ********** Code for _IDBCursorWithValueJs **************
 $dynamic("get$value").IDBCursorWithValue = function() {
   return this.value;
 }
-// ********** Code for IDBDatabaseJs **************
+// ********** Code for _IDBDatabaseJs **************
 $dynamic("addEventListener$3").IDBDatabase = function($0, $1, $2) {
   return this.addEventListener($0, $wrap_call$1(to$call$1($1)), $2);
 };
-// ********** Code for IDBDatabaseErrorJs **************
-// ********** Code for IDBDatabaseExceptionJs **************
-// ********** Code for IDBFactoryJs **************
-// ********** Code for IDBIndexJs **************
-// ********** Code for IDBKeyJs **************
-// ********** Code for IDBKeyRangeJs **************
-// ********** Code for IDBObjectStoreJs **************
+// ********** Code for _IDBDatabaseErrorJs **************
+// ********** Code for _IDBDatabaseExceptionJs **************
+// ********** Code for _IDBFactoryJs **************
+// ********** Code for _IDBIndexJs **************
+// ********** Code for _IDBKeyJs **************
+// ********** Code for _IDBKeyRangeJs **************
+// ********** Code for _IDBObjectStoreJs **************
 $dynamic("add$1").IDBObjectStore = function($0) {
   return this.add($0);
 };
-// ********** Code for IDBRequestJs **************
+// ********** Code for _IDBRequestJs **************
 $dynamic("addEventListener$3").IDBRequest = function($0, $1, $2) {
   return this.addEventListener($0, $wrap_call$1(to$call$1($1)), $2);
 };
-// ********** Code for IDBTransactionJs **************
+// ********** Code for _IDBTransactionJs **************
 $dynamic("addEventListener$3").IDBTransaction = function($0, $1, $2) {
   return this.addEventListener($0, $wrap_call$1(to$call$1($1)), $2);
 };
-// ********** Code for IDBVersionChangeEventJs **************
-// ********** Code for IDBVersionChangeRequestJs **************
-// ********** Code for ImageDataJs **************
+// ********** Code for _IDBVersionChangeEventJs **************
+// ********** Code for _IDBVersionChangeRequestJs **************
+// ********** Code for _ImageDataJs **************
 $dynamic("get$height").ImageData = function() {
   return this.height;
 }
 $dynamic("get$width").ImageData = function() {
   return this.width;
 }
-// ********** Code for InjectedScriptHostJs **************
-// ********** Code for InspectorFrontendHostJs **************
-// ********** Code for Int16ArrayJs **************
-var Int16ArrayJs = {};
+// ********** Code for _InjectedScriptHostJs **************
+// ********** Code for _InspectorFrontendHostJs **************
+// ********** Code for _Int16ArrayJs **************
+var _Int16ArrayJs = {};
 $dynamic("get$length").Int16Array = function() {
   return this.length;
 }
@@ -2226,8 +2229,8 @@ $dynamic("forEach$1").Int16Array = function($0) {
 $dynamic("indexOf$1").Int16Array = function($0) {
   return this.indexOf($0, (0));
 };
-// ********** Code for Int32ArrayJs **************
-var Int32ArrayJs = {};
+// ********** Code for _Int32ArrayJs **************
+var _Int32ArrayJs = {};
 $dynamic("get$length").Int32Array = function() {
   return this.length;
 }
@@ -2273,8 +2276,8 @@ $dynamic("forEach$1").Int32Array = function($0) {
 $dynamic("indexOf$1").Int32Array = function($0) {
   return this.indexOf($0, (0));
 };
-// ********** Code for Int8ArrayJs **************
-var Int8ArrayJs = {};
+// ********** Code for _Int8ArrayJs **************
+var _Int8ArrayJs = {};
 $dynamic("get$length").Int8Array = function() {
   return this.length;
 }
@@ -2320,18 +2323,18 @@ $dynamic("forEach$1").Int8Array = function($0) {
 $dynamic("indexOf$1").Int8Array = function($0) {
   return this.indexOf($0, (0));
 };
-// ********** Code for JavaScriptAudioNodeJs **************
-// ********** Code for JavaScriptCallFrameJs **************
-// ********** Code for KeyboardEventJs **************
-// ********** Code for LocationJs **************
-// ********** Code for LowPass2FilterNodeJs **************
-// ********** Code for MediaControllerJs **************
+// ********** Code for _JavaScriptAudioNodeJs **************
+// ********** Code for _JavaScriptCallFrameJs **************
+// ********** Code for _KeyboardEventJs **************
+// ********** Code for _LocationJs **************
+// ********** Code for _LowPass2FilterNodeJs **************
+// ********** Code for _MediaControllerJs **************
 $dynamic("addEventListener$3").MediaController = function($0, $1, $2) {
   return this.addEventListener($0, $wrap_call$1(to$call$1($1)), $2);
 };
-// ********** Code for MediaElementAudioSourceNodeJs **************
-// ********** Code for MediaErrorJs **************
-// ********** Code for MediaListJs **************
+// ********** Code for _MediaElementAudioSourceNodeJs **************
+// ********** Code for _MediaErrorJs **************
+// ********** Code for _MediaListJs **************
 $dynamic("get$length").MediaList = function() {
   return this.length;
 }
@@ -2377,12 +2380,12 @@ $dynamic("forEach$1").MediaList = function($0) {
 $dynamic("indexOf$1").MediaList = function($0) {
   return this.indexOf($0, (0));
 };
-// ********** Code for MediaQueryListJs **************
-// ********** Code for MediaQueryListListenerJs **************
-// ********** Code for MemoryInfoJs **************
-// ********** Code for MessageChannelJs **************
-// ********** Code for MessageEventJs **************
-// ********** Code for MessagePortJs **************
+// ********** Code for _MediaQueryListJs **************
+// ********** Code for _MediaQueryListListenerJs **************
+// ********** Code for _MemoryInfoJs **************
+// ********** Code for _MessageChannelJs **************
+// ********** Code for _MessageEventJs **************
+// ********** Code for _MessagePortJs **************
 $dynamic("addEventListener$3").MessagePort = function($0, $1, $2) {
   return this.addEventListener($0, $wrap_call$1(to$call$1($1)), $2);
 };
@@ -2395,12 +2398,12 @@ $dynamic("postMessage$2").MessagePort = function($0, $1) {
 $dynamic("start$0").MessagePort = function() {
   return this.start();
 };
-// ********** Code for MetadataJs **************
-// ********** Code for MouseEventJs **************
-// ********** Code for MutationCallbackJs **************
-// ********** Code for MutationEventJs **************
-// ********** Code for MutationRecordJs **************
-// ********** Code for NamedNodeMapJs **************
+// ********** Code for _MetadataJs **************
+// ********** Code for _MouseEventJs **************
+// ********** Code for _MutationCallbackJs **************
+// ********** Code for _MutationEventJs **************
+// ********** Code for _MutationRecordJs **************
+// ********** Code for _NamedNodeMapJs **************
 $dynamic("get$length").NamedNodeMap = function() {
   return this.length;
 }
@@ -2446,10 +2449,10 @@ $dynamic("forEach$1").NamedNodeMap = function($0) {
 $dynamic("indexOf$1").NamedNodeMap = function($0) {
   return this.indexOf($0, (0));
 };
-// ********** Code for NavigatorJs **************
-// ********** Code for NodeFilterJs **************
-// ********** Code for NodeIteratorJs **************
-// ********** Code for NodeListJs **************
+// ********** Code for _NavigatorJs **************
+// ********** Code for _NodeFilterJs **************
+// ********** Code for _NodeIteratorJs **************
+// ********** Code for _NodeListJs **************
 $dynamic("get$length").NodeList = function() {
   return this.length;
 }
@@ -2495,178 +2498,178 @@ $dynamic("forEach$1").NodeList = function($0) {
 $dynamic("indexOf$1").NodeList = function($0) {
   return this.indexOf($0, (0));
 };
-// ********** Code for NodeSelectorJs **************
-// ********** Code for NotationJs **************
-// ********** Code for NotificationJs **************
+// ********** Code for _NodeSelectorJs **************
+// ********** Code for _NotationJs **************
+// ********** Code for _NotificationJs **************
 $dynamic("addEventListener$3").Notification = function($0, $1, $2) {
   return this.addEventListener($0, $wrap_call$1(to$call$1($1)), $2);
 };
-// ********** Code for NotificationCenterJs **************
-// ********** Code for OESStandardDerivativesJs **************
-// ********** Code for OESTextureFloatJs **************
-// ********** Code for OESVertexArrayObjectJs **************
-// ********** Code for OfflineAudioCompletionEventJs **************
-// ********** Code for OperationNotAllowedExceptionJs **************
-// ********** Code for OverflowEventJs **************
-// ********** Code for PageTransitionEventJs **************
-// ********** Code for PerformanceJs **************
-// ********** Code for PerformanceNavigationJs **************
-// ********** Code for PerformanceTimingJs **************
-// ********** Code for PointerLockJs **************
-// ********** Code for PopStateEventJs **************
-// ********** Code for PositionErrorJs **************
-// ********** Code for ProcessingInstructionJs **************
-// ********** Code for ProgressEventJs **************
-// ********** Code for RGBColorJs **************
-// ********** Code for RangeJs **************
-// ********** Code for RangeExceptionJs **************
-// ********** Code for RealtimeAnalyserNodeJs **************
-// ********** Code for RectJs **************
+// ********** Code for _NotificationCenterJs **************
+// ********** Code for _OESStandardDerivativesJs **************
+// ********** Code for _OESTextureFloatJs **************
+// ********** Code for _OESVertexArrayObjectJs **************
+// ********** Code for _OfflineAudioCompletionEventJs **************
+// ********** Code for _OperationNotAllowedExceptionJs **************
+// ********** Code for _OverflowEventJs **************
+// ********** Code for _PageTransitionEventJs **************
+// ********** Code for _PerformanceJs **************
+// ********** Code for _PerformanceNavigationJs **************
+// ********** Code for _PerformanceTimingJs **************
+// ********** Code for _PointerLockJs **************
+// ********** Code for _PopStateEventJs **************
+// ********** Code for _PositionErrorJs **************
+// ********** Code for _ProcessingInstructionJs **************
+// ********** Code for _ProgressEventJs **************
+// ********** Code for _RGBColorJs **************
+// ********** Code for _RangeJs **************
+// ********** Code for _RangeExceptionJs **************
+// ********** Code for _RealtimeAnalyserNodeJs **************
+// ********** Code for _RectJs **************
 $dynamic("get$left").Rect = function() {
   return this.left;
 }
 $dynamic("get$top").Rect = function() {
   return this.top;
 }
-// ********** Code for SQLErrorJs **************
-// ********** Code for SQLExceptionJs **************
-// ********** Code for SQLResultSetJs **************
-// ********** Code for SQLResultSetRowListJs **************
+// ********** Code for _SQLErrorJs **************
+// ********** Code for _SQLExceptionJs **************
+// ********** Code for _SQLResultSetJs **************
+// ********** Code for _SQLResultSetRowListJs **************
 $dynamic("get$length").SQLResultSetRowList = function() {
   return this.length;
 }
-// ********** Code for SQLTransactionJs **************
-// ********** Code for SQLTransactionSyncJs **************
-// ********** Code for SVGElementJs **************
-// ********** Code for SVGAElementJs **************
+// ********** Code for _SQLTransactionJs **************
+// ********** Code for _SQLTransactionSyncJs **************
+// ********** Code for _SVGElementJs **************
+// ********** Code for _SVGAElementJs **************
 $dynamic("get$className").SVGAElement = function() {
   return this.className;
 }
 $dynamic("get$style").SVGAElement = function() {
   return this.style;
 }
-// ********** Code for SVGAltGlyphDefElementJs **************
-// ********** Code for SVGTextContentElementJs **************
+// ********** Code for _SVGAltGlyphDefElementJs **************
+// ********** Code for _SVGTextContentElementJs **************
 $dynamic("get$className").SVGTextContentElement = function() {
   return this.className;
 }
 $dynamic("get$style").SVGTextContentElement = function() {
   return this.style;
 }
-// ********** Code for SVGTextPositioningElementJs **************
-// ********** Code for SVGAltGlyphElementJs **************
-// ********** Code for SVGAltGlyphItemElementJs **************
-// ********** Code for SVGAngleJs **************
+// ********** Code for _SVGTextPositioningElementJs **************
+// ********** Code for _SVGAltGlyphElementJs **************
+// ********** Code for _SVGAltGlyphItemElementJs **************
+// ********** Code for _SVGAngleJs **************
 $dynamic("get$value").SVGAngle = function() {
   return this.value;
 }
 $dynamic("set$value").SVGAngle = function(value) {
   this.value = value;
 }
-// ********** Code for SVGAnimationElementJs **************
-// ********** Code for SVGAnimateColorElementJs **************
-// ********** Code for SVGAnimateElementJs **************
-// ********** Code for SVGAnimateMotionElementJs **************
-// ********** Code for SVGAnimateTransformElementJs **************
-// ********** Code for SVGAnimatedAngleJs **************
+// ********** Code for _SVGAnimationElementJs **************
+// ********** Code for _SVGAnimateColorElementJs **************
+// ********** Code for _SVGAnimateElementJs **************
+// ********** Code for _SVGAnimateMotionElementJs **************
+// ********** Code for _SVGAnimateTransformElementJs **************
+// ********** Code for _SVGAnimatedAngleJs **************
 $dynamic("get$baseVal").SVGAnimatedAngle = function() {
   return this.baseVal;
 }
-// ********** Code for SVGAnimatedBooleanJs **************
+// ********** Code for _SVGAnimatedBooleanJs **************
 $dynamic("get$baseVal").SVGAnimatedBoolean = function() {
   return this.baseVal;
 }
 $dynamic("set$baseVal").SVGAnimatedBoolean = function(value) {
   this.baseVal = value;
 }
-// ********** Code for SVGAnimatedEnumerationJs **************
+// ********** Code for _SVGAnimatedEnumerationJs **************
 $dynamic("get$baseVal").SVGAnimatedEnumeration = function() {
   return this.baseVal;
 }
 $dynamic("set$baseVal").SVGAnimatedEnumeration = function(value) {
   this.baseVal = value;
 }
-// ********** Code for SVGAnimatedIntegerJs **************
+// ********** Code for _SVGAnimatedIntegerJs **************
 $dynamic("get$baseVal").SVGAnimatedInteger = function() {
   return this.baseVal;
 }
 $dynamic("set$baseVal").SVGAnimatedInteger = function(value) {
   this.baseVal = value;
 }
-// ********** Code for SVGAnimatedLengthJs **************
+// ********** Code for _SVGAnimatedLengthJs **************
 $dynamic("get$baseVal").SVGAnimatedLength = function() {
   return this.baseVal;
 }
-// ********** Code for SVGAnimatedLengthListJs **************
+// ********** Code for _SVGAnimatedLengthListJs **************
 $dynamic("get$baseVal").SVGAnimatedLengthList = function() {
   return this.baseVal;
 }
-// ********** Code for SVGAnimatedNumberJs **************
+// ********** Code for _SVGAnimatedNumberJs **************
 $dynamic("get$baseVal").SVGAnimatedNumber = function() {
   return this.baseVal;
 }
 $dynamic("set$baseVal").SVGAnimatedNumber = function(value) {
   this.baseVal = value;
 }
-// ********** Code for SVGAnimatedNumberListJs **************
+// ********** Code for _SVGAnimatedNumberListJs **************
 $dynamic("get$baseVal").SVGAnimatedNumberList = function() {
   return this.baseVal;
 }
-// ********** Code for SVGAnimatedPreserveAspectRatioJs **************
+// ********** Code for _SVGAnimatedPreserveAspectRatioJs **************
 $dynamic("get$baseVal").SVGAnimatedPreserveAspectRatio = function() {
   return this.baseVal;
 }
-// ********** Code for SVGAnimatedRectJs **************
+// ********** Code for _SVGAnimatedRectJs **************
 $dynamic("get$baseVal").SVGAnimatedRect = function() {
   return this.baseVal;
 }
-// ********** Code for SVGAnimatedStringJs **************
+// ********** Code for _SVGAnimatedStringJs **************
 $dynamic("get$baseVal").SVGAnimatedString = function() {
   return this.baseVal;
 }
 $dynamic("set$baseVal").SVGAnimatedString = function(value) {
   this.baseVal = value;
 }
-// ********** Code for SVGAnimatedTransformListJs **************
+// ********** Code for _SVGAnimatedTransformListJs **************
 $dynamic("get$baseVal").SVGAnimatedTransformList = function() {
   return this.baseVal;
 }
-// ********** Code for SVGCircleElementJs **************
+// ********** Code for _SVGCircleElementJs **************
 $dynamic("get$className").SVGCircleElement = function() {
   return this.className;
 }
 $dynamic("get$style").SVGCircleElement = function() {
   return this.style;
 }
-// ********** Code for SVGClipPathElementJs **************
+// ********** Code for _SVGClipPathElementJs **************
 $dynamic("get$className").SVGClipPathElement = function() {
   return this.className;
 }
 $dynamic("get$style").SVGClipPathElement = function() {
   return this.style;
 }
-// ********** Code for SVGColorJs **************
-// ********** Code for SVGComponentTransferFunctionElementJs **************
-// ********** Code for SVGCursorElementJs **************
-// ********** Code for SVGDefsElementJs **************
+// ********** Code for _SVGColorJs **************
+// ********** Code for _SVGComponentTransferFunctionElementJs **************
+// ********** Code for _SVGCursorElementJs **************
+// ********** Code for _SVGDefsElementJs **************
 $dynamic("get$className").SVGDefsElement = function() {
   return this.className;
 }
 $dynamic("get$style").SVGDefsElement = function() {
   return this.style;
 }
-// ********** Code for SVGDescElementJs **************
+// ********** Code for _SVGDescElementJs **************
 $dynamic("get$className").SVGDescElement = function() {
   return this.className;
 }
 $dynamic("get$style").SVGDescElement = function() {
   return this.style;
 }
-// ********** Code for SVGDocumentJs **************
+// ********** Code for _SVGDocumentJs **************
 $dynamic("get$rootElement").SVGDocument = function() {
   return this.rootElement;
 }
-// ********** Code for SVGElementInstanceJs **************
+// ********** Code for _SVGElementInstanceJs **************
 $dynamic("get$childNodes").SVGElementInstance = function() {
   return this.childNodes;
 }
@@ -2676,20 +2679,20 @@ $dynamic("get$parentNode").SVGElementInstance = function() {
 $dynamic("addEventListener$3").SVGElementInstance = function($0, $1, $2) {
   return this.addEventListener($0, $wrap_call$1(to$call$1($1)), $2);
 };
-// ********** Code for SVGElementInstanceListJs **************
+// ********** Code for _SVGElementInstanceListJs **************
 $dynamic("get$length").SVGElementInstanceList = function() {
   return this.length;
 }
-// ********** Code for SVGEllipseElementJs **************
+// ********** Code for _SVGEllipseElementJs **************
 $dynamic("get$className").SVGEllipseElement = function() {
   return this.className;
 }
 $dynamic("get$style").SVGEllipseElement = function() {
   return this.style;
 }
-// ********** Code for SVGExceptionJs **************
-// ********** Code for SVGExternalResourcesRequiredJs **************
-// ********** Code for SVGFEBlendElementJs **************
+// ********** Code for _SVGExceptionJs **************
+// ********** Code for _SVGExternalResourcesRequiredJs **************
+// ********** Code for _SVGFEBlendElementJs **************
 $dynamic("get$height").SVGFEBlendElement = function() {
   return this.height;
 }
@@ -2702,7 +2705,7 @@ $dynamic("get$className").SVGFEBlendElement = function() {
 $dynamic("get$style").SVGFEBlendElement = function() {
   return this.style;
 }
-// ********** Code for SVGFEColorMatrixElementJs **************
+// ********** Code for _SVGFEColorMatrixElementJs **************
 $dynamic("get$height").SVGFEColorMatrixElement = function() {
   return this.height;
 }
@@ -2715,7 +2718,7 @@ $dynamic("get$className").SVGFEColorMatrixElement = function() {
 $dynamic("get$style").SVGFEColorMatrixElement = function() {
   return this.style;
 }
-// ********** Code for SVGFEComponentTransferElementJs **************
+// ********** Code for _SVGFEComponentTransferElementJs **************
 $dynamic("get$height").SVGFEComponentTransferElement = function() {
   return this.height;
 }
@@ -2728,7 +2731,7 @@ $dynamic("get$className").SVGFEComponentTransferElement = function() {
 $dynamic("get$style").SVGFEComponentTransferElement = function() {
   return this.style;
 }
-// ********** Code for SVGFECompositeElementJs **************
+// ********** Code for _SVGFECompositeElementJs **************
 $dynamic("get$height").SVGFECompositeElement = function() {
   return this.height;
 }
@@ -2741,7 +2744,7 @@ $dynamic("get$className").SVGFECompositeElement = function() {
 $dynamic("get$style").SVGFECompositeElement = function() {
   return this.style;
 }
-// ********** Code for SVGFEConvolveMatrixElementJs **************
+// ********** Code for _SVGFEConvolveMatrixElementJs **************
 $dynamic("get$height").SVGFEConvolveMatrixElement = function() {
   return this.height;
 }
@@ -2754,7 +2757,7 @@ $dynamic("get$className").SVGFEConvolveMatrixElement = function() {
 $dynamic("get$style").SVGFEConvolveMatrixElement = function() {
   return this.style;
 }
-// ********** Code for SVGFEDiffuseLightingElementJs **************
+// ********** Code for _SVGFEDiffuseLightingElementJs **************
 $dynamic("get$height").SVGFEDiffuseLightingElement = function() {
   return this.height;
 }
@@ -2767,7 +2770,7 @@ $dynamic("get$className").SVGFEDiffuseLightingElement = function() {
 $dynamic("get$style").SVGFEDiffuseLightingElement = function() {
   return this.style;
 }
-// ********** Code for SVGFEDisplacementMapElementJs **************
+// ********** Code for _SVGFEDisplacementMapElementJs **************
 $dynamic("get$height").SVGFEDisplacementMapElement = function() {
   return this.height;
 }
@@ -2780,8 +2783,8 @@ $dynamic("get$className").SVGFEDisplacementMapElement = function() {
 $dynamic("get$style").SVGFEDisplacementMapElement = function() {
   return this.style;
 }
-// ********** Code for SVGFEDistantLightElementJs **************
-// ********** Code for SVGFEDropShadowElementJs **************
+// ********** Code for _SVGFEDistantLightElementJs **************
+// ********** Code for _SVGFEDropShadowElementJs **************
 $dynamic("get$height").SVGFEDropShadowElement = function() {
   return this.height;
 }
@@ -2794,7 +2797,7 @@ $dynamic("get$className").SVGFEDropShadowElement = function() {
 $dynamic("get$style").SVGFEDropShadowElement = function() {
   return this.style;
 }
-// ********** Code for SVGFEFloodElementJs **************
+// ********** Code for _SVGFEFloodElementJs **************
 $dynamic("get$height").SVGFEFloodElement = function() {
   return this.height;
 }
@@ -2807,11 +2810,11 @@ $dynamic("get$className").SVGFEFloodElement = function() {
 $dynamic("get$style").SVGFEFloodElement = function() {
   return this.style;
 }
-// ********** Code for SVGFEFuncAElementJs **************
-// ********** Code for SVGFEFuncBElementJs **************
-// ********** Code for SVGFEFuncGElementJs **************
-// ********** Code for SVGFEFuncRElementJs **************
-// ********** Code for SVGFEGaussianBlurElementJs **************
+// ********** Code for _SVGFEFuncAElementJs **************
+// ********** Code for _SVGFEFuncBElementJs **************
+// ********** Code for _SVGFEFuncGElementJs **************
+// ********** Code for _SVGFEFuncRElementJs **************
+// ********** Code for _SVGFEGaussianBlurElementJs **************
 $dynamic("get$height").SVGFEGaussianBlurElement = function() {
   return this.height;
 }
@@ -2824,7 +2827,7 @@ $dynamic("get$className").SVGFEGaussianBlurElement = function() {
 $dynamic("get$style").SVGFEGaussianBlurElement = function() {
   return this.style;
 }
-// ********** Code for SVGFEImageElementJs **************
+// ********** Code for _SVGFEImageElementJs **************
 $dynamic("get$height").SVGFEImageElement = function() {
   return this.height;
 }
@@ -2837,7 +2840,7 @@ $dynamic("get$className").SVGFEImageElement = function() {
 $dynamic("get$style").SVGFEImageElement = function() {
   return this.style;
 }
-// ********** Code for SVGFEMergeElementJs **************
+// ********** Code for _SVGFEMergeElementJs **************
 $dynamic("get$height").SVGFEMergeElement = function() {
   return this.height;
 }
@@ -2850,8 +2853,8 @@ $dynamic("get$className").SVGFEMergeElement = function() {
 $dynamic("get$style").SVGFEMergeElement = function() {
   return this.style;
 }
-// ********** Code for SVGFEMergeNodeElementJs **************
-// ********** Code for SVGFEMorphologyElementJs **************
+// ********** Code for _SVGFEMergeNodeElementJs **************
+// ********** Code for _SVGFEMorphologyElementJs **************
 $dynamic("get$height").SVGFEMorphologyElement = function() {
   return this.height;
 }
@@ -2864,7 +2867,7 @@ $dynamic("get$className").SVGFEMorphologyElement = function() {
 $dynamic("get$style").SVGFEMorphologyElement = function() {
   return this.style;
 }
-// ********** Code for SVGFEOffsetElementJs **************
+// ********** Code for _SVGFEOffsetElementJs **************
 $dynamic("get$height").SVGFEOffsetElement = function() {
   return this.height;
 }
@@ -2877,8 +2880,8 @@ $dynamic("get$className").SVGFEOffsetElement = function() {
 $dynamic("get$style").SVGFEOffsetElement = function() {
   return this.style;
 }
-// ********** Code for SVGFEPointLightElementJs **************
-// ********** Code for SVGFESpecularLightingElementJs **************
+// ********** Code for _SVGFEPointLightElementJs **************
+// ********** Code for _SVGFESpecularLightingElementJs **************
 $dynamic("get$height").SVGFESpecularLightingElement = function() {
   return this.height;
 }
@@ -2891,8 +2894,8 @@ $dynamic("get$className").SVGFESpecularLightingElement = function() {
 $dynamic("get$style").SVGFESpecularLightingElement = function() {
   return this.style;
 }
-// ********** Code for SVGFESpotLightElementJs **************
-// ********** Code for SVGFETileElementJs **************
+// ********** Code for _SVGFESpotLightElementJs **************
+// ********** Code for _SVGFETileElementJs **************
 $dynamic("get$height").SVGFETileElement = function() {
   return this.height;
 }
@@ -2905,7 +2908,7 @@ $dynamic("get$className").SVGFETileElement = function() {
 $dynamic("get$style").SVGFETileElement = function() {
   return this.style;
 }
-// ********** Code for SVGFETurbulenceElementJs **************
+// ********** Code for _SVGFETurbulenceElementJs **************
 $dynamic("get$height").SVGFETurbulenceElement = function() {
   return this.height;
 }
@@ -2918,7 +2921,7 @@ $dynamic("get$className").SVGFETurbulenceElement = function() {
 $dynamic("get$style").SVGFETurbulenceElement = function() {
   return this.style;
 }
-// ********** Code for SVGFilterElementJs **************
+// ********** Code for _SVGFilterElementJs **************
 $dynamic("get$height").SVGFilterElement = function() {
   return this.height;
 }
@@ -2931,28 +2934,28 @@ $dynamic("get$className").SVGFilterElement = function() {
 $dynamic("get$style").SVGFilterElement = function() {
   return this.style;
 }
-// ********** Code for SVGStylableJs **************
+// ********** Code for _SVGStylableJs **************
 $dynamic("get$className").SVGStylable = function() {
   return this.className;
 }
 $dynamic("get$style").SVGStylable = function() {
   return this.style;
 }
-// ********** Code for SVGFilterPrimitiveStandardAttributesJs **************
+// ********** Code for _SVGFilterPrimitiveStandardAttributesJs **************
 $dynamic("get$height").SVGFilterPrimitiveStandardAttributes = function() {
   return this.height;
 }
 $dynamic("get$width").SVGFilterPrimitiveStandardAttributes = function() {
   return this.width;
 }
-// ********** Code for SVGFitToViewBoxJs **************
-// ********** Code for SVGFontElementJs **************
-// ********** Code for SVGFontFaceElementJs **************
-// ********** Code for SVGFontFaceFormatElementJs **************
-// ********** Code for SVGFontFaceNameElementJs **************
-// ********** Code for SVGFontFaceSrcElementJs **************
-// ********** Code for SVGFontFaceUriElementJs **************
-// ********** Code for SVGForeignObjectElementJs **************
+// ********** Code for _SVGFitToViewBoxJs **************
+// ********** Code for _SVGFontElementJs **************
+// ********** Code for _SVGFontFaceElementJs **************
+// ********** Code for _SVGFontFaceFormatElementJs **************
+// ********** Code for _SVGFontFaceNameElementJs **************
+// ********** Code for _SVGFontFaceSrcElementJs **************
+// ********** Code for _SVGFontFaceUriElementJs **************
+// ********** Code for _SVGForeignObjectElementJs **************
 $dynamic("get$height").SVGForeignObjectElement = function() {
   return this.height;
 }
@@ -2965,30 +2968,30 @@ $dynamic("get$className").SVGForeignObjectElement = function() {
 $dynamic("get$style").SVGForeignObjectElement = function() {
   return this.style;
 }
-// ********** Code for SVGGElementJs **************
+// ********** Code for _SVGGElementJs **************
 $dynamic("get$className").SVGGElement = function() {
   return this.className;
 }
 $dynamic("get$style").SVGGElement = function() {
   return this.style;
 }
-// ********** Code for SVGGlyphElementJs **************
-// ********** Code for SVGGlyphRefElementJs **************
+// ********** Code for _SVGGlyphElementJs **************
+// ********** Code for _SVGGlyphRefElementJs **************
 $dynamic("get$className").SVGGlyphRefElement = function() {
   return this.className;
 }
 $dynamic("get$style").SVGGlyphRefElement = function() {
   return this.style;
 }
-// ********** Code for SVGGradientElementJs **************
+// ********** Code for _SVGGradientElementJs **************
 $dynamic("get$className").SVGGradientElement = function() {
   return this.className;
 }
 $dynamic("get$style").SVGGradientElement = function() {
   return this.style;
 }
-// ********** Code for SVGHKernElementJs **************
-// ********** Code for SVGImageElementJs **************
+// ********** Code for _SVGHKernElementJs **************
+// ********** Code for _SVGImageElementJs **************
 $dynamic("get$height").SVGImageElement = function() {
   return this.height;
 }
@@ -3001,33 +3004,33 @@ $dynamic("get$className").SVGImageElement = function() {
 $dynamic("get$style").SVGImageElement = function() {
   return this.style;
 }
-// ********** Code for SVGLangSpaceJs **************
-// ********** Code for SVGLengthJs **************
+// ********** Code for _SVGLangSpaceJs **************
+// ********** Code for _SVGLengthJs **************
 $dynamic("get$value").SVGLength = function() {
   return this.value;
 }
 $dynamic("set$value").SVGLength = function(value) {
   this.value = value;
 }
-// ********** Code for SVGLengthListJs **************
-// ********** Code for SVGLineElementJs **************
+// ********** Code for _SVGLengthListJs **************
+// ********** Code for _SVGLineElementJs **************
 $dynamic("get$className").SVGLineElement = function() {
   return this.className;
 }
 $dynamic("get$style").SVGLineElement = function() {
   return this.style;
 }
-// ********** Code for SVGLinearGradientElementJs **************
-// ********** Code for SVGLocatableJs **************
-// ********** Code for SVGMPathElementJs **************
-// ********** Code for SVGMarkerElementJs **************
+// ********** Code for _SVGLinearGradientElementJs **************
+// ********** Code for _SVGLocatableJs **************
+// ********** Code for _SVGMPathElementJs **************
+// ********** Code for _SVGMarkerElementJs **************
 $dynamic("get$className").SVGMarkerElement = function() {
   return this.className;
 }
 $dynamic("get$style").SVGMarkerElement = function() {
   return this.style;
 }
-// ********** Code for SVGMaskElementJs **************
+// ********** Code for _SVGMaskElementJs **************
 $dynamic("get$height").SVGMaskElement = function() {
   return this.height;
 }
@@ -3040,47 +3043,47 @@ $dynamic("get$className").SVGMaskElement = function() {
 $dynamic("get$style").SVGMaskElement = function() {
   return this.style;
 }
-// ********** Code for SVGMatrixJs **************
-// ********** Code for SVGMetadataElementJs **************
-// ********** Code for SVGMissingGlyphElementJs **************
-// ********** Code for SVGNumberJs **************
+// ********** Code for _SVGMatrixJs **************
+// ********** Code for _SVGMetadataElementJs **************
+// ********** Code for _SVGMissingGlyphElementJs **************
+// ********** Code for _SVGNumberJs **************
 $dynamic("get$value").SVGNumber = function() {
   return this.value;
 }
 $dynamic("set$value").SVGNumber = function(value) {
   this.value = value;
 }
-// ********** Code for SVGNumberListJs **************
-// ********** Code for SVGPaintJs **************
-// ********** Code for SVGPathElementJs **************
+// ********** Code for _SVGNumberListJs **************
+// ********** Code for _SVGPaintJs **************
+// ********** Code for _SVGPathElementJs **************
 $dynamic("get$className").SVGPathElement = function() {
   return this.className;
 }
 $dynamic("get$style").SVGPathElement = function() {
   return this.style;
 }
-// ********** Code for SVGPathSegJs **************
-// ********** Code for SVGPathSegArcAbsJs **************
-// ********** Code for SVGPathSegArcRelJs **************
-// ********** Code for SVGPathSegClosePathJs **************
-// ********** Code for SVGPathSegCurvetoCubicAbsJs **************
-// ********** Code for SVGPathSegCurvetoCubicRelJs **************
-// ********** Code for SVGPathSegCurvetoCubicSmoothAbsJs **************
-// ********** Code for SVGPathSegCurvetoCubicSmoothRelJs **************
-// ********** Code for SVGPathSegCurvetoQuadraticAbsJs **************
-// ********** Code for SVGPathSegCurvetoQuadraticRelJs **************
-// ********** Code for SVGPathSegCurvetoQuadraticSmoothAbsJs **************
-// ********** Code for SVGPathSegCurvetoQuadraticSmoothRelJs **************
-// ********** Code for SVGPathSegLinetoAbsJs **************
-// ********** Code for SVGPathSegLinetoHorizontalAbsJs **************
-// ********** Code for SVGPathSegLinetoHorizontalRelJs **************
-// ********** Code for SVGPathSegLinetoRelJs **************
-// ********** Code for SVGPathSegLinetoVerticalAbsJs **************
-// ********** Code for SVGPathSegLinetoVerticalRelJs **************
-// ********** Code for SVGPathSegListJs **************
-// ********** Code for SVGPathSegMovetoAbsJs **************
-// ********** Code for SVGPathSegMovetoRelJs **************
-// ********** Code for SVGPatternElementJs **************
+// ********** Code for _SVGPathSegJs **************
+// ********** Code for _SVGPathSegArcAbsJs **************
+// ********** Code for _SVGPathSegArcRelJs **************
+// ********** Code for _SVGPathSegClosePathJs **************
+// ********** Code for _SVGPathSegCurvetoCubicAbsJs **************
+// ********** Code for _SVGPathSegCurvetoCubicRelJs **************
+// ********** Code for _SVGPathSegCurvetoCubicSmoothAbsJs **************
+// ********** Code for _SVGPathSegCurvetoCubicSmoothRelJs **************
+// ********** Code for _SVGPathSegCurvetoQuadraticAbsJs **************
+// ********** Code for _SVGPathSegCurvetoQuadraticRelJs **************
+// ********** Code for _SVGPathSegCurvetoQuadraticSmoothAbsJs **************
+// ********** Code for _SVGPathSegCurvetoQuadraticSmoothRelJs **************
+// ********** Code for _SVGPathSegLinetoAbsJs **************
+// ********** Code for _SVGPathSegLinetoHorizontalAbsJs **************
+// ********** Code for _SVGPathSegLinetoHorizontalRelJs **************
+// ********** Code for _SVGPathSegLinetoRelJs **************
+// ********** Code for _SVGPathSegLinetoVerticalAbsJs **************
+// ********** Code for _SVGPathSegLinetoVerticalRelJs **************
+// ********** Code for _SVGPathSegListJs **************
+// ********** Code for _SVGPathSegMovetoAbsJs **************
+// ********** Code for _SVGPathSegMovetoRelJs **************
+// ********** Code for _SVGPatternElementJs **************
 $dynamic("get$height").SVGPatternElement = function() {
   return this.height;
 }
@@ -3093,32 +3096,32 @@ $dynamic("get$className").SVGPatternElement = function() {
 $dynamic("get$style").SVGPatternElement = function() {
   return this.style;
 }
-// ********** Code for SVGPointJs **************
-// ********** Code for SVGPointListJs **************
-// ********** Code for SVGPolygonElementJs **************
+// ********** Code for _SVGPointJs **************
+// ********** Code for _SVGPointListJs **************
+// ********** Code for _SVGPolygonElementJs **************
 $dynamic("get$className").SVGPolygonElement = function() {
   return this.className;
 }
 $dynamic("get$style").SVGPolygonElement = function() {
   return this.style;
 }
-// ********** Code for SVGPolylineElementJs **************
+// ********** Code for _SVGPolylineElementJs **************
 $dynamic("get$className").SVGPolylineElement = function() {
   return this.className;
 }
 $dynamic("get$style").SVGPolylineElement = function() {
   return this.style;
 }
-// ********** Code for SVGPreserveAspectRatioJs **************
-// ********** Code for SVGRadialGradientElementJs **************
-// ********** Code for SVGRectJs **************
+// ********** Code for _SVGPreserveAspectRatioJs **************
+// ********** Code for _SVGRadialGradientElementJs **************
+// ********** Code for _SVGRectJs **************
 $dynamic("get$height").SVGRect = function() {
   return this.height;
 }
 $dynamic("get$width").SVGRect = function() {
   return this.width;
 }
-// ********** Code for SVGRectElementJs **************
+// ********** Code for _SVGRectElementJs **************
 $dynamic("get$height").SVGRectElement = function() {
   return this.height;
 }
@@ -3131,8 +3134,8 @@ $dynamic("get$className").SVGRectElement = function() {
 $dynamic("get$style").SVGRectElement = function() {
   return this.style;
 }
-// ********** Code for SVGRenderingIntentJs **************
-// ********** Code for SVGSVGElementJs **************
+// ********** Code for _SVGRenderingIntentJs **************
+// ********** Code for _SVGSVGElementJs **************
 $dynamic("get$height").SVGSVGElement = function() {
   return this.height;
 }
@@ -3145,49 +3148,49 @@ $dynamic("get$className").SVGSVGElement = function() {
 $dynamic("get$style").SVGSVGElement = function() {
   return this.style;
 }
-// ********** Code for SVGScriptElementJs **************
-// ********** Code for SVGSetElementJs **************
-// ********** Code for SVGStopElementJs **************
+// ********** Code for _SVGScriptElementJs **************
+// ********** Code for _SVGSetElementJs **************
+// ********** Code for _SVGStopElementJs **************
 $dynamic("get$className").SVGStopElement = function() {
   return this.className;
 }
 $dynamic("get$style").SVGStopElement = function() {
   return this.style;
 }
-// ********** Code for SVGStringListJs **************
-// ********** Code for SVGStyleElementJs **************
-// ********** Code for SVGSwitchElementJs **************
+// ********** Code for _SVGStringListJs **************
+// ********** Code for _SVGStyleElementJs **************
+// ********** Code for _SVGSwitchElementJs **************
 $dynamic("get$className").SVGSwitchElement = function() {
   return this.className;
 }
 $dynamic("get$style").SVGSwitchElement = function() {
   return this.style;
 }
-// ********** Code for SVGSymbolElementJs **************
+// ********** Code for _SVGSymbolElementJs **************
 $dynamic("get$className").SVGSymbolElement = function() {
   return this.className;
 }
 $dynamic("get$style").SVGSymbolElement = function() {
   return this.style;
 }
-// ********** Code for SVGTRefElementJs **************
-// ********** Code for SVGTSpanElementJs **************
-// ********** Code for SVGTestsJs **************
-// ********** Code for SVGTextElementJs **************
-// ********** Code for SVGTextPathElementJs **************
-// ********** Code for SVGTitleElementJs **************
+// ********** Code for _SVGTRefElementJs **************
+// ********** Code for _SVGTSpanElementJs **************
+// ********** Code for _SVGTestsJs **************
+// ********** Code for _SVGTextElementJs **************
+// ********** Code for _SVGTextPathElementJs **************
+// ********** Code for _SVGTitleElementJs **************
 $dynamic("get$className").SVGTitleElement = function() {
   return this.className;
 }
 $dynamic("get$style").SVGTitleElement = function() {
   return this.style;
 }
-// ********** Code for SVGTransformJs **************
-// ********** Code for SVGTransformListJs **************
-// ********** Code for SVGTransformableJs **************
-// ********** Code for SVGURIReferenceJs **************
-// ********** Code for SVGUnitTypesJs **************
-// ********** Code for SVGUseElementJs **************
+// ********** Code for _SVGTransformJs **************
+// ********** Code for _SVGTransformListJs **************
+// ********** Code for _SVGTransformableJs **************
+// ********** Code for _SVGURIReferenceJs **************
+// ********** Code for _SVGUnitTypesJs **************
+// ********** Code for _SVGUseElementJs **************
 $dynamic("get$height").SVGUseElement = function() {
   return this.height;
 }
@@ -3200,33 +3203,33 @@ $dynamic("get$className").SVGUseElement = function() {
 $dynamic("get$style").SVGUseElement = function() {
   return this.style;
 }
-// ********** Code for SVGVKernElementJs **************
-// ********** Code for SVGViewElementJs **************
-// ********** Code for SVGZoomAndPanJs **************
-// ********** Code for SVGViewSpecJs **************
-// ********** Code for SVGZoomEventJs **************
-// ********** Code for ScreenJs **************
+// ********** Code for _SVGVKernElementJs **************
+// ********** Code for _SVGViewElementJs **************
+// ********** Code for _SVGZoomAndPanJs **************
+// ********** Code for _SVGViewSpecJs **************
+// ********** Code for _SVGZoomEventJs **************
+// ********** Code for _ScreenJs **************
 $dynamic("get$height").Screen = function() {
   return this.height;
 }
 $dynamic("get$width").Screen = function() {
   return this.width;
 }
-// ********** Code for ScriptProfileJs **************
-// ********** Code for ScriptProfileNodeJs **************
+// ********** Code for _ScriptProfileJs **************
+// ********** Code for _ScriptProfileNodeJs **************
 $dynamic("get$children").ScriptProfileNode = function() {
   return this.children;
 }
-// ********** Code for ShadowRootJs **************
-// ********** Code for SharedWorkerJs **************
-// ********** Code for SharedWorkerContextJs **************
-// ********** Code for SpeechInputEventJs **************
-// ********** Code for SpeechInputResultJs **************
-// ********** Code for SpeechInputResultListJs **************
+// ********** Code for _ShadowRootJs **************
+// ********** Code for _SharedWorkerJs **************
+// ********** Code for _SharedWorkerContextJs **************
+// ********** Code for _SpeechInputEventJs **************
+// ********** Code for _SpeechInputResultJs **************
+// ********** Code for _SpeechInputResultListJs **************
 $dynamic("get$length").SpeechInputResultList = function() {
   return this.length;
 }
-// ********** Code for StorageJs **************
+// ********** Code for _StorageJs **************
 $dynamic("get$length").Storage = function() {
   return this.length;
 }
@@ -3246,10 +3249,10 @@ $dynamic("set$dartObjectLocalStorage").Storage = function(value) {
       else
         throw new UnsupportedOperationException('Cannot dartObjectLocalStorage for unknown Storage object.');
 }
-// ********** Code for StorageEventJs **************
-// ********** Code for StorageInfoJs **************
-// ********** Code for StyleMediaJs **************
-// ********** Code for StyleSheetListJs **************
+// ********** Code for _StorageEventJs **************
+// ********** Code for _StorageInfoJs **************
+// ********** Code for _StyleMediaJs **************
+// ********** Code for _StyleSheetListJs **************
 $dynamic("get$length").StyleSheetList = function() {
   return this.length;
 }
@@ -3295,16 +3298,16 @@ $dynamic("forEach$1").StyleSheetList = function($0) {
 $dynamic("indexOf$1").StyleSheetList = function($0) {
   return this.indexOf($0, (0));
 };
-// ********** Code for TextEventJs **************
-// ********** Code for TextMetricsJs **************
+// ********** Code for _TextEventJs **************
+// ********** Code for _TextMetricsJs **************
 $dynamic("get$width").TextMetrics = function() {
   return this.width;
 }
-// ********** Code for TextTrackJs **************
+// ********** Code for _TextTrackJs **************
 $dynamic("addEventListener$3").TextTrack = function($0, $1, $2) {
   return this.addEventListener($0, $wrap_call$1(to$call$1($1)), $2);
 };
-// ********** Code for TextTrackCueJs **************
+// ********** Code for _TextTrackCueJs **************
 $dynamic("get$text").TextTrackCue = function() {
   return this.text;
 }
@@ -3314,24 +3317,24 @@ $dynamic("set$text").TextTrackCue = function(value) {
 $dynamic("addEventListener$3").TextTrackCue = function($0, $1, $2) {
   return this.addEventListener($0, $wrap_call$1(to$call$1($1)), $2);
 };
-// ********** Code for TextTrackCueListJs **************
+// ********** Code for _TextTrackCueListJs **************
 $dynamic("get$length").TextTrackCueList = function() {
   return this.length;
 }
-// ********** Code for TextTrackListJs **************
+// ********** Code for _TextTrackListJs **************
 $dynamic("get$length").TextTrackList = function() {
   return this.length;
 }
 $dynamic("addEventListener$3").TextTrackList = function($0, $1, $2) {
   return this.addEventListener($0, $wrap_call$1(to$call$1($1)), $2);
 };
-// ********** Code for TimeRangesJs **************
+// ********** Code for _TimeRangesJs **************
 $dynamic("get$length").TimeRanges = function() {
   return this.length;
 }
-// ********** Code for TouchJs **************
-// ********** Code for TouchEventJs **************
-// ********** Code for TouchListJs **************
+// ********** Code for _TouchJs **************
+// ********** Code for _TouchEventJs **************
+// ********** Code for _TouchListJs **************
 $dynamic("get$length").TouchList = function() {
   return this.length;
 }
@@ -3377,13 +3380,13 @@ $dynamic("forEach$1").TouchList = function($0) {
 $dynamic("indexOf$1").TouchList = function($0) {
   return this.indexOf($0, (0));
 };
-// ********** Code for TrackEventJs **************
-// ********** Code for TreeWalkerJs **************
+// ********** Code for _TrackEventJs **************
+// ********** Code for _TreeWalkerJs **************
 $dynamic("get$parentNode").TreeWalker = function() {
   return this.parentNode.bind(this);
 }
-// ********** Code for Uint16ArrayJs **************
-var Uint16ArrayJs = {};
+// ********** Code for _Uint16ArrayJs **************
+var _Uint16ArrayJs = {};
 $dynamic("get$length").Uint16Array = function() {
   return this.length;
 }
@@ -3429,8 +3432,8 @@ $dynamic("forEach$1").Uint16Array = function($0) {
 $dynamic("indexOf$1").Uint16Array = function($0) {
   return this.indexOf($0, (0));
 };
-// ********** Code for Uint32ArrayJs **************
-var Uint32ArrayJs = {};
+// ********** Code for _Uint32ArrayJs **************
+var _Uint32ArrayJs = {};
 $dynamic("get$length").Uint32Array = function() {
   return this.length;
 }
@@ -3476,8 +3479,8 @@ $dynamic("forEach$1").Uint32Array = function($0) {
 $dynamic("indexOf$1").Uint32Array = function($0) {
   return this.indexOf($0, (0));
 };
-// ********** Code for Uint8ArrayJs **************
-var Uint8ArrayJs = {};
+// ********** Code for _Uint8ArrayJs **************
+var _Uint8ArrayJs = {};
 $dynamic("get$length").Uint8Array = function() {
   return this.length;
 }
@@ -3523,80 +3526,80 @@ $dynamic("forEach$1").Uint8Array = function($0) {
 $dynamic("indexOf$1").Uint8Array = function($0) {
   return this.indexOf($0, (0));
 };
-// ********** Code for Uint8ClampedArrayJs **************
-var Uint8ClampedArrayJs = {};
+// ********** Code for _Uint8ClampedArrayJs **************
+var _Uint8ClampedArrayJs = {};
 $dynamic("get$length").Uint8ClampedArray = function() {
   return this.length;
 }
-// ********** Code for ValidityStateJs **************
-// ********** Code for WaveShaperNodeJs **************
-// ********** Code for WebGLActiveInfoJs **************
-// ********** Code for WebGLBufferJs **************
-// ********** Code for WebGLCompressedTexturesJs **************
-// ********** Code for WebGLContextAttributesJs **************
-// ********** Code for WebGLContextEventJs **************
-// ********** Code for WebGLDebugRendererInfoJs **************
-// ********** Code for WebGLDebugShadersJs **************
-// ********** Code for WebGLFramebufferJs **************
-// ********** Code for WebGLLoseContextJs **************
-// ********** Code for WebGLProgramJs **************
-// ********** Code for WebGLRenderbufferJs **************
-// ********** Code for WebGLRenderingContextJs **************
-// ********** Code for WebGLShaderJs **************
-// ********** Code for WebGLTextureJs **************
-// ********** Code for WebGLUniformLocationJs **************
-// ********** Code for WebGLVertexArrayObjectOESJs **************
-// ********** Code for WebKitAnimationJs **************
-// ********** Code for WebKitAnimationEventJs **************
-// ********** Code for WebKitAnimationListJs **************
+// ********** Code for _ValidityStateJs **************
+// ********** Code for _WaveShaperNodeJs **************
+// ********** Code for _WebGLActiveInfoJs **************
+// ********** Code for _WebGLBufferJs **************
+// ********** Code for _WebGLCompressedTexturesJs **************
+// ********** Code for _WebGLContextAttributesJs **************
+// ********** Code for _WebGLContextEventJs **************
+// ********** Code for _WebGLDebugRendererInfoJs **************
+// ********** Code for _WebGLDebugShadersJs **************
+// ********** Code for _WebGLFramebufferJs **************
+// ********** Code for _WebGLLoseContextJs **************
+// ********** Code for _WebGLProgramJs **************
+// ********** Code for _WebGLRenderbufferJs **************
+// ********** Code for _WebGLRenderingContextJs **************
+// ********** Code for _WebGLShaderJs **************
+// ********** Code for _WebGLTextureJs **************
+// ********** Code for _WebGLUniformLocationJs **************
+// ********** Code for _WebGLVertexArrayObjectOESJs **************
+// ********** Code for _WebKitAnimationJs **************
+// ********** Code for _WebKitAnimationEventJs **************
+// ********** Code for _WebKitAnimationListJs **************
 $dynamic("get$length").WebKitAnimationList = function() {
   return this.length;
 }
-// ********** Code for WebKitBlobBuilderJs **************
-// ********** Code for WebKitCSSFilterValueJs **************
-// ********** Code for WebKitCSSKeyframeRuleJs **************
+// ********** Code for _WebKitBlobBuilderJs **************
+// ********** Code for _WebKitCSSFilterValueJs **************
+// ********** Code for _WebKitCSSKeyframeRuleJs **************
 $dynamic("get$style").WebKitCSSKeyframeRule = function() {
   return this.style;
 }
-// ********** Code for WebKitCSSKeyframesRuleJs **************
-// ********** Code for WebKitCSSMatrixJs **************
-// ********** Code for WebKitCSSRegionRuleJs **************
-// ********** Code for WebKitCSSTransformValueJs **************
-// ********** Code for WebKitMutationObserverJs **************
-// ********** Code for WebKitNamedFlowJs **************
-// ********** Code for WebKitPointJs **************
-// ********** Code for WebKitTransitionEventJs **************
-// ********** Code for WebSocketJs **************
+// ********** Code for _WebKitCSSKeyframesRuleJs **************
+// ********** Code for _WebKitCSSMatrixJs **************
+// ********** Code for _WebKitCSSRegionRuleJs **************
+// ********** Code for _WebKitCSSTransformValueJs **************
+// ********** Code for _WebKitMutationObserverJs **************
+// ********** Code for _WebKitNamedFlowJs **************
+// ********** Code for _WebKitPointJs **************
+// ********** Code for _WebKitTransitionEventJs **************
+// ********** Code for _WebSocketJs **************
 $dynamic("addEventListener$3").WebSocket = function($0, $1, $2) {
   return this.addEventListener($0, $wrap_call$1(to$call$1($1)), $2);
 };
-// ********** Code for WheelEventJs **************
-// ********** Code for WorkerJs **************
+// ********** Code for _WheelEventJs **************
+// ********** Code for _WorkerJs **************
 $dynamic("postMessage$1").Worker = function($0) {
   return this.postMessage($0);
 };
 $dynamic("postMessage$2").Worker = function($0, $1) {
   return this.postMessage($0, $1);
 };
-// ********** Code for WorkerLocationJs **************
-// ********** Code for WorkerNavigatorJs **************
-// ********** Code for XMLHttpRequestJs **************
+// ********** Code for _WorkerLocationJs **************
+// ********** Code for _WorkerNavigatorJs **************
+// ********** Code for _XMLHttpRequestJs **************
 $dynamic("addEventListener$3").XMLHttpRequest = function($0, $1, $2) {
   return this.addEventListener($0, $wrap_call$1(to$call$1($1)), $2);
 };
-// ********** Code for XMLHttpRequestExceptionJs **************
-// ********** Code for XMLHttpRequestProgressEventJs **************
-// ********** Code for XMLHttpRequestUploadJs **************
+// ********** Code for _XMLHttpRequestExceptionJs **************
+// ********** Code for _XMLHttpRequestProgressEventJs **************
+// ********** Code for _XMLHttpRequestUploadJs **************
 $dynamic("addEventListener$3").XMLHttpRequestUpload = function($0, $1, $2) {
   return this.addEventListener($0, $wrap_call$1(to$call$1($1)), $2);
 };
-// ********** Code for XMLSerializerJs **************
-// ********** Code for XPathEvaluatorJs **************
-// ********** Code for XPathExceptionJs **************
-// ********** Code for XPathExpressionJs **************
-// ********** Code for XPathNSResolverJs **************
-// ********** Code for XPathResultJs **************
-// ********** Code for XSLTProcessorJs **************
+// ********** Code for _XMLSerializerJs **************
+// ********** Code for _XPathEvaluatorJs **************
+// ********** Code for _XPathExceptionJs **************
+// ********** Code for _XPathExpressionJs **************
+// ********** Code for _XPathNSResolverJs **************
+// ********** Code for _XPathResultJs **************
+// ********** Code for _XSLTProcessorJs **************
 // ********** Code for _Collections **************
 function _Collections() {}
 _Collections.forEach = function(iterable, f) {
@@ -5564,6 +5567,23 @@ SpeechInputEventWrappingImplementation._wrap$ctor = function(ptr) {
 }
 SpeechInputEventWrappingImplementation._wrap$ctor.prototype = SpeechInputEventWrappingImplementation.prototype;
 function SpeechInputEventWrappingImplementation() {}
+// ********** Code for StorageWrappingImplementation **************
+$inherits(StorageWrappingImplementation, DOMWrapperBase);
+StorageWrappingImplementation._wrap$ctor = function(ptr) {
+  DOMWrapperBase._wrap$ctor.call(this, ptr);
+}
+StorageWrappingImplementation._wrap$ctor.prototype = StorageWrappingImplementation.prototype;
+function StorageWrappingImplementation() {}
+StorageWrappingImplementation.prototype.get$length = function() {
+  return this._ptr.get$length();
+}
+StorageWrappingImplementation.prototype.getItem = function(key) {
+  return this._ptr.getItem(key);
+}
+StorageWrappingImplementation.prototype.setItem = function(key, data) {
+  this._ptr.setItem(key, data);
+  return;
+}
 // ********** Code for StyleElementWrappingImplementation **************
 $inherits(StyleElementWrappingImplementation, ElementWrappingImplementation);
 StyleElementWrappingImplementation._wrap$ctor = function(ptr) {
@@ -7134,6 +7154,9 @@ LevelDom.wrapSVGAnimatedString = function(raw) {
 LevelDom.wrapSVGLength = function(raw) {
   return null == raw ? null : null != raw.get$dartObjectLocalStorage() ? raw.get$dartObjectLocalStorage() : new SVGLengthWrappingImplementation._wrap$ctor(raw);
 }
+LevelDom.wrapStorage = function(raw) {
+  return null == raw ? null : null != raw.get$dartObjectLocalStorage() ? raw.get$dartObjectLocalStorage() : new StorageWrappingImplementation._wrap$ctor(raw);
+}
 LevelDom.wrapWindow = function(raw) {
   return null == raw ? null : null != raw.get$dartObjectLocalStorage() ? raw.get$dartObjectLocalStorage() : new WindowWrappingImplementation._wrap$ctor(raw);
 }
@@ -8011,6 +8034,9 @@ function WindowWrappingImplementation() {}
 WindowWrappingImplementation.prototype.get$length = function() {
   return this._ptr.get$length();
 }
+WindowWrappingImplementation.prototype.get$localStorage = function() {
+  return LevelDom.wrapStorage(this._ptr.get$localStorage());
+}
 WindowWrappingImplementation.prototype.get$top = function() {
   return LevelDom.wrapWindow(this._ptr.get$top());
 }
@@ -8498,13 +8524,14 @@ ObservableException.prototype.toString = function() {
   return this.message;
 }
 // ********** Code for top level **************
-//  ********** Library zipdemo **************
-// ********** Code for zipdemo **************
-function zipdemo() {
-  this.enemies = new DoubleLinkedQueue();
+//  ********** Library alphabetinvasion **************
+// ********** Code for AlphabetInvasion **************
+function AlphabetInvasion() {
+  this.currentLevel = (1);
   this.CURRENT_SPEED = (0);
   this.LAUNCH_RATE = (1);
-  this.currentLevel = (1);
+  this.HIGH_SCORE_STORAGE_KEY = "_alphabet_attack_high_score_";
+  this.enemies = new DoubleLinkedQueue();
   this.modalBox = html_get$document().query("#modalmessages");
   this.message = html_get$document().query("#message");
   this.score = html_get$document().query("#score");
@@ -8512,24 +8539,22 @@ function zipdemo() {
   this.level = html_get$document().query("#level");
   this.remainingEnemies = html_get$document().query("#remaining");
   this.highScore = html_get$document().query("#highscore");
-  this.highScore.set$text("0");
 }
-zipdemo.prototype.run = function() {
+AlphabetInvasion.prototype.run = function() {
   var $this = this; // closure support
   this.resetGame();
   this.keyboardObservable = Observable.fromEvent(html_get$window().get$on().get$keyPress());
   this.keyboardObservable.subscribe$1((function (e) {
-    return $this.handleKeypress(e);
+    if ($eq($this.gameState, const$0000)) {
+      $this.hideMessage();
+      $this.playLevel();
+    }
   })
   );
+  var hs = html_get$window().get$localStorage().getItem(this.HIGH_SCORE_STORAGE_KEY);
+  if (!hs.isEmpty()) this.highScore.set$text(hs);
 }
-zipdemo.prototype.handleKeypress = function(e) {
-  if ($eq(this.gameState, const$0000)) {
-    this.hideMessage();
-    this.playLevel();
-  }
-}
-zipdemo.prototype.playLevel = function() {
+AlphabetInvasion.prototype.playLevel = function() {
   var $this = this; // closure support
   if (this.generator != null) this.generator.dispose();
   var title = const$0026.getKeys().filter$1((function (k) {
@@ -8537,14 +8562,15 @@ zipdemo.prototype.playLevel = function() {
   })
   ).iterator().next$0();
   var config = const$0026.$index(title);
-  var enemiesThisLevel = ((this.currentLevel * (2)) + (8));
-  var killed = (0);
   this.gameState = const$0030;
-  this.showMessage(title);
   this.level.set$text(this.currentLevel.toString());
-  this.remainingEnemies.set$text(enemiesThisLevel.toString());
-  Observable.timer((2500), (1)).subscribe$1((function (_) {
+  this.showMessage(title);
+  function play() {
     $this.hideMessage();
+    var enemiesThisLevel = (($this.currentLevel * (2)) + (13));
+    $this.remainingEnemies.set$text(enemiesThisLevel.toString());
+    var capitalLetterProbability = (1) - (($this.currentLevel * (2.5)) / (100));
+    var killed = (0);
     var allEnemiesLaunched = false;
     $this.gameloop = Observable.timer(config.$index($this.CURRENT_SPEED), (-1)).subscribe$1((function (__) {
       return $this.updatePlayfield();
@@ -8563,7 +8589,7 @@ zipdemo.prototype.playLevel = function() {
     })
     );
     $this.generator = Observable.randomInt((0), (25), config.$index($this.LAUNCH_RATE), config.$index($this.LAUNCH_RATE), enemiesThisLevel).apply((function (v) {
-      return Math.random() < (0.5) ? "abcdefghijklmnopqrstuvwxyz"[$sub(v, (1))] : "abcdefghijklmnopqrstuvwxyz"[$sub(v, (1))].toUpperCase();
+      return Math.random() <= capitalLetterProbability ? "abcdefghijklmnopqrstuvwxyz"[$sub(v, (1))] : "abcdefghijklmnopqrstuvwxyz"[$sub(v, (1))].toUpperCase();
     })
     ).subscribe$2((function (v) {
       return $this.launchNewEnemy(v);
@@ -8572,10 +8598,13 @@ zipdemo.prototype.playLevel = function() {
       return allEnemiesLaunched = true;
     })
     );
+  }
+  Observable.timer((2500), (1)).subscribe$1((function (_) {
+    return play();
   })
   );
 }
-zipdemo.prototype.nextLevel = function() {
+AlphabetInvasion.prototype.nextLevel = function() {
   var $this = this; // closure support
   if (this.currentLevel == (15)) this.youWin();
   this.gameState = const$0032;
@@ -8584,20 +8613,31 @@ zipdemo.prototype.nextLevel = function() {
   this.keyboard.dispose();
   this.showMessage(("Level " + this.currentLevel + " Complete"));
   this.currentLevel++;
-  Observable.timer((5000), (1)).subscribe$1((function (_) {
+  Observable.timer((4000), (1)).subscribe$1((function (_) {
     return $this.playLevel();
   })
   );
 }
-zipdemo.prototype.youWin = function() {
-
-}
-zipdemo.prototype.youLose = function() {
+AlphabetInvasion.prototype.youWin = function() {
   var $this = this; // closure support
   if ($eq(this.gameState, const$0032)) return;
   this.gameState = const$0032;
   this.gameloop.dispose();
   this.generator.dispose();
+  this.keyboard.dispose();
+  this.showMessage("You win this time Earthling!  We'll be back!");
+  Observable.timer((5500), (1)).subscribe$1((function (_) {
+    return $this.resetGame();
+  })
+  );
+}
+AlphabetInvasion.prototype.youLose = function() {
+  var $this = this; // closure support
+  if ($eq(this.gameState, const$0032)) return;
+  this.gameState = const$0032;
+  this.gameloop.dispose();
+  this.generator.dispose();
+  this.keyboard.dispose();
   this.enemies.forEach$1((function (enemy) {
     if ($ne(enemy, $this.enemies.first())) {
       enemy.set$text(":P");
@@ -8607,36 +8647,36 @@ zipdemo.prototype.youLose = function() {
   })
   );
   this.showMessage("You Lose Earthling.  Prepare to be alphabetized!");
-  Observable.timer((5000), (1)).subscribe$1((function (_) {
+  Observable.timer((4500), (1)).subscribe$1((function (_) {
     return $this.resetGame();
   })
   );
 }
-zipdemo.prototype.killEnemy = function(enemy) {
+AlphabetInvasion.prototype.killEnemy = function(enemy) {
   enemy.get$style().set$color("Red");
   enemy.set$text("@");
   enemy.get$style().set$fontSize((48));
   var v = this.getTopValue(enemy);
-  this.addToScore(($globals.zipdemo_playfieldDimensions.get$bounding().get$height() - v) * this.currentLevel);
+  this.addToScore(($globals.AlphabetInvasion_playfieldDimensions.get$bounding().get$height() - v) * this.currentLevel);
   Observable.timer((750), (1)).subscribe$1((function (_) {
     return enemy.remove();
   })
   );
 }
-zipdemo.prototype.updatePlayfield = function() {
+AlphabetInvasion.prototype.updatePlayfield = function() {
   var $this = this; // closure support
-  var factor = $globals.zipdemo_playfieldheight / (200);
+  var factor = $globals.AlphabetInvasion_playfieldheight / (200);
   Observable.fromList(this.enemies.get$dynamic()).subscribe$1((function (enemy) {
     var newPos = ($this.getTopValue(enemy) + factor);
     enemy.get$style().set$top(newPos);
-    if (newPos >= $globals.zipdemo_playfieldheight + (44)) $this.youLose();
+    if (newPos >= $globals.AlphabetInvasion_playfieldheight + (44)) $this.youLose();
   })
   );
 }
-zipdemo.prototype.getTopValue = function(e) {
+AlphabetInvasion.prototype.getTopValue = function(e) {
   return Math.parseInt(e.get$style().get$top().toString().replaceAll("px", ""));
 }
-zipdemo.prototype.launchNewEnemy = function(v) {
+AlphabetInvasion.prototype.launchNewEnemy = function(v) {
   var r = (Math.random() * (100) + (155)).toInt();
   var g = (Math.random() * (100) + (155)).toInt();
   var b = (Math.random() * (100) + (155)).toInt();
@@ -8644,19 +8684,20 @@ zipdemo.prototype.launchNewEnemy = function(v) {
   l.get$classes().add("enemy");
   l.get$style().set$color(("rgb(" + r + "," + g + "," + b + ")"));
   l.set$text(v);
-  l.get$style().set$top($globals.zipdemo_playfieldDimensions.get$bounding().get$top());
-  l.get$style().set$left(Math.random() * ($globals.zipdemo_playfieldDimensions.client.get$width() - (25)));
+  l.get$style().set$top($globals.AlphabetInvasion_playfieldDimensions.get$bounding().get$top());
+  l.get$style().set$left(Math.random() * ($globals.AlphabetInvasion_playfieldDimensions.client.get$width() - (25)));
   this.enemies.add(l);
   this.playfield.get$elements().add(l);
 }
-zipdemo.prototype.addToScore = function(amount) {
+AlphabetInvasion.prototype.addToScore = function(amount) {
   var newScore = (Math.parseInt(this.score.get$text()) + amount);
   this.score.set$text(newScore.toString());
   if (newScore > Math.parseInt(this.highScore.get$text())) {
     this.highScore.set$text(newScore.toString());
+    html_get$window().get$localStorage().setItem(this.HIGH_SCORE_STORAGE_KEY, newScore.toString());
   }
 }
-zipdemo.prototype.resetGame = function() {
+AlphabetInvasion.prototype.resetGame = function() {
   var $this = this; // closure support
   this.gameState = const$0000;
   this.showMessage("");
@@ -8677,44 +8718,44 @@ zipdemo.prototype.resetGame = function() {
   );
   this.showMessage("PRESS ANY KEY TO START");
 }
-zipdemo.prototype.updatePlayfieldHeight = function() {
+AlphabetInvasion.prototype.updatePlayfieldHeight = function() {
   var $this = this; // closure support
   return this.playfield.get$rect().then((function (r) {
-    $globals.zipdemo_playfieldDimensions = r;
-    $globals.zipdemo_playfieldheight = r.client.get$top() + r.client.get$height();
+    $globals.AlphabetInvasion_playfieldDimensions = r;
+    $globals.AlphabetInvasion_playfieldheight = r.client.get$top() + r.client.get$height();
   })
   );
 }
-zipdemo.prototype.clearPlayfield = function() {
+AlphabetInvasion.prototype.clearPlayfield = function() {
   this.enemies.forEach$1((function (e) {
     return e.remove$0();
   })
   );
   this.enemies.clear();
 }
-zipdemo.prototype.showMessage = function(msg) {
+AlphabetInvasion.prototype.showMessage = function(msg) {
   var $this = this; // closure support
   if (msg.length == (0)) {
     this.message.set$text("");
     return;
   }
   this.modalBox.get$style().set$opacity("1");
-  var i = (1);
   Observable.timer((30), msg.length).subscribe$1((function (v) {
-    $this.message.set$text(msg.substring((0), i++));
+    var $0;
+    return ($this.message.set$text(($0 = msg.substring((0), v))), $0);
   })
   );
 }
-zipdemo.prototype.hideMessage = function() {
+AlphabetInvasion.prototype.hideMessage = function() {
   this.modalBox.get$style().set$opacity("0");
 }
 // ********** Code for GameState **************
 function GameState(_str) {
-  this._zipdemo_str = _str;
+  this._alphabetinvasion_str = _str;
 }
 // ********** Code for top level **************
 function main() {
-  new zipdemo().run();
+  new AlphabetInvasion().run();
 }
 // 182 dynamic types.
 // 506 types
@@ -8769,7 +8810,7 @@ function $static_init(){
   $globals._firstMeasurementRequest = true;
   $globals._DefaultObserver__hashNum = (0);
   $globals._nextMeasurementFrameScheduled = false;
-  $globals.zipdemo_playfieldheight = (0);
+  $globals.AlphabetInvasion_playfieldheight = (0);
 }
 var const$0000 = Object.create(GameState.prototype, {_str: {"value": "paused", writeable: false}});
 var const$0001 = Object.create(ObservableException.prototype, {message: {"value": "Invalid milliseconds value.", writeable: false}});
@@ -8778,21 +8819,21 @@ var const$0003 = Object.create(NoMoreElementsException.prototype, {});
 var const$0004 = Object.create(EmptyQueueException.prototype, {});
 var const$0006 = Object.create(ObservableException.prototype, {message: {"value": "Parameter 'next' must be a Function f(n) or an IObserver.", writeable: false}});
 var const$0010 = Object.create(IllegalAccessException.prototype, {});
-var const$0011 = ImmutableList.ImmutableList$from$factory([(33), (1900)]);
-var const$0012 = ImmutableList.ImmutableList$from$factory([(31), (1700)]);
-var const$0013 = ImmutableList.ImmutableList$from$factory([(29), (1500)]);
-var const$0014 = ImmutableList.ImmutableList$from$factory([(27), (1350)]);
-var const$0015 = ImmutableList.ImmutableList$from$factory([(25), (1100)]);
-var const$0016 = ImmutableList.ImmutableList$from$factory([(23), (1000)]);
-var const$0017 = ImmutableList.ImmutableList$from$factory([(20), (950)]);
-var const$0018 = ImmutableList.ImmutableList$from$factory([(18), (900)]);
-var const$0019 = ImmutableList.ImmutableList$from$factory([(15), (850)]);
-var const$0020 = ImmutableList.ImmutableList$from$factory([(11), (800)]);
-var const$0021 = ImmutableList.ImmutableList$from$factory([(9), (700)]);
-var const$0022 = ImmutableList.ImmutableList$from$factory([(7), (650)]);
-var const$0023 = ImmutableList.ImmutableList$from$factory([(5), (600)]);
-var const$0024 = ImmutableList.ImmutableList$from$factory([(3), (550)]);
-var const$0025 = ImmutableList.ImmutableList$from$factory([(1), (500)]);
+var const$0011 = ImmutableList.ImmutableList$from$factory([(60), (1300)]);
+var const$0012 = ImmutableList.ImmutableList$from$factory([(55), (1200)]);
+var const$0013 = ImmutableList.ImmutableList$from$factory([(50), (1100)]);
+var const$0014 = ImmutableList.ImmutableList$from$factory([(50), (1000)]);
+var const$0015 = ImmutableList.ImmutableList$from$factory([(45), (800)]);
+var const$0016 = ImmutableList.ImmutableList$from$factory([(40), (650)]);
+var const$0017 = ImmutableList.ImmutableList$from$factory([(35), (500)]);
+var const$0018 = ImmutableList.ImmutableList$from$factory([(30), (450)]);
+var const$0019 = ImmutableList.ImmutableList$from$factory([(25), (400)]);
+var const$0020 = ImmutableList.ImmutableList$from$factory([(20), (400)]);
+var const$0021 = ImmutableList.ImmutableList$from$factory([(15), (350)]);
+var const$0022 = ImmutableList.ImmutableList$from$factory([(11), (350)]);
+var const$0023 = ImmutableList.ImmutableList$from$factory([(9), (350)]);
+var const$0024 = ImmutableList.ImmutableList$from$factory([(7), (350)]);
+var const$0025 = ImmutableList.ImmutableList$from$factory([(5), (350)]);
 var const$0027 = Object.create(SimpleClientRect.prototype, {left: {"value": (0), writeable: false}, top: {"value": (0), writeable: false}, width: {"value": (0), writeable: false}, height: {"value": (0), writeable: false}});
 var const$0028 = ImmutableList.ImmutableList$from$factory([]);
 var const$0029 = Object.create(EmptyElementRect.prototype, {client: {"value": const$0027, writeable: false}, offset: {"value": const$0027, writeable: false}, scroll: {"value": const$0027, writeable: false}, bounding: {"value": const$0027, writeable: false}, clientRects: {"value": const$0028, writeable: false}});
