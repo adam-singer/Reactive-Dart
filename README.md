@@ -12,7 +12,7 @@ of data being pushed at the application.
 * ['Alphabet Invasion!' A game written entirely with Reactive Dart](http://www.lucastudios.com/demos/alphabetinvasion/)
 
 ## Reactive Dart Blog Series
-* [Part 1 - Using Observable.throttle() to minimize routh-trips](http://phylotic.blogspot.com/2012/01/reactive-dart-series-part-1-of-n-using.html)
+* [Part 1 - Using Observable.throttle() to minimize round-trips](http://phylotic.blogspot.com/2012/01/reactive-dart-series-part-1-of-n-using.html)
 * [Part 2 - Merging multiple sequences with Observable.merge()](http://phylotic.blogspot.com/2012/01/reactive-dart-series-part-2-of-n.html)
 * [Part 3 - Creating a simple game with Reactive Dart](http://phylotic.blogspot.com/2012/02/reactive-dart-series-part-3-of-n.html)
 
