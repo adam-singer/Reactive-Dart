@@ -82,7 +82,7 @@ class AlphabetInvasion {
         
     // retreive the high score if one exists
     String hs = window.localStorage.getItem(this.HIGH_SCORE_STORAGE_KEY);
-    if (!hs.isEmpty()) highScore.text = hs;
+    if (hs != null && !hs.isEmpty()) highScore.text = hs;
   }  
   
   
@@ -243,7 +243,7 @@ class AlphabetInvasion {
   void updatePlayfield(){
     
     // adjusting enemy speed based on playfield height
-    num factor = playfieldheight / 200;
+    num factor = (playfieldheight / 200).ceil();
     
     // iterate the enemy list and make adjustments...
     Observable
@@ -324,12 +324,16 @@ class AlphabetInvasion {
   }
   
   // Update the measurement of the playfield, usually in response to a browser size change.
-  void updatePlayfieldHeight() { playfield.rect.then((ElementRect r) 
-                                                          {
-                                                            playfieldDimensions = r;
-                                                            
-                                                            playfieldheight = r.client.top + r.client.height;    
-                                                          });
+  void updatePlayfieldHeight() 
+  { 
+    playfield
+    .rect
+    .then((ElementRect r) 
+        {
+          playfieldDimensions = r;
+          
+          playfieldheight = r.client.top + r.client.height;    
+        });
   }
   
   void clearPlayfield() {

@@ -5794,7 +5794,7 @@ AlphabetInvasion.prototype.run = function() {
   })
   );
   var hs = get$$window().localStorage.getItem(this.HIGH_SCORE_STORAGE_KEY);
-  if (!hs.isEmpty()) this.highScore.set$text(hs);
+  if (hs != null && !hs.isEmpty()) this.highScore.set$text(hs);
 }
 AlphabetInvasion.prototype.playLevel = function() {
   var $this = this; // closure support
@@ -5907,7 +5907,7 @@ AlphabetInvasion.prototype.killEnemy = function(enemy) {
 }
 AlphabetInvasion.prototype.updatePlayfield = function() {
   var $this = this; // closure support
-  var factor = $globals.AlphabetInvasion_playfieldheight / (200);
+  var factor = ($globals.AlphabetInvasion_playfieldheight / (200)).ceil();
   Observable.fromList(this.enemies.get$dynamic()).subscribe$1((function (enemy) {
     var newPos = ($this.getTopValue(enemy) + factor);
     enemy.get$style().set$top(newPos);
