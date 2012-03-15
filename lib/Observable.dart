@@ -16,11 +16,6 @@
 
 
 /**
-* Alias for [Observable] class (dartc does not like this for static methods)
-*/
-class O extends Observable{}
-
-/**
 * Observable<T> is a helper class for the reactive model.  It is recommended
 * to use this class, rather than trying to implement [IObservable<T>] directly.
 *
@@ -402,8 +397,8 @@ class Observable
  }
  
  /// Returns a single value as an observable sequence.
- static ChainableIObservable returnValue(value, [IObservable continuation]) =>
-   Observable.create((IObserver o){
+ static ChainableIObservable returnValue(value, [IObservable continuation]){
+   return Observable.create((IObserver o){
      makeit(){
        o.next(value);
        o.complete();
@@ -415,6 +410,7 @@ class Observable
        continuation.subscribe((_){},() => makeit(), (e) => o.error(e));
      }
    });
+ }
  
  /// Returns a numerica range from a given start to a given finish, with optional stepping
  /// (default step is 1).  If start > finish then range will be high to low.

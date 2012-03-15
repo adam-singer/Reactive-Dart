@@ -23,7 +23,9 @@
 
 #import('dart:html');
 #import('../lib/reactive_lib.dart');
+#import('dart:isolate');
 #source('DemoIsolate.dart');
+
 
 class reactivedemo {
 
@@ -573,10 +575,12 @@ class reactivedemo {
     var button = document.query("#btnClickDemo");
     var buttonStatus = document.query("#btnStatus");
     
+    int inc = 0;
+    
     //Lets count mouse clicks...   
     Observable
       .fromEvent(button.on.click)
-      .count()
+      .apply((_) => ++inc) //pass incremented count to the next method
       .subscribe((c) => buttonStatus.text = "$c clicks have occurred.");
   }
   

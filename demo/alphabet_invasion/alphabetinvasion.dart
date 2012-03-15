@@ -324,11 +324,13 @@ class AlphabetInvasion {
   }
   
   // Update the measurement of the playfield, usually in response to a browser size change.
-  void updatePlayfieldHeight() => playfield.rect.then((ElementRect r) 
+  void updatePlayfieldHeight() { playfield.rect.then((ElementRect r) 
                                                           {
                                                             playfieldDimensions = r;
+                                                            
                                                             playfieldheight = r.client.top + r.client.height;    
                                                           });
+  }
   
   void clearPlayfield() {
     enemies.forEach((e) => e.remove());
