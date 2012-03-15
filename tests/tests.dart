@@ -9,6 +9,13 @@
 * 
 * Unit Tests for Reactive Dart library
 *
+*
+* Aside from some lower level tests, most of these follow a pattern
+* for each Observable type:
+* * Check the original implementation
+* * Check the chained implementation (if chainable)
+* * Check the continuation parameter (if has one)
+* * Check the implementation logic
 */
 
 main(){
