@@ -767,9 +767,9 @@ class Observable
  /// This is really more like an aggregation or a "scan" from functional list
  /// operations, where you get each intermediate value of the sequence as it
  /// is folded in with the accumulator and function.
- static ChainableIObservable fold(IObservable source, f(v, n), startingValue){
-   var acc = startingValue;
+ static ChainableIObservable fold(IObservable source, f(acc, v), startingValue){
    return Observable.create((IObserver o){
+     var acc = startingValue;
      source.subscribe(
        (v){
          acc = f(acc, v);

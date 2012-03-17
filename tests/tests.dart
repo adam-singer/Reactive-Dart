@@ -6,17 +6,14 @@
 #import('../../../src/dart/client/testing/unittest/unittest_html.dart');
 
 
-
 /*
  * Unit Tests for Reactive Dart library
 */
 
-var tlist5 = const [1, 2, 3, 4, 5];
 
-var tListStrings = const ['apple', 'pear', 'orange', 'grape', 'strawberry'];
 
 main(){  
-  group("Initializers ::: ", (){
+  group("Observable constructors ::: ", (){
     usingNew();
     usingCreate();
   });
@@ -44,13 +41,227 @@ main(){
     fromEvent();
     throwE();
     count();
-    
+    apply();
+    distinctUntilNot();
+    where();
+    zip();
+    merge();
+    distinct();
+    delay();
+    contains();
+    empty();
+    fold();
+    any();
+    buffer();
+    concat();
     fromListGetsAllElements();
-
-    timer();  
+    timer();
   });
-
 }
+
+
+concat() => asyncTest('.concat()', 10, (){
+  var i = 1;
+  var o1 = Observable.range(1, 5);
+  var o2 = Observable.range(6, 10);
+  
+  Observable
+  .concat([o1, o2])
+  .subscribe((v){
+    Expect.equals(i++, v);
+    callbackDone();
+  });
+});
+
+
+// TODO: test for handling of termination when
+// buffer is partially full
+buffer() => asyncTest('.buffer()', 5, (){
+  var i = 1;
+ 
+  Observable
+  .range(1, 10)
+  .buffer(size:2) //buffer the sequence into chunks of 2
+  .subscribe((v){
+    Expect.isTrue(v is List);
+    Expect.equals(2, v.length);
+    Expect.equals(i++, v[0]);
+    Expect.equals(i++, v[1]);
+    callbackDone();
+  });
+});
+
+any(){
+  
+  asyncTest('.any() none', 1, (){
+    
+    Observable
+      .empty()
+      .any()
+      .subscribe((v){
+        Expect.isFalse(v);
+        callbackDone();
+      });
+  });
+  
+  asyncTest('.any() some', 1, (){
+    
+    Observable
+      .returnValue("foo")
+      .any()
+      .subscribe((v){
+        Expect.isTrue(v);
+        callbackDone();
+      });
+  });
+  
+}
+
+fold() => asyncTest('.fold()', 10, (){
+  var c = 1;
+  var i = 1;
+  
+  Observable
+    .range(1, 10)
+    .fold((acc, v) => v + acc, 1)
+    .subscribe(
+      (v){
+        i += c++; //match the fold operation
+        Expect.equals(i, v);
+        callbackDone();
+      },
+      (){},
+      (e) => Expect.fail('$e')
+    );
+});
+
+empty() => asyncTest('.empty()', 1, (){
+  var isEmpty = true;
+  
+  Observable
+  .empty()
+  .subscribe((_){
+    isEmpty = false;
+  },
+  (){
+    Expect.isTrue(isEmpty);
+    callbackDone();
+  });
+});
+
+contains() => asyncTest('.contains()', 1, (){
+  var c = false;
+  
+  Observable
+  .range(1, 10)
+  .contains(5)
+  .subscribe((v){
+    c = v;
+  },
+    (){
+    Expect.isTrue(c);
+    callbackDone();
+  });
+});
+
+delay() => asyncTest('.delay()', 1, (){
+  Stopwatch sw = new Stopwatch.start();
+  
+  Observable
+  .range(1, 10)
+  .delay(300)
+  .subscribe((v){}, (){
+    sw.stop();
+    Expect.isTrue(sw.elapsedInMs() >= 300);
+    callbackDone();
+  });
+});
+
+distinct() => asyncTest('.distinct()', 6, (){
+  var o1 = Observable.range(1, 5);
+  var o2 = Observable.range(1, 5);
+  var i = 1;
+  
+  Observable
+  .merge([o1, o2])
+  .distinct()
+  .subscribe((v){
+    Expect.equals(i++, v);
+    callbackDone();
+  }, ()
+  { 
+    Expect.equals(6, i);
+    callbackDone();
+    });
+});
+
+merge() => asyncTest('.merge()', 1, (){
+  var o1 = Observable.range(1, 5);
+  var o2 = Observable.range(1, 5);
+  
+  Observable
+  .merge([o1, o2])
+  .count()
+  .subscribe((v){
+    Expect.equals(10, v);
+    callbackDone();
+  });
+});
+
+zip() => asyncTest('.zip()', 5, (){
+  var o1 = Observable.range(1, 5);
+  var o2 = Observable.range(1, 5);
+  var i = 1;
+  
+  Observable
+  .zip(o1, o2, (v1, v2) => v1 * v2) //yield product (squares)
+  .subscribe((v){
+    Expect.equals(i * i++, v);
+    callbackDone();
+  });
+  
+  
+});
+
+where() => asyncTest('.where()', 5, (){
+  var i = 2;
+  
+  Observable
+  .range(1, 10)
+  .where((num v) => v % 2 == 0) //filter for even numbers
+  .subscribe((v){
+    Expect.equals(i, v);
+    i += 2;
+    callbackDone();
+  });
+});
+
+distinctUntilNot() => asyncTest('.distinctUntilNot()', 1, (){
+  
+  var repeatingList = [1,2,3,4,5,1,2,3,4,5];
+  
+  Observable
+  .fromList(repeatingList)
+  .distinctUntilNot()
+  .count()
+  .subscribe((v){
+    Expect.equals(5, v);
+    callbackDone();
+  });
+});
+
+apply() => asyncTest('.apply()', 5, (){
+  var i = 1;
+  
+  Observable
+  .range(1, 5)
+  .apply((v) => 'number: $v')
+  .subscribe((v){
+    Expect.isTrue(v is String);
+    Expect.isTrue(v.contains('${i++}'));
+    callbackDone();
+  });
+});
 
 count(){
   nullCountIsZero();
@@ -114,7 +325,7 @@ timestamp() => asyncTest('.timestamp()', 1, (){
 timeout() => asyncTest('.timeout()', 2, (){
   
   Observable
-    .fromList(tlist5)
+    .range(1, 5)
     .pace(100)
     .timeout(50)
     .subscribe(
@@ -132,7 +343,7 @@ throttle() => asyncTest('.throttle()', 2, (){
   
   //should emit no values
   Observable
-    .fromList(tlist5)
+    .range(1, 5)
     .throttle(100)
     .subscribe((v){
       Expect.fail('throttle failed.');
@@ -142,7 +353,7 @@ throttle() => asyncTest('.throttle()', 2, (){
   
   //should emit 5 values
   Observable
-    .fromList(tlist5)
+    .range(1, 5)
     .pace(20)
     .throttle(10)
     .count()
@@ -209,7 +420,7 @@ first() => asyncTest('.first()', 2, (){
   var gotValue = false;
   
   Observable
-  .fromList(tlist5)
+  .range(1, 5)
   .first()
   .subscribe((v){
     Expect.isFalse(gotValue);
@@ -227,7 +438,7 @@ take() => asyncTest('.take()', 4, (){
   var i = 1;
   
   Observable
-    .fromList(tlist5)
+    .range(1, 5)
     .take(4)
     .subscribe((v){
       Expect.equals(i++, v);
@@ -238,7 +449,7 @@ take() => asyncTest('.take()', 4, (){
 takeWhile() => asyncTest('.takeWhile()', 1, (){
   
   Observable
-    .fromList(tlist5)
+    .range(1, 5)
     .takeWhile((v) => v < 3)
     .count()
     .subscribe((v){
@@ -306,7 +517,7 @@ randomInt() => asyncTest('.randomInt()', 1, (){
 sample() => asyncTest('.sample()', 1, (){
   
   Observable
-    .fromList(tlist5)
+    .range(1, 5)
     .sample(2) //sample rate of 2 from the list should yield 2 results
     .count()
     .subscribe((n) {
@@ -316,8 +527,8 @@ sample() => asyncTest('.sample()', 1, (){
 });
 
 firstOf() => asyncTest('.firstOf()', 10, (){
-  
-  var o1 = Observable.fromList(tlist5);
+  var tListStrings = const ['apple', 'pear', 'orange', 'grape', 'strawberry'];
+  var o1 = Observable.range(1, 5);
   var o2 = Observable.fromList(tListStrings);
   
   // o1 should emit first since it is first in the list.
@@ -328,7 +539,7 @@ firstOf() => asyncTest('.firstOf()', 10, (){
       callbackDone();
     });
   
-  o1 = Observable.fromList(tlist5);
+  o1 = Observable.range(1, 5);
   o2 = Observable.fromList(tListStrings);
   
   // o2 should emit first since o1 is delayed.
@@ -344,7 +555,7 @@ firstOf() => asyncTest('.firstOf()', 10, (){
 skip() => asyncTest('.skip()', 1, (){
   
   Observable
-    .fromList(tlist5)
+    .range(1, 5)
     .skip(2) // removes the first two elements from the list
     .count()
     .subscribe((n){
@@ -357,7 +568,7 @@ skip() => asyncTest('.skip()', 1, (){
 skipWhile() => asyncTest('.skipWhile()', 1, (){
   
   Observable
-    .fromList(tlist5)
+    .range(1, 5)
     .skipWhile((v) => v < 3) // removes the first two elements from the list that are < 3
     .count()
     .subscribe((n){
@@ -373,11 +584,11 @@ pace() => asyncTest('.pace()', 1, (){
   var interval = 30;
   
   Observable
-    .fromList(tlist5)
+    .range(1, 5)
     .pace(interval)
     .subscribe((_){}, (){
       sw.stop();
-      Expect.isTrue(sw.elapsedInMs() > (tlist5.length - 1) * interval);
+      Expect.isTrue(sw.elapsedInMs() > 4 * interval);
       sw.reset();
       callbackDone();
     });
@@ -435,7 +646,7 @@ usingNew() => asyncTest('new Observable() creates and returns correct object', 1
 fromListGetsAllElements() => asyncTest('.fromList() Emits all elements', 5, (){
   var i = 1;
   Observable
-    .fromList(tlist5)
+    .range(1, 5)
     .subscribe((n) {
       Expect.equals(i++, n);
       callbackDone();
@@ -457,7 +668,7 @@ nullCountIsZero() => asyncTest('.count() Null count is 0', 1, (){
 /// Checks if a sequence of elements returns the correct total via Observable.count.
 countEqualsExpected() => asyncTest('.count() Count equals expected', 1, (){
   Observable
-    .fromList(tlist5)
+    .range(1, 5)
     .count()
     .subscribe((total){
       Expect.equals(5, total);
