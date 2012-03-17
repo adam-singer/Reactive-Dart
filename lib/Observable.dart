@@ -910,11 +910,15 @@ class Observable
  /// This observable operator assumes that the given isolate is uni-directional
  /// and can only receive an initialization (or registration) messsage.
  ///
- /// ## CAUTION - READ BEFORE USING
+ /// ## DRAGONS! - READ BEFORE USING
  /// Isolates can only expose state via the DOM, so this observable will only
  /// work client-side.  Also, sensitive data SHOULD NEVER be accessed this way, because
  /// it is exposed to the DOM via a hidden field and could be inspected by other
  /// client-side scripts.
+ ///
+ /// ## MORE DRAGONS! - Big Changes Coming to Isolates from the Dart team
+ /// This code will likely be deprecated, or scrapped entirely once the new Isolate
+ /// changes are introduced.
  ///
  /// ## Parameters
  /// * i - The isolate to observe.
