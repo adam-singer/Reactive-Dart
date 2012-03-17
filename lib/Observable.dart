@@ -347,13 +347,11 @@ class Observable
    var cnt = 0;
    
    return Observable.create((IObserver o){
-     var d;
-     d = source.subscribe(
+     source.subscribe(
        (v){
          if (++cnt == howMany){
            o.next(v);
            o.complete();
-           d.dispose();
          }else{
            o.next(v);
          }
