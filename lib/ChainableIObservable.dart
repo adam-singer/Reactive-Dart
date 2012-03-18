@@ -61,4 +61,5 @@ interface ChainableIObservable<T> extends IObservable<T> default _ChainableIObse
   ChainableIObservable<T> range(num start, num finish, [step]);
   ChainableIObservable<T> fromFuture(Future f);
   ChainableIObservable<T> pace(int paceInMilliseconds);
+  ChainableIObservable<T> animationFrame([int interval]);
 }

@@ -84,6 +84,7 @@ class reactivedemo {
 //    skipWhile();
 //    pace();
 //    fromFuture();
+    animationFrame();
   }
 
   // How sequence diagrams work.
@@ -115,6 +116,17 @@ class reactivedemo {
   // S|--1-2---2--1------1------#
   //
   //**************************************************************************************
+  
+  
+  void animationFrame(){
+    header('Observable.animationFrame() provides calls to requestAnimationFrame() as an observable sequence.');
+    
+    Observable
+    .animationFrame(interval:500)
+    .subscribe((v){
+      print('$v');
+    });
+  }
   
   void fromFuture(){
     header('Observable.fromFuture() provides a value returned by a Future in an observable sequence.');

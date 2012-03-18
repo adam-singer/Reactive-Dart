@@ -31,6 +31,41 @@ class Observable
  /// Creates an IObservable with the given implementation function.
  static create(f(IObserver o)) => new ChainableIObservable(f);
  
+ /// ## Webkit ONLY! (for now)
+ /// 
+ static ChainableIObservable animationFrame([num interval = 0, IObservable continuation]){
+   if (interval < 0) return Observable.throwE(const ObservableException('Parameter "interval" cannot be < 0.'));
+   
+   return Observable.create((IObserver o){
+     makeit(){ 
+       if (interval == 0){
+         loop(int time){
+           window.webkitRequestAnimationFrame(loop, null);
+           o.next(time);
+         }
+         window.webkitRequestAnimationFrame(loop, null);
+       }else{
+         var lastTime = 0;
+
+         loopInterval(int time){
+           window.webkitRequestAnimationFrame(loopInterval, null);
+           if (time - lastTime >= interval){
+             o.next(time);
+             lastTime = time;
+           }   
+         }
+         window.webkitRequestAnimationFrame(loopInterval, null);
+       }
+     }
+     
+     if (continuation == null){
+       makeit();
+     }else{
+       continuation.subscribe((_){},() => makeit(), (e) => o.error(e));
+     }
+   });
+ }
+ 
   /// Takes output from a [Future] and returns it in an observable sequence.
  static ChainableIObservable fromFuture(Future f, [IObservable continuation]){
    return Observable.create((IObserver o){

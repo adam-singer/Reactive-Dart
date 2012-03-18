@@ -115,7 +115,7 @@ class AlphabetInvasion {
      
      // Start the game loop, which updates the enemies.
      gameloop = Observable
-       .timer(config[CURRENT_SPEED])
+       .animationFrame(interval:config[CURRENT_SPEED])
        .subscribe((__) => updatePlayfield());
 
 
@@ -154,8 +154,6 @@ class AlphabetInvasion {
    Observable
     .timer(2500, 1)
     .subscribe((_) => play());
-    
-
   }
   
   void nextLevel(){

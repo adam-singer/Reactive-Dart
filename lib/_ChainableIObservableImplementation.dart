@@ -166,5 +166,7 @@ class _ChainableIObservableImplementation<T> implements ChainableIObservable<T>,
   fromFuture(Future f) => Observable.fromFuture(f, continuation:this);
   
   pace(int paceInMilliseconds) => Observable.pace(this, paceInMilliseconds);
+  
+  animationFrame([int interval = 0]) => Observable.animationFrame(interval, continuation:this);
 }
 
