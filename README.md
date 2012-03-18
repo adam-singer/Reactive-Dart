@@ -19,6 +19,7 @@ of data being pushed at the application.
 ## 40+ Observable Operators to Work With
 The demo app demonstrates nearly all of them:
 
+* .animationFrame()
 * .any()
 * .apply()
 * .buffer()

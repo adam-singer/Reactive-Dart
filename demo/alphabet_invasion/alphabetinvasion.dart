@@ -25,7 +25,7 @@ class AlphabetInvasion {
   static ElementRect playfieldDimensions;
   static num playfieldheight = 0;
   
-  static final String lookup = "abcdefghijklmnopqrstuvwxyz";
+  static final String lookup = 'abcdefghijklmnopqrstuvwxyz';
   static final Map levels = 
                       const {
                         "Level 1 - Rookies": const [60, 1300],
