@@ -70,7 +70,7 @@ class reactivedemo {
 //    unfold();
 //    range();
 //    fromIsolate();
-//    fromXMLHttpRequest();
+    fromXMLHttpRequest();
 //    take();  
 //    takeWhile();
 //    first();
@@ -84,7 +84,7 @@ class reactivedemo {
 //    skipWhile();
 //    pace();
 //    fromFuture();
-    animationFrame();
+//    animationFrame();
   }
 
   // How sequence diagrams work.
@@ -307,7 +307,7 @@ class reactivedemo {
     
     var uri = 'reactivedemo.html'; //this should work if running locally...
     Observable
-    .fromXMLHttpRequest(uri, 'Accept', 'text/plain')
+    .fromXMLHttpRequest(uri, 'Accept', 'text/html')
     .single() //using single to enforce no additional values other than the data we requested...
     .subscribe((v)=>print('$v'), ()=> print('Request Complete.'), (e) => print ("Error! $e"));
   }
