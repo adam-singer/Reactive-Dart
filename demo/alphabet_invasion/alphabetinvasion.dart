@@ -81,7 +81,7 @@ class AlphabetInvasion {
     });
         
     // retreive the high score if one exists
-    String hs = window.localStorage.getItem(this.HIGH_SCORE_STORAGE_KEY);
+    String hs = window.localStorage[HIGH_SCORE_STORAGE_KEY];
     if (hs != null && !hs.isEmpty()) highScore.text = hs;
   }  
   
@@ -285,7 +285,7 @@ class AlphabetInvasion {
     
     if (newScore > Math.parseInt(highScore.text)){
       highScore.text = newScore.toString();
-      window.localStorage.setItem(HIGH_SCORE_STORAGE_KEY, newScore.toString());
+      window.localStorage[HIGH_SCORE_STORAGE_KEY] = newScore.toString();
     }
   }
  

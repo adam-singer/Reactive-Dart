@@ -40,21 +40,21 @@ class Observable
      makeit(){ 
        if (interval == 0){
          loop(int time){
-           window.webkitRequestAnimationFrame(loop, null);
+           window.webkitRequestAnimationFrame(loop);
            o.next(time);
          }
-         window.webkitRequestAnimationFrame(loop, null);
+         window.webkitRequestAnimationFrame(loop);
        }else{
          var lastTime = 0;
 
          loopInterval(int time){
-           window.webkitRequestAnimationFrame(loopInterval, null);
+           window.webkitRequestAnimationFrame(loopInterval);
            if (time - lastTime >= interval){
              o.next(time);
              lastTime = time;
            }   
          }
-         window.webkitRequestAnimationFrame(loopInterval, null);
+         window.webkitRequestAnimationFrame(loopInterval);
        }
      }
      

@@ -8,7 +8,7 @@ RD stems from the idea that everything in the environment is a sequence
 of data being pushed at the application.
 
 ## Live Demos
-* [Observable.throttle()](http://prujohn.github.com/Reactive-Dart)
+* [Observable.throttle()](http://www.lucastudios.com/demos/throttle/throttle_demo.html)
 * ['Alphabet Invasion!' A game written entirely with Reactive Dart](http://www.lucastudios.com/demos/alphabetinvasion/)
 
 ## Reactive Dart Blog Series

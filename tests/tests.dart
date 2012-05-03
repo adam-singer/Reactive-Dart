@@ -3,7 +3,8 @@
 
 // NOTE: You will need to point the path below to wherever your 
 // location of the Dart source code is located.
-#import('../../../src/dart/client/testing/unittest/unittest_html.dart');
+#import('../../../src/lib/unittest/unittest.dart');
+#import('../../../src/lib/unittest/html_enhanced_config.dart');
 
 
 /*
@@ -13,12 +14,14 @@
 
 
 main(){  
-  group("Observable constructors ::: ", (){
+  useHtmlEnhancedConfiguration();
+  
+  group("Observable constructors", (){
     usingNew();
     usingCreate();
   });
   
-  group("Operators ::: ", (){
+  group("Operators", (){
     fromFuture();
     pace();
     skipWhile();
@@ -34,12 +37,14 @@ main(){
     returnValue();
     range();
     unfold();
-    throttle();
-    timeout();
-    timestamp();
-    toList();
-    fromEvent();
-    throwE();
+    group('TEST GROUP', (){
+      throttle();
+      timeout();
+      timestamp();
+      toList();
+      fromEvent();
+      throwE();      
+    });
     count();
     apply();
     distinctUntilNot();
@@ -56,40 +61,45 @@ main(){
     concat();
     fromListGetsAllElements();
     timer();
+
   });
 }
 
 
-concat() => asyncTest('.concat()', 10, (){
-  var i = 1;
-  var o1 = Observable.range(1, 5);
-  var o2 = Observable.range(6, 10);
-  
-  Observable
-  .concat([o1, o2])
-  .subscribe((v){
-    Expect.equals(i++, v);
-    callbackDone();
+concat() {
+  asyncTest('.concat()', 10, (){
+    var i = 1;
+    var o1 = Observable.range(1, 5);
+    var o2 = Observable.range(6, 10);
+    
+    Observable
+    .concat([o1, o2])
+    .subscribe((v){
+      Expect.equals(i++, v);
+      callbackDone();
+    });
   });
-});
+}
 
 
 // TODO: test for handling of termination when
 // buffer is partially full
-buffer() => asyncTest('.buffer()', 5, (){
-  var i = 1;
- 
-  Observable
-  .range(1, 10)
-  .buffer(size:2) //buffer the sequence into chunks of 2
-  .subscribe((v){
-    Expect.isTrue(v is List);
-    Expect.equals(2, v.length);
-    Expect.equals(i++, v[0]);
-    Expect.equals(i++, v[1]);
-    callbackDone();
+buffer(){
+    asyncTest('.buffer()', 5, (){
+    var i = 1;
+   
+    Observable
+    .range(1, 10)
+    .buffer(size:2) //buffer the sequence into chunks of 2
+    .subscribe((v){
+      Expect.isTrue(v is List);
+      Expect.equals(2, v.length);
+      Expect.equals(i++, v[0]);
+      Expect.equals(i++, v[1]);
+      callbackDone();
+    });
   });
-});
+}
 
 any(){
   
@@ -117,111 +127,125 @@ any(){
   
 }
 
-fold() => asyncTest('.fold()', 10, (){
-  var c = 1;
-  var i = 1;
-  
-  Observable
-    .range(1, 10)
-    .fold((acc, v) => v + acc, 1)
-    .subscribe(
-      (v){
-        i += c++; //match the fold operation
-        Expect.equals(i, v);
-        callbackDone();
-      },
-      (){},
-      (e) => Expect.fail('$e')
-    );
-});
-
-empty() => asyncTest('.empty()', 1, (){
-  var isEmpty = true;
-  
-  Observable
-  .empty()
-  .subscribe((_){
-    isEmpty = false;
-  },
-  (){
-    Expect.isTrue(isEmpty);
-    callbackDone();
+fold() { 
+  asyncTest('.fold()', 10, (){
+    var c = 1;
+    var i = 1;
+    
+    Observable
+      .range(1, 10)
+      .fold((acc, v) => v + acc, 1)
+      .subscribe(
+        (v){
+          i += c++; //match the fold operation
+          Expect.equals(i, v);
+          callbackDone();
+        },
+        (){},
+        (e) => Expect.fail('$e')
+      );
   });
-});
+}
 
-contains() => asyncTest('.contains()', 1, (){
-  var c = false;
-  
-  Observable
-  .range(1, 10)
-  .contains(5)
-  .subscribe((v){
-    c = v;
-  },
+empty(){
+  asyncTest('.empty()', 1, (){
+    var isEmpty = true;
+    
+    Observable
+    .empty()
+    .subscribe((_){
+      isEmpty = false;
+    },
     (){
-    Expect.isTrue(c);
-    callbackDone();
-  });
-});
-
-delay() => asyncTest('.delay()', 1, (){
-  Stopwatch sw = new Stopwatch.start();
-  
-  Observable
-  .range(1, 10)
-  .delay(300)
-  .subscribe((v){}, (){
-    sw.stop();
-    Expect.isTrue(sw.elapsedInMs() >= 300);
-    callbackDone();
-  });
-});
-
-distinct() => asyncTest('.distinct()', 6, (){
-  var o1 = Observable.range(1, 5);
-  var o2 = Observable.range(1, 5);
-  var i = 1;
-  
-  Observable
-  .merge([o1, o2])
-  .distinct()
-  .subscribe((v){
-    Expect.equals(i++, v);
-    callbackDone();
-  }, ()
-  { 
-    Expect.equals(6, i);
-    callbackDone();
+      Expect.isTrue(isEmpty);
+      callbackDone();
     });
-});
-
-merge() => asyncTest('.merge()', 1, (){
-  var o1 = Observable.range(1, 5);
-  var o2 = Observable.range(1, 5);
-  
-  Observable
-  .merge([o1, o2])
-  .count()
-  .subscribe((v){
-    Expect.equals(10, v);
-    callbackDone();
   });
-});
+}
 
-zip() => asyncTest('.zip()', 5, (){
-  var o1 = Observable.range(1, 5);
-  var o2 = Observable.range(1, 5);
-  var i = 1;
-  
-  Observable
-  .zip(o1, o2, (v1, v2) => v1 * v2) //yield product (squares)
-  .subscribe((v){
-    Expect.equals(i * i++, v);
-    callbackDone();
+contains(){
+  asyncTest('.contains()', 1, (){
+    var c = false;
+    
+    Observable
+    .range(1, 10)
+    .contains(5)
+    .subscribe((v){
+      c = v;
+    },
+      (){
+      Expect.isTrue(c);
+      callbackDone();
+    });
   });
+}
   
-  
-});
+delay() { 
+  asyncTest('.delay()', 1, (){
+    Stopwatch sw = new Stopwatch.start();
+    
+    Observable
+    .range(1, 10)
+    .delay(300)
+    .subscribe((v){}, (){
+      sw.stop();
+      Expect.isTrue(sw.elapsedInMs() >= 300);
+      callbackDone();
+    });
+  });
+}
+
+distinct() {
+  asyncTest('.distinct()', 6, (){
+
+    var o1 = Observable.range(1, 5);
+    var o2 = Observable.range(1, 5);
+    var i = 1;
+    
+    Observable
+    .merge([o1, o2])
+    .distinct()
+    .subscribe((v){
+      Expect.equals(i++, v);
+      callbackDone();
+    }, ()
+    { 
+      Expect.equals(6, i);
+      callbackDone();
+      });
+  });
+}
+
+
+merge() {
+  asyncTest('.merge()', 1, (){
+    var o1 = Observable.range(1, 5);
+    var o2 = Observable.range(1, 5);
+    
+    Observable
+    .merge([o1, o2])
+    .count()
+    .subscribe((v){
+      Expect.equals(10, v);
+      callbackDone();
+    });
+  });
+}
+
+zip() { 
+  asyncTest('.zip()', 5, (){
+    var o1 = Observable.range(1, 5);
+    var o2 = Observable.range(1, 5);
+    var i = 1;
+    
+    Observable
+    .zip(o1, o2, (v1, v2) => v1 * v2) //yield product (squares)
+    .subscribe((v){
+      Expect.equals(i * i++, v);
+      callbackDone();
+    });
+  });
+}
 
 where() => asyncTest('.where()', 5, (){
   var i = 2;
@@ -460,7 +484,7 @@ takeWhile() => asyncTest('.takeWhile()', 1, (){
 
 fromXMLHttpRequest() => asyncTest('.fromXMLHttpRequest()', 1, (){
   var uri = 'tests.html'; //this should work if running locally...
-  var testFileLength = 387; // the length of test.html if unmodified.
+  var testFileLength = 403; // the length of test.html if unmodified.
   
   Observable
     .fromXMLHttpRequest(uri, 'Accept', 'text/plain')
@@ -504,7 +528,7 @@ randomInt() => asyncTest('.randomInt()', 1, (){
   Observable
   .randomInt(1, 10, howMany:10)
   .apply((v){
-    Expect.isTrue(v is int);  // all values should be integers
+    Expect.isTrue(v is num);  // all values should be integers
     return v;
   })
   .count()
