@@ -1,4 +1,3 @@
-
 ## Reactive Dart
 Reactive Dart (RD) is an implementation of the reactive model on sequences.  
 
@@ -7,63 +6,71 @@ Plainly stated, this project implements the dual of an Enumerable type: Observab
 RD stems from the idea that everything in the environment is a sequence
 of data being pushed at the application.
 
-## Live Demos
+## Live Demos ##
 * [Observable.throttle()](http://www.lucastudios.com/demos/throttle/throttle_demo.html)
 * ['Alphabet Invasion!' A game written entirely with Reactive Dart](http://www.lucastudios.com/demos/alphabetinvasion/)
 
-## Reactive Dart Blog Series
+## Reactive Dart Blog Series ##
 * [Part 1 - Using Observable.throttle() to minimize round-trips](http://phylotic.blogspot.com/2012/01/reactive-dart-series-part-1-of-n-using.html)
 * [Part 2 - Merging multiple sequences with Observable.merge()](http://phylotic.blogspot.com/2012/01/reactive-dart-series-part-2-of-n.html)
 * [Part 3 - Creating a simple game with Reactive Dart](http://phylotic.blogspot.com/2012/02/reactive-dart-series-part-3-of-n.html)
 * [Part 4 - Working with Observable.animationFrame()](http://phylotic.blogspot.com/2012/03/reactive-dart-series-part-4-of-n.html)
 
-## 40+ Observable Operators to Work With
+## 40+ Observable Operators to Work With ##
 The demo app demonstrates nearly all of them:
 
-* .animationFrame()
-* .any()
-* .apply()
-* .buffer()
-* .concat()
-* .contains()
-* .count()
-* .create() (create your own observable if the built-ins don't suite your needs)
-* .delay()
-* .distinct()
-* .distinctUntilNot()
-* .empty()
-* .first()
-* .firstOf()
-* .fold()
+### Wrappers ###
 * .fromEvent()
 * .fromFuture()
-* .fromIsolate() (hacky, but works)
+* .fromIsolate() (experimental)
 * .fromList()
 * .fromXMLHttpRequest()
-* .merge()
-* .pace()
+
+### Generators ###
+* .animationFrame()
+* .create() (create your own observable if the built-ins don't suite your needs)
+* .empty()
 * .random()
 * .randomInt()
 * .range()
+* .throwE()
+* .timeout()
+* .timer()
 * .returnValue()
+
+### Transforming ###
+* .apply()
+* .fold()
+* .timestamp()
+* .toList()
+* .unfold()
+
+### Query Type ###
+* .any()
+* .contains()
+* .count()
+* .distinct()
+* .distinctUntilNot()
+* .first()
+* .firstOf()
 * .sample()
 * .single()
 * .skip()
 * .skipWhile()
 * .take()
 * .takeWhile()
-* .throttle()
-* .throwE()
-* .timeout()
-* .timer()
-* .timestamp()
-* .toList()
-* .unfold()
 * .where()
+
+### Others ###
+* .buffer()
+* .concat()
+* .delay()
+* .merge()
+* .pace()
+* .throttle()
 * .zip()
 
-
-## Consistent Idiom Regardless of Sequence Type
+## Consistent Idiom Regardless of Sequence Type ##
 RD sees everything in the same way, so you don't have to remember specific
 imperative implementation in order to "pull" data from the environment.
 
