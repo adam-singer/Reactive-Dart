@@ -18,6 +18,9 @@
 * This library implements reactive operators that can be used in server and
 * client-side operations.  Use reactive_client or reactive_server if
 * you want to use functionality specific to those environments.
+*
+* This library will go away once Dart supports a Timer object
+* in the core.
 */
 #library('Reactive Dart - Common');
 
