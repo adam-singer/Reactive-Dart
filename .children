@@ -1,6 +1,8 @@
 demo/merge_demo/observablemerge.dart
 demo/reactivedemo.dart
 tests/tests.dart
+reactive_server.dart
+reactive_common.dart
+reactive_client.dart
 demo/throttle_demo/throttle_demo.dart
-lib/reactive_lib.dart
 demo/alphabet_invasion/alphabetinvasion.dart

@@ -14,8 +14,21 @@
 //   See the License for the specific language governing permissions and
 //   limitations under the License.
 
-interface IObservable<T>
-{
-  // 'next' can be an observer or a function f(next)
-  IDisposable subscribe(next, [complete(), error(Exception e)]);
-}
+/**
+* This library implements reactive operators that can be used in server and
+* client-side operations.  Use reactive_client or reactive_server if
+* you want to use functionality specific to those environments.
+*/
+#library('Reactive Dart - Client');
+
+#import('dart:io');
+
+#source('common/IDisposable.dart');
+#source('common/IObserver.dart');
+#source('common/IObservable.dart');
+#source('server/Observable.dart');
+#source('server/_ChainableIObservableImplementation.dart');
+#source('common/_UnsubscriberWrapper.dart');
+#source('common/_DefaultObserver.dart');
+#source('server/ChainableIObservable.dart');
+#source('common/ObservableException.dart');

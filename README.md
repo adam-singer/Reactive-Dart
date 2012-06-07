@@ -3,10 +3,10 @@ Reactive Dart (RD) is an implementation of the reactive model on sequences.
 
 Plainly stated, this project implements the dual of an Enumerable type: Observable.  
 
-RD stems from the idea that everything in the environment is a sequence
+RD formalizes the idea that everything in the environment is just a sequence
 of data being pushed at the application.
 
-## Live Demos ##
+## Online Demos ##
 * [Observable.throttle()](http://www.lucastudios.com/demos/throttle/throttle_demo.html)
 * ['Alphabet Invasion!' A game written entirely with Reactive Dart](http://www.lucastudios.com/demos/alphabetinvasion/)
 
@@ -16,18 +16,29 @@ of data being pushed at the application.
 * [Part 3 - Creating a simple game with Reactive Dart](http://phylotic.blogspot.com/2012/02/reactive-dart-series-part-3-of-n.html)
 * [Part 4 - Working with Observable.animationFrame()](http://phylotic.blogspot.com/2012/03/reactive-dart-series-part-4-of-n.html)
 
+## Works On All Dart Platforms ##
+Some observable operators, or their implementations, are specific to platform (.fromEvent() is an example of this), so RD offers three library choices:
+
+### Client (Dartium, JS) ###
+    #import('reactive_client.dart');
+
+### Server (VM) ###
+    #import('reactive_server.dart');
+
+### Common (all platforms) ###
+    #import('reactive_common.dart');
+
 ## 40+ Observable Operators to Work With ##
-The demo app demonstrates nearly all of them:
+To see a demonstration of these operators, run **reactivedemo.dart** in the **/demo** directory.
 
 ### Wrappers ###
-* .fromEvent()
+* .fromEvent() ** Client Only **
 * .fromFuture()
-* .fromIsolate() (experimental)
 * .fromList()
-* .fromXMLHttpRequest()
+* .fromXMLHttpRequest() ** Client Only **
 
 ### Generators ###
-* .animationFrame()
+* .animationFrame() ** Client Only **
 * .create() (create your own observable if the built-ins don't suite your needs)
 * .empty()
 * .random()
@@ -79,7 +90,7 @@ Lets look at a few examples:
 ### Example 1 - Lists
     Observable
 		.fromList([1,2,3,4,5])
-		.subscribe((i) => print("$i"));
+		.observe((i) => print("$i"));
 
 Yields
 
@@ -93,14 +104,14 @@ We could have also achieved the same result with a generator observable like .ra
 
 	Observable
 		.range(1, 5)
-		.subscribe((i) => print("$i"));
+		.observe((i) => print("$i"));
 	
-### Example 2 - Events
+### Example 2 - Events (Client Only) ###
 RD sees events coming from the user, or any other event for that matter, as just another sequence:
 
 	Observable
 		.fromEvent(myElement.on.click)
-		.subscribe((e) => print ("Button Clicked"));
+		.observe((e) => print ("Button Clicked"));
 
 Yields (for each click on the element)
 
@@ -114,22 +125,22 @@ our intent.  It's declarative, consistent, and readable.  We like that.
 One can easily see how the same would apply to, lets say, a sequence of
 network messages coming from server-side, or a Dart isolate...
 
-## .subscribe() is a Multi-Headed Beast
-All observables implement a **subscribe()** method, which is "overloaded" such
+## .observe() is a Multi-Headed Beast ##
+All observables implement a **observe()** method, which is "overloaded" such
 that it takes the following arguements:
 
-* .subscribe(IObserver o); //Your own observer implementation
-* .subscribe(next(v)); // a function that is called when the next item in 
+* .observe(IObserver o); //Your own observer implementation
+* .observe(next(v)); // a function that is called when the next item in 
 sequence is available
-* .subscribe(next(v), complete());  // a completer function that is called when
+* .observe(next(v), complete());  // a completer function that is called when
 the sequence terminates on it's own
-* .subscribe(next(v), complete(), error(e)); // an error handler function that
+* .observe(next(v), complete(), error(e)); // an error handler function that
 is provided an Exception whenever the sequence experiences a fault
 
-### How .subscribe() works...
+### How .observe() works... ###
 	Observable
 		.timer(500, 5) //implements an interval timer at 500ms for 5 ticks 
-		.subscribe(
+		.observe(
 			(_)=> print("Tick!"),   	// next() is called for each element in a sequence 
 			()=> print("Complete."), 	// complete() is called when a sequence terminates
 			(e)=> print("Error!")		// error() is called when an Exception occurs in the sequence stream
@@ -148,7 +159,7 @@ Now lets suppose we put something invalid for the interval parameter.  In this c
 
 	Observable
 		.timer(-2, 5) //implements an interval timer at 500ms for 5 ticks 
-		.subscribe(
+		.observe(
 			(_)=> print("Tick!"),   	
 			()=> print("Complete."), 	
 			(e)=> print("Error!")
@@ -159,7 +170,7 @@ Yields
 	Error!
 	
 
-## Implementing your own Observable
+## Implementing your own Observable ##
 It's easy with the helper method **Observable.create**
 
 	//A simple observable that returns the value 5 and then terminates.
@@ -169,20 +180,20 @@ It's easy with the helper method **Observable.create**
 		return (){};
 	});
 	
-	myObservable.subscribe((v) => print("The number is: $v");
+	myObservable.observe((v) => print("The number is: $v");
 	
 Yields
 
 	The number is: 5
 	
-## How do I unsubscribe?
+## How do I cancel the .observe()? ##
 Lets modify our timer observable again to illustrate this.
 
 	var counter = 0;
 	var disposer;
 	disposer = Observable
 					.timer(500) //implements an interval timer at 500ms for infinity 
-					.subscribe(
+					.observe(
 						(_){
 							if (++counter > 5){
 								disposer.dispose();
@@ -205,19 +216,19 @@ Yields
 Notice that the complete() function isn't called by the observable in this case,
 because the termination did not occur in sequence itself.
 
-## Observable chaining
+## Observable chaining ##
 Any observable that takes an Observable as it's first parameter is also chainable with any other observable. How cool is this:
 
-### Unchained Example
+### Unchained Example ###
 	Observable
 		.count(Observable.fromEvent(myElement.on.click))
-		.subscribe((c) => print("You clicked the mouse $c times."));
+		.observe((c) => print("You clicked the mouse $c times."));
 
-### Chained Example (more readable, easier to modify)
+### Chained Example (more readable, easier to modify) ###
 	Observable
 		.fromEvent(myElement.on.click)
 		.count()
-		.subscribe((c) => print("You clicked the mouse $c times."));
+		.observe((c) => print("You clicked the mouse $c times."));
 		
 Both will yield (for each mouse click)
 
@@ -228,7 +239,7 @@ Both will yield (for each mouse click)
 
 Chaining gets really powerful when you start to think about combining observable sequences in different ways...
 
-### Merging Multiple Observable Streams
+### Merging Multiple Observable Streams ###
 	// Three observables yielding 20 ticks at different intervals
 	// We use then use the .apply() observable to modify the results down the line...
 	var o1 = Observable
@@ -243,7 +254,7 @@ Chaining gets really powerful when you start to think about combining observable
 	
 	o1
 	.merge([o2, o3]) //merging o1 with o2 and o3
-	.subscribe((v) => print(v));
+	.observe((v) => print(v));
 	
 You'll have to run the above code yourself to see how it works, but basically it does
 all the hard work of merging elements from the three streams into a single stream.

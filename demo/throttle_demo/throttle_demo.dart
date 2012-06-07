@@ -1,5 +1,5 @@
 #import('dart:html');
-#import('../../lib/reactive_lib.dart');
+#import('../../reactive_client.dart');
 
 /**
 *
@@ -34,7 +34,7 @@ class throttle_demo {
     Observable
     .fromEvent(tbInput.on.keyUp)
     .throttle(400)
-    .subscribe((e) => displayResults(tbInput.dynamic.value));
+    .observe((e) => displayResults(tbInput.dynamic.value));
     
   }
 
@@ -52,7 +52,7 @@ class throttle_demo {
     Observable
     .fromList(awords)
     .where((String w) => w.startsWith(beginsWith))
-    .subscribe(
+    .observe(
       (String word) => s.add('<li>$word</li>'), // .next(v) function
       ()=> resultsList.innerHTML = s.toString() // .complete() function
       );

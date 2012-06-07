@@ -32,7 +32,6 @@ interface ChainableIObservable<T> extends IObservable<T> default _ChainableIObse
   ChainableIObservable<T> fold(f(v,n), startingValue);
   ChainableIObservable<T> any();
   ChainableIObservable<T> buffer([size]);
-  ChainableIObservable<T> delay(int milliseconds);
   ChainableIObservable<T> distinct();
   ChainableIObservable<T> distinctUntilNot();
   ChainableIObservable<T> apply(applyFunction(n));
@@ -41,8 +40,6 @@ interface ChainableIObservable<T> extends IObservable<T> default _ChainableIObse
   ChainableIObservable<T> where(f(n));
   ChainableIObservable<T> toList();
   ChainableIObservable<T> timestamp();
-  ChainableIObservable<T> timeout(int milliseconds);
-  ChainableIObservable<T> throttle(int milliseconds);
   ChainableIObservable<T> single();
   ChainableIObservable<T> first();
   ChainableIObservable<T> take(int howMany);
@@ -51,15 +48,9 @@ interface ChainableIObservable<T> extends IObservable<T> default _ChainableIObse
   ChainableIObservable<T> sample(int sampleFrequency);
   ChainableIObservable<T> skip(int skip);
   ChainableIObservable<T> skipWhile(isTrue(v));
-  ChainableIObservable<T> fromXMLHttpRequest(String uri, String requestHeader, String requestValue);
   ChainableIObservable<T> fromList(List l);
-  ChainableIObservable<T> timer(int milliseconds, [int ticks]);
-  ChainableIObservable<T> fromIsolate(Isolate i, initMessage, [terminationMessage]);
   ChainableIObservable<T> unfold(initialstate, conditional(state), iterate(state), result(state));
-  ChainableIObservable<T> fromEvent(EventListenerList event);
   ChainableIObservable<T> returnValue(value);
   ChainableIObservable<T> range(num start, num finish, [step]);
   ChainableIObservable<T> fromFuture(Future f);
-  ChainableIObservable<T> pace(int paceInMilliseconds);
-  ChainableIObservable<T> animationFrame([int interval]);
 }

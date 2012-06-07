@@ -18,7 +18,7 @@
 // Instantiates a general purpose IObservable with chaining helper methods.
 // This implementation treats the sequences as a shared stream among all 
 // subscribers.  Only the first subscriber is guaranteed to get all elements
-// in a static sequence (lists, etc).  This is the default behavior for most observables.
+// in a static sequence (lists, etc).
 //
 class _ChainableIObservableImplementation<T> implements ChainableIObservable<T>, IDisposable, _FactoryObservable{
   final Function oFunc;
@@ -43,7 +43,7 @@ class _ChainableIObservableImplementation<T> implements ChainableIObservable<T>,
       );
   }
   
-  IDisposable subscribe(next, [complete(), error(Exception e)]){
+  IDisposable observe(next, [complete(), error(Exception e)]){
     if (err != null){
       //sequence faulted, so return an exception result immediately
       if (error != null) error(err);
@@ -152,9 +152,7 @@ class _ChainableIObservableImplementation<T> implements ChainableIObservable<T>,
   fromList(List l) => Observable.fromList(l, continuation:this);
   
   timer(int milliseconds, [int ticks = -1]) => Observable.timer(milliseconds, ticks, continuation:this);
-  
-  fromIsolate(Isolate i, initMessage, [terminationMessage = ""]) => Observable.fromIsolate(i, initMessage, terminationMessage, continuation:this);
-  
+    
   unfold(initialstate, conditional(state), iterate(state), result(state)) => Observable.unfold(initialstate, conditional, iterate, result, continuation:this);
   
   fromEvent(EventListenerList event) => Observable.fromEvent(event, continuation:this);

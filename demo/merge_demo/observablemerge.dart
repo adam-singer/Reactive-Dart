@@ -1,5 +1,5 @@
 #import('dart:html');
-#import('../../lib/reactive_lib.dart');
+#import('../../reactive_client.dart');
 
 class observablemerge {
 
@@ -34,7 +34,7 @@ class observablemerge {
     
     o1
     .merge([o2, o3])
-    .subscribe((v) => print('$v'), ()=> print('All streams terminated.'));
+    .observe((v) => print('$v'), ()=> print('All streams terminated.'));
     
   }
 }

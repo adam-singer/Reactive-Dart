@@ -1,5 +1,5 @@
 #import('dart:html');
-#import('../../lib/reactive_lib.dart');
+#import('../../reactive_client.dart');
 #resource('main.css');
 
 class AlphabetInvasion {
@@ -73,7 +73,7 @@ class AlphabetInvasion {
     
     // if the game is 'paused', any key will cause the game
     // to start.
-    keyboardObservable.subscribe((e){
+    keyboardObservable.observe((e){
       if (gameState == GameState.Paused){
         hideMessage();
         playLevel();
@@ -116,12 +116,12 @@ class AlphabetInvasion {
      // Start the game loop, which updates the enemies.
      gameloop = Observable
        .animationFrame(interval:config[CURRENT_SPEED])
-       .subscribe((__) => updatePlayfield());
+       .observe((__) => updatePlayfield());
 
 
      // set another subscriber to the keyboardObservable
      // which handles play input during each level
-     keyboard = keyboardObservable.subscribe((e){
+     keyboard = keyboardObservable.observe((e){
        if (enemies.isEmpty()) return;
        
        // we are only concerned about the enemy closest to the ground...
@@ -145,7 +145,7 @@ class AlphabetInvasion {
      generator = Observable
                  .randomInt(0, 25, intervalLow:config[LAUNCH_RATE], intervalHigh:config[LAUNCH_RATE], howMany: enemiesThisLevel)
                  .apply((v) => Math.random() <= capitalLetterProbability ? lookup[v - 1] : lookup[v - 1].toUpperCase())
-                 .subscribe((v) => launchNewEnemy(v), () => allEnemiesLaunched = true);
+                 .observe((v) => launchNewEnemy(v), () => allEnemiesLaunched = true);
    }
    
    // This observable sets a delay for showing the level title,
@@ -153,7 +153,7 @@ class AlphabetInvasion {
    // the level.
    Observable
     .timer(2500, 1)
-    .subscribe((_) => play());
+    .observe((_) => play());
   }
   
   void nextLevel(){
@@ -170,7 +170,7 @@ class AlphabetInvasion {
     
     Observable
     .timer(4000, 1)
-    .subscribe((_) => playLevel());
+    .observe((_) => playLevel());
   }
   
   void youWin(){
@@ -188,7 +188,7 @@ class AlphabetInvasion {
     // reset the game after 5.5 seconds
     Observable
     .timer(5500, 1)
-    .subscribe((_) => resetGame());    
+    .observe((_) => resetGame());    
   }
   
   void youLose(){
@@ -217,7 +217,7 @@ class AlphabetInvasion {
     // reset the game after 4.5 seconds
     Observable
     .timer(4500, 1)
-    .subscribe((_) => resetGame());
+    .observe((_) => resetGame());
   }
   
   
@@ -234,7 +234,7 @@ class AlphabetInvasion {
     // remove the enemy from the DOM after 750ms
     Observable
       .timer(750, 1)
-      .subscribe((_) => enemy.remove());
+      .observe((_) => enemy.remove());
   }
   
   // Updates positions of all enemies and calculates if an enemy has landed.
@@ -246,7 +246,7 @@ class AlphabetInvasion {
     // iterate the enemy list and make adjustments...
     Observable
         .fromList(enemies.dynamic)
-        .subscribe((Element enemy){
+        .observe((Element enemy){
           int newPos = (getTopValue(enemy) + factor);
           enemy.style.top = newPos;
           
@@ -315,7 +315,7 @@ class AlphabetInvasion {
     // monitor the browser for size changes and adjust the playfield height accordingly
     windowHeight = Observable
                     .fromEvent(window.on.resize)
-                    .subscribe((_) => updatePlayfieldHeight());
+                    .observe((_) => updatePlayfieldHeight());
     
     showMessage("PRESS ANY KEY TO START");
     
@@ -354,7 +354,7 @@ class AlphabetInvasion {
     // is shown.
     Observable
       .timer(30, msg.length)
-      .subscribe((v) => message.text = msg.substring(0, v));
+      .observe((v) => message.text = msg.substring(0, v));
 
   }
   

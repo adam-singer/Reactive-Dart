@@ -24,12 +24,9 @@
 * to implement [IObservable<T>].
 */
 class Observable
-{
- // Support factory implementation if the dev wants to use 'new Observable(...)'
- factory Observable(f(IObserver o)) => Observable.create(f);
- 
+{ 
  /// Creates an IObservable with the given implementation function.
- static create(f(IObserver o)) => new ChainableIObservable(f);
+ static ChainableIObservable create(f(IObserver o)) => new ChainableIObservable(f);
  
  /// ## Webkit ONLY! (for now)
  /// 
@@ -61,7 +58,7 @@ class Observable
      if (continuation == null){
        makeit();
      }else{
-       continuation.subscribe((_){},() => makeit(), (e) => o.error(e));
+       continuation.observe((_){},() => makeit(), (e) => o.error(e));
      }
    });
  }
@@ -90,7 +87,7 @@ class Observable
      if (continuation == null){
        makeit();
      }else{
-       continuation.subscribe((_){},() => makeit(), (e) => o.error(e));
+       continuation.observe((_){},() => makeit(), (e) => o.error(e));
      }
    });
  }
@@ -120,7 +117,7 @@ class Observable
        window.setTimeout(paceIt, paceInMilliseconds);
      }
           
-     source.subscribe(
+     source.observe(
      (v){
        buff.add(v);
      },
@@ -141,7 +138,7 @@ class Observable
      int counter = 0;
      bool trueFlag = true;
      
-     source.subscribe(
+     source.observe(
        (v){
          if (!trueFlag){
            o.next(v);
@@ -164,7 +161,7 @@ class Observable
    
    return Observable.create((IObserver o){
      int counter = 0;
-     source.subscribe(
+     source.observe(
        (v){
          if (counter++ >= skipCount){
            o.next(v);
@@ -183,7 +180,7 @@ class Observable
    return Observable.create((IObserver o){
      int counter = 0;
      
-     source.subscribe((v){
+     source.observe((v){
        if (++counter == sampleFrequency){
          o.next(v);
          counter = 0;
@@ -204,7 +201,7 @@ class Observable
      
      sources.forEach((source){
       IDisposable d;
-      d = source.subscribe(
+      d = source.observe(
         (v){
           if (firstIn == null){
             firstIn = source;
@@ -241,7 +238,7 @@ class Observable
       Observable
         .random(low, high, intervalLow, intervalHigh, howMany)
         .apply((v) => v.ceil())
-        .subscribe(
+        .observe(
           (v) => o.next(v),
           () => o.complete(),
           (e) => o.error(e)
@@ -251,7 +248,7 @@ class Observable
      if (continuation == null){
        makeit();
      }else{
-       continuation.subscribe((_){},() => makeit(), (e) => o.error(e));
+       continuation.observe((_){},() => makeit(), (e) => o.error(e));
      }
    });
    
@@ -300,7 +297,7 @@ class Observable
      if (continuation == null){
        makeit();
      }else{
-       continuation.subscribe((_){},() => makeit(), (e) => o.error(e));
+       continuation.observe((_){},() => makeit(), (e) => o.error(e));
      }
    });
    
@@ -316,19 +313,19 @@ class Observable
       
       Observable
       .fromEvent(r.on.error)
-      .subscribe((e){
+      .observe((e){
         o.error(const ObservableException('error occurred during XMLHttpRequest.'));  
       });
           
       Observable
       .fromEvent(r.on.abort)
-      .subscribe((e){
+      .observe((e){
         o.complete();
       });
       
       Observable
       .fromEvent(r.on.readyStateChange)
-      .subscribe((e){
+      .observe((e){
         if (r.readyState != 4) return;
         o.next(r.responseText);
         o.complete();
@@ -350,7 +347,7 @@ class Observable
       makeit();
     }
     else{
-      continuation.subscribe((_){},() => makeit(), (e) => o.error(e));
+      continuation.observe((_){},() => makeit(), (e) => o.error(e));
     }
       
   });  
@@ -360,7 +357,7 @@ class Observable
  /// returns true.
  static ChainableIObservable takeWhile(IObservable source, conditional(v)){  
    return Observable.create((IObserver o){
-     source.subscribe(
+     source.observe(
        (v){
          if (conditional(v) == false){
            o.complete();
@@ -382,7 +379,7 @@ class Observable
    var cnt = 0;
    
    return Observable.create((IObserver o){
-     source.subscribe(
+     source.observe(
        (v){
          if (++cnt == howMany){
            o.next(v);
@@ -399,7 +396,7 @@ class Observable
  /// Returns the first value received from an observable sequence, then terminates.
  static ChainableIObservable first(IObservable source){
    return Observable.create((IObserver o){
-     source.subscribe(
+     source.observe(
        (v){
          o.next(v);
          o.complete();
@@ -414,7 +411,7 @@ class Observable
  static ChainableIObservable single(IObservable source){
    return Observable.create((IObserver o){
      bool gotOne = false;
-     source.subscribe(
+     source.observe(
        (v){
          if (gotOne) {
            o.error(const ObservableException('source return more than one element in Observable.single().'));
@@ -440,7 +437,7 @@ class Observable
      if (continuation == null){
        makeit();
      }else{
-       continuation.subscribe((_){},() => makeit(), (e) => o.error(e));
+       continuation.observe((_){},() => makeit(), (e) => o.error(e));
      }
    });
  }
@@ -479,7 +476,7 @@ class Observable
      if (continuation == null){
        makeit();
      }else{
-       continuation.subscribe((_){},() => makeit(), (e) => o.error(e));
+       continuation.observe((_){},() => makeit(), (e) => o.error(e));
      }
    });
  }
@@ -502,7 +499,7 @@ class Observable
        if (last != null) o.next(last);
        }
           
-     source.subscribe(
+     source.observe(
        (v) {
          if (!ignoreValue){
            last = v;
@@ -528,7 +525,7 @@ class Observable
 
      void checker() => o.error(const ObservableException('Timeout Exceeded.'));
           
-     source.subscribe(
+     source.observe(
        (v) {
          window.clearTimeout(handler);
          o.next(v);
@@ -546,7 +543,7 @@ class Observable
  /// each element in a given sequence.
  static ChainableIObservable<Date> timestamp(IObservable source){
    return Observable.create((IObserver o){
-     source.subscribe(
+     source.observe(
        (v) => o.next(new Date.now()),
        () => o.complete(),
        (e) => o.error(e)
@@ -563,7 +560,7 @@ class Observable
    List l = new List();
    
    return Observable.create((IObserver o){
-     source.subscribe(
+     source.observe(
        (v) => l.add(v),
        (){
          o.next(l);
@@ -580,7 +577,7 @@ class Observable
  ///     Element myElement = new Element.tag('button');
  ///     Observable
  ///         .fromEvent(myElement.on.click)
- ///         .subscribe((e) => print('clicked!'));
+ ///         .observe((e) => print('clicked!'));
  static ChainableIObservable<Event> fromEvent(EventListenerList event, [IObservable continuation]){
    return Observable.create((IObserver o) {
      makeit() => event.add((e) => o.next(e));
@@ -588,7 +585,7 @@ class Observable
      if (continuation == null){
        makeit();
      }else{
-       continuation.subscribe((_){},() => makeit(), (e) => o.error(e));
+       continuation.observe((_){},() => makeit(), (e) => o.error(e));
      }
    });
  }
@@ -603,7 +600,7 @@ class Observable
  static ChainableIObservable count(IObservable source){
    int cnt = 0;
    return Observable.create((IObserver o) =>
-   source.subscribe(
+   source.observe(
      (_)=> ++cnt, 
      (){
        o.next(cnt);
@@ -616,7 +613,7 @@ class Observable
  /// Applies a given function to each element of the sequence
  static ChainableIObservable apply(IObservable source, applyFunction(n)){
    return Observable.create((IObserver o){
-     source.subscribe(
+     source.observe(
        (v) => o.next(applyFunction(v)),
        () => o.complete(),
        (e) => o.error(e)
@@ -628,7 +625,7 @@ class Observable
  static ChainableIObservable distinctUntilNot(IObservable source){
    Set s = new Set();
    return Observable.create((IObserver o){
-     source.subscribe(
+     source.observe(
        (v){
          if (!s.contains(v)){
            s.add(v);
@@ -647,7 +644,7 @@ class Observable
  /// function returns true for a given element.
  static ChainableIObservable where(IObservable source, f(n)){
    return Observable.create((IObserver o){
-     source.subscribe(
+     source.observe(
      (v){
        if (f(v)) o.next(v);
      },
@@ -671,7 +668,7 @@ class Observable
      var ld;
      var rd;
      
-     ld = left.subscribe(
+     ld = left.observe(
        (v){
          lq.add(v);
          if (!rq.isEmpty()) o.next(f(lq.removeFirst(), rq.removeFirst()));
@@ -684,7 +681,7 @@ class Observable
        },
        (e) => o.error(e));
 
-     rd = right.subscribe(
+     rd = right.observe(
        (v){
          rq.add(v);
          if (!lq.isEmpty()) o.next(f(lq.removeFirst(), rq.removeFirst()));
@@ -705,7 +702,7 @@ class Observable
    return Observable.create((IObserver o){
      //subscribe to tall the sources
      sources.forEach((source)=>
-       source.subscribe(
+       source.observe(
        (v) => o.next(v),
        () {
          if (++t == sources.length) o.complete();
@@ -721,7 +718,7 @@ class Observable
    Set s = new Set();
    
    return Observable.create((IObserver o){
-     source.subscribe(
+     source.observe(
        (v){
          if (!s.contains(v)){
            s.add(v);
@@ -742,11 +739,11 @@ class Observable
    var t = Observable
     .timer(milliseconds, 1);
    
-   t.subscribe((v) =>{}, () => delaying = false);
+   t.observe((v) =>{}, () => delaying = false);
    
    
    return Observable.create((IObserver o){
-     source.subscribe(
+     source.observe(
      (v){
        if (!delaying){
          if (!buff.isEmpty()){
@@ -760,7 +757,7 @@ class Observable
        }
      },
      (){
-        t.subscribe((v)=>{},(){
+        t.observe((v)=>{},(){
           if (!buff.isEmpty()){
             buff.forEach((b) => o.next(b));
             buff.clear();
@@ -776,7 +773,7 @@ class Observable
  /// Returns an observable sequence that returns false until a given value is found, then terminates.
  static ChainableIObservable contains(IObservable source, value){
    return Observable.create((IObserver o) {
-     source.subscribe(
+     source.observe(
        (v){
          if (v != value){
            o.next(false);
@@ -805,7 +802,7 @@ class Observable
  static ChainableIObservable fold(IObservable source, f(acc, v), startingValue){
    return Observable.create((IObserver o){
      var acc = startingValue;
-     source.subscribe(
+     source.observe(
        (v){
          acc = f(acc, v);
          o.next(acc);
@@ -820,7 +817,7 @@ class Observable
  /// If the sequences terminates without producing a value, returns false.
  static ChainableIObservable any(IObservable source){
    return Observable.create((IObserver o){
-     source.subscribe(
+     source.observe(
          (v)
          {
            o.next(true);
@@ -842,7 +839,7 @@ class Observable
  static ChainableIObservable buffer(IObservable source, [int size = 10]){
    List buff = new List();
    return Observable.create((IObserver o)
-   {source.subscribe(
+   {source.observe(
      (v) {
        buff.add(v);
        if (buff.length == size){
@@ -872,7 +869,7 @@ class Observable
      void _concatInternal(IObserver obs, List<IObservable> ol, int index){
 
        ol[index]
-        .subscribe(
+        .observe(
           (v) => obs.next(v),
           (){
             if (++index < ol.length){
@@ -902,7 +899,7 @@ class Observable
      if (continuation == null){
        makeit();
      }else{
-       continuation.subscribe((_){},() => makeit(), (e) => o.error(e));
+       continuation.observe((_){},() => makeit(), (e) => o.error(e));
      }
    });
  }
@@ -935,117 +932,11 @@ class Observable
      if (continuation == null){
        makeit();
      }else{
-       continuation.subscribe((_){},() => makeit(), (e) => o.error(e));
+       continuation.observe((_){},() => makeit(), (e) => o.error(e));
      }
      
    });
  }
- 
- /// Returns an observable sequence of messages received from a given [Isolate].
- /// This observable operator assumes that the given isolate is uni-directional
- /// and can only receive an initialization (or registration) messsage.
- ///
- /// ## DRAGONS! - READ BEFORE USING
- /// Isolates can only expose state via the DOM, so this observable will only
- /// work client-side.  Also, sensitive data SHOULD NEVER be accessed this way, because
- /// it is exposed to the DOM via a hidden field and could be inspected by other
- /// client-side scripts.
- ///
- /// ## MORE DRAGONS! - Big Changes Coming to Isolates from the Dart team
- /// This code will likely be deprecated, or scrapped entirely once the new Isolate
- /// changes are introduced.
- ///
- /// ## Parameters
- /// * i - The isolate to observe.
- /// * initMessage - The initialization message that the isolate is to receive.
- /// * terminationMessage (optional) - A message, that when received from the isolate,
- /// terminates the sequence.
- /// * timeOut (optional, default none) Terminates the sequence if a message isn't
- /// received from the isolate in a given time (in milliseconds).
- static ChainableIObservable fromIsolate(Isolate i, initMessage, [terminationMessage = "", IObservable continuation])
- {
-   return Observable.create((IObserver o){
-     makeit(){
-       i.spawn().then((SendPort port){
-         new _ObserverIsolate().spawn().then((SendPort oPort){
-           oPort.send(terminationMessage);
-                    
-           var iostate = document.query("#${_ObserverIsolate.IOSTATE + oPort.hashCode()}");
-           
-           Observable
-           .fromEvent(iostate.on.change)
-           .subscribe(
-             (e){
-               if (iostate.value == _ObserverIsolate.MSG_COMPLETE){
-                 iostate.remove();
-                 o.complete();
-               }else{
-                 o.next(JSON.parse(iostate.value));             
-               }
-           },
-           () => o.complete(),
-           (err) => o.error(err)
-           );
-           
-           
-           port.send(initMessage, oPort);
-         });     
-       });
-     }
-     
-     if (continuation == null){
-       makeit();
-     }else{
-       continuation.subscribe((_){},() => makeit(), (e) => o.error(e));
-     }
-   });  
- }
- 
-}
 
-// HACK
-// proxy for the Observable.fromIsolate() function.
-// uses DOM hidden field to surface and notify .fromIsolate()
-// of new messages from the target Isolate.
-class _ObserverIsolate extends Isolate {
-  static final MSG_COMPLETE = "___complete___";
-  static final IOSTATE = "___iostate___";
-  
-  _ObserverIsolate() : super.light() {
-
-  }
-
-  void main() {
-    var tMessage;
-
-    String statehash = _ObserverIsolate.IOSTATE + this.port.toSendPort().hashCode();
-
-    var state = document.query("#${statehash}");
-    
-    if (state == null){
-      Element e = new Element.tag('input');
-      e.style.display = 'none';
-      e.id = statehash;
-      document.body.nodes.add(e);
-      state = document.query("#${statehash}");
-    }
-    
-    if (state == null) return;  //TODO throw?
-    
-    this.port.receive((message, SendPort replyTo) {
-      //first two messages will always be from the observable.
-      if (tMessage == null){
-        tMessage = message;
-        return;
-      }
-      
-      if (message == tMessage){
-        state.value = _ObserverIsolate.MSG_COMPLETE;
-      }else{
-        state.value = JSON.stringify(message);
-      }
-      state.on.change.dispatch(new Event('change'));
-    });
-  }
 }
 

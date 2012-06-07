@@ -14,17 +14,19 @@
 //   See the License for the specific language governing permissions and
 //   limitations under the License.
 
-#library('Reactive Dart');
-#import('dart:html');
-#import('dart:json');
-#import('dart:isolate');
+/**
+* This library implements reactive operators that can be used in server and
+* client-side operations.  Use reactive_client or reactive_server if
+* you want to use functionality specific to those environments.
+*/
+#library('Reactive Dart - Common');
 
-#source('IDisposable.dart');
-#source('IObserver.dart');
-#source('IObservable.dart');
-#source('Observable.dart');
-#source('_ChainableIObservableImplementation.dart');
-#source('_UnsubscriberWrapper.dart');
-#source('_DefaultObserver.dart');
-#source('ChainableIObservable.dart');
-#source('ObservableException.dart');
+#source('common/IDisposable.dart');
+#source('common/IObserver.dart');
+#source('common/IObservable.dart');
+#source('common/Observable.dart');
+#source('common/_ChainableIObservableImplementation.dart');
+#source('common/_UnsubscriberWrapper.dart');
+#source('common/_DefaultObserver.dart');
+#source('common/ChainableIObservable.dart');
+#source('common/ObservableException.dart');

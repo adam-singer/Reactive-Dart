@@ -22,9 +22,8 @@
 /// Build with frogc.  Open browser console to see results.
 
 #import('dart:html');
-#import('../lib/reactive_lib.dart');
+#import('../reactive_client.dart');
 #import('dart:isolate');
-#source('DemoIsolate.dart');
 
 
 class reactivedemo {
@@ -69,7 +68,6 @@ class reactivedemo {
 //    throttle(); //Throttle has it's own demo, see '/demos/throttle_demo/throttle_demo.dart'
 //    unfold();
 //    range();
-//    fromIsolate();
     fromXMLHttpRequest();
 //    take();  
 //    takeWhile();
@@ -101,7 +99,7 @@ class reactivedemo {
   // X = Exceptions
   // # = Termination of Sequence
   // f = Between lines represents some function applied.
-  // S = The sequence emitted to the .subscribe() method.
+  // S = The sequence emitted to the .observe() method.
   //
   // Example 1 - Single observable which throws an error.
   // 1|--X---->
@@ -123,7 +121,7 @@ class reactivedemo {
     
     Observable
     .animationFrame(interval:500)
-    .subscribe((v){
+    .observe((v){
       print('$v');
     });
   }
@@ -133,7 +131,7 @@ class reactivedemo {
     
     Observable
       .fromFuture(document.body.rect) // get the dimensions of the DOM <body> tag (rect returns a Future<ElementRect>)
-      .subscribe(
+      .observe(
         (ElementRect v) => print('<body> dimensions: width: ${v.bounding.width}, height: ${v.bounding.height}'), 
         () => print('Sequence Complete.')
       );
@@ -147,7 +145,7 @@ class reactivedemo {
     Observable
       .range(1, 10)
       .pace(1500) //pacing sequence to 1.5 seconds each.
-      .subscribe((v) => print(v), () => print('Sequence Complete.'));
+      .observe((v) => print(v), () => print('Sequence Complete.'));
   }
   
   void skipWhile(){
@@ -156,7 +154,7 @@ class reactivedemo {
     Observable
       .range(1, 20)
       .skipWhile((v) => v < 6)
-      .subscribe((v) => print('$v'), () => print('Sequence Complete.'));
+      .observe((v) => print('$v'), () => print('Sequence Complete.'));
   }
   
   void skip(){
@@ -165,7 +163,7 @@ class reactivedemo {
     Observable
       .range(1, 20)
       .skip(5)
-      .subscribe((v) => print('$v'), () => print('Sequence Complete.'));
+      .observe((v) => print('$v'), () => print('Sequence Complete.'));
     
   }
   
@@ -176,7 +174,7 @@ class reactivedemo {
     Observable
       .range(1, 100)
       .sample(5)
-      .subscribe((v) => print('Sampled: $v'), () => print ('Sequence Complete.'));
+      .observe((v) => print('Sampled: $v'), () => print ('Sequence Complete.'));
     
   }
   
@@ -205,7 +203,7 @@ class reactivedemo {
     // chaining firstOf after o1 means o1 is included in the list automatically
     o1
     .firstOf([o2, o3])
-    .subscribe((v) => print('$v'), () => print('Sequence Complete.'));
+    .observe((v) => print('$v'), () => print('Sequence Complete.'));
     
   }
   
@@ -217,7 +215,7 @@ class reactivedemo {
     header("Observable.randomInt() (and also Observable.random() for Real numbers) generates a range of randum numbers at optionally random time intervals.");
     Observable
     .randomInt(0, 10, 1, 1000, 20) //generating ints from 1 - 10 at intervals between 100 & 1000ms for 20 ticks.
-    .subscribe((v) => print('$v'));
+    .observe((v) => print('$v'));
   }
     
   // 1|X
@@ -228,7 +226,7 @@ class reactivedemo {
     
     Observable
     .throwE(const Exception('Here is an exception.'))
-    .subscribe((e){}, (){}, (e)=> print('Error! $e'));
+    .observe((e){}, (){}, (e)=> print('Error! $e'));
   }
   
   // 1|1#
@@ -239,7 +237,7 @@ class reactivedemo {
     
     Observable
     .returnValue(42)
-    .subscribe((e)=> print('$e'));
+    .observe((e)=> print('$e'));
   }
   
   // Succeeds
@@ -257,7 +255,7 @@ class reactivedemo {
     Observable
     .range(1, 100)
     .single()
-    .subscribe((e)=> print('$e'), (){}, (e) => print('Error! $e'));
+    .observe((e)=> print('$e'), (){}, (e) => print('Error! $e'));
   }
   
   // 1|----1---->
@@ -269,7 +267,7 @@ class reactivedemo {
     Observable
     .range(42, 100)
     .first()
-    .subscribe((e)=> print('$e'));
+    .observe((e)=> print('$e'));
   }
   
   // 1|----1-------1---1--->
@@ -282,7 +280,7 @@ class reactivedemo {
     Observable
     .range(1, 100)
     .takeWhile((n) => n < 6)
-    .subscribe((e)=> print('$e'));
+    .observe((e)=> print('$e'));
   }
   
   // Given .take(4)
@@ -295,7 +293,7 @@ class reactivedemo {
     Observable
     .range(1, 100)
     .take(5)
-    .subscribe((e)=> print('$e'));
+    .observe((e)=> print('$e'));
     
   }
   
@@ -305,25 +303,13 @@ class reactivedemo {
   fromXMLHttpRequest(){
     header("Observable.fromXMLHttpRequest() Performs a GET request and returns the results for the given request type, in an observable sequence (singleton)");
     
-    var uri = 'DemoIsolate.dart'; //this should work if running locally...
+    var uri = 'reactivedemo.dart'; //this should work if running locally...
     Observable
     .fromXMLHttpRequest(uri, 'Accept', 'text/html')
     .single() //using single to enforce no additional values other than the data we requested...
-    .subscribe((v)=>print('$v'), ()=> print('Request Complete.'), (e) => print ("Error! $e"));
+    .observe((v)=>print('$v'), ()=> print('Request Complete.'), (e) => print ("Error! $e"));
   }
-  
-  // 1|---1--1--1--1--->
-  //  |   |  |  |  |
-  // S|---1--1--1--1--->
-  void fromIsolate(){
-    header("Observable.fromIsolate() Generates an observable sequence from an Isolate. Read the comments carefully before using this function.");
-    print('DemoIsolate() will issue 20 randomized messages, then terminate.');
     
-    Observable
-      .fromIsolate(new DemoIsolate(), "")
-      .subscribe((n) => print('Message from Isolate: ${n}'), () => print('Isolate terminated.'));
-  }
-  
   // Given range(1, 5, 1)
   // 1|--1--1--1--1--1#
   //  |  |  |  |  |  ||
@@ -334,12 +320,12 @@ class reactivedemo {
     print('1 to 5 in .5 step');
     Observable
       .range(1, 5, .5)
-      .subscribe((v) => print(v));
+      .observe((v) => print(v));
     
     print('5 to 1 in .5 step');
     Observable
       .range(5, 1, .5)
-      .subscribe((v) => print(v));
+      .observe((v) => print(v));
   }
   
   // 1|--1---1-1-----1--1----->
@@ -351,7 +337,7 @@ class reactivedemo {
     Observable
       .fromList(testlist)
       .apply((n) => n * n)
-      .subscribe((v) => print('squared: $v'));
+      .observe((v) => print('squared: $v'));
   }
   
   // 1|--1--1--1--1--1--1#
@@ -363,7 +349,7 @@ class reactivedemo {
     // lets count 1 to 10
     Observable
       .unfold(1, (n) => n <= 10, (n) => n + 1, (n) => n)
-      .subscribe((v) => print(v));
+      .observe((v) => print(v));
   }
   
   void throttle(){
@@ -380,7 +366,7 @@ class reactivedemo {
     Observable
       .timer(500, 4)
       .timeout(501)  //adjust this lower than 500 to see the exception throw.
-      .subscribe((t) => print('Tick: $t'), (){}, (e)=> print('error!'));
+      .observe((t) => print('Tick: $t'), (){}, (e)=> print('error!'));
   }
   
   // Given 't' = timestamp
@@ -393,7 +379,7 @@ class reactivedemo {
     Observable
       .timer(1300, 4)
       .timestamp()
-      .subscribe((Date t) => print('Stamp: $t'),()=>print('Sequence Complete.'));
+      .observe((Date t) => print('Stamp: $t'),()=>print('Sequence Complete.'));
     
   }
   
@@ -409,7 +395,7 @@ class reactivedemo {
       .fromList(testlist)
       .where((v) => v % 2 == 0)
       .toList()
-      .subscribe((v) => print("List has ${v.length} elements.  First element is ${v[0]} and last is ${v.last()}"));
+      .observe((v) => print("List has ${v.length} elements.  First element is ${v[0]} and last is ${v.last()}"));
   }
   
   // 1|--1--1--1--1--1--1-->
@@ -422,7 +408,7 @@ class reactivedemo {
     Observable
       .fromList(testlist)
       .where((v) => v % 2 == 0)
-      .subscribe((v) => print(v));
+      .observe((v) => print(v));
   }
   
   // Where 'P' is the result of the function applied to pairs
@@ -443,7 +429,7 @@ class reactivedemo {
     // tick maximum is 10.
     o1
       .zip(o2, (l, r) => [l, r]) // just return the pair as a list of two.
-      .subscribe((v) => print('These values should be the same: ${v[0]}, ${v[1]}'));
+      .observe((v) => print('These values should be the same: ${v[0]}, ${v[1]}'));
     
   }
   
@@ -464,7 +450,7 @@ class reactivedemo {
     Observable
       .fromList(testlist)
       .contains(5)
-      .subscribe((b)=> print(b));
+      .observe((b)=> print(b));
   }
   
   // Where 'C' = the running count of elements in the sequence
@@ -478,7 +464,7 @@ class reactivedemo {
       .fromList(testlist)
       .contains(5)
       .count()
-      .subscribe((c)=> print(c));
+      .observe((c)=> print(c));
   }
   
   // 1|--1---1--1--1#
@@ -492,7 +478,7 @@ class reactivedemo {
     Observable
       .fromList([1,2,3])
       .concat([Observable.fromList([4,5,6]), Observable.fromList([7,8,9])]) //concat our list sequence with two more sequences
-      .subscribe((v) => print(v));
+      .observe((v) => print(v));
   }
   
   // Where 'R' = the result of each fold iteration
@@ -504,7 +490,7 @@ class reactivedemo {
     Observable
       .fromList(testlist)
       .fold((v, n) => v + n, 0)
-      .subscribe((v) => print(v));
+      .observe((v) => print(v));
   }
   
   // true case
@@ -521,12 +507,12 @@ class reactivedemo {
     Observable
       .fromList(testlist)
       .any()
-      .subscribe((v)=> print('Should be true: $v.'));
+      .observe((v)=> print('Should be true: $v.'));
     
     Observable
       .empty()
       .any()
-      .subscribe((v) => print('Should be false: $v.'));
+      .observe((v) => print('Should be false: $v.'));
     
   }
   
@@ -540,7 +526,7 @@ class reactivedemo {
     Observable
       .fromList(testlist)
       .buffer(2)
-      .subscribe((v)=> print("Received buffered list of size ${v.length} with elements: ${v[0]}, ${v[1]}."));
+      .observe((v)=> print("Received buffered list of size ${v.length} with elements: ${v[0]}, ${v[1]}."));
   }
   
   // Where D = distinct values in the sequence
@@ -553,7 +539,7 @@ class reactivedemo {
       .fromList(testlist)
       .concat([Observable.fromList(testlist), Observable.fromList(testlist)]) //add a few copies of the same elements
       .distinct()
-      .subscribe((v) => print(v));    
+      .observe((v) => print(v));    
   }
   
   // 1|--1--------1------1------#---->
@@ -569,7 +555,7 @@ class reactivedemo {
     var o3 = Observable.timer(300, 10).apply((v) => 'Timer 3, tick $v');
     
     o1.merge([o2, o3]) //merges o1 with o2 and o3...
-      .subscribe((v) => print(v));
+      .observe((v) => print(v));
   }
   
   void timer(){
@@ -579,7 +565,7 @@ class reactivedemo {
     //Timer
     Observable
     .timer(1000, 20)
-    .subscribe((t) => status.text = ++counter,
+    .observe((t) => status.text = '${++counter}',
       () => status.text = "Complete.");    
   }
   
@@ -593,7 +579,7 @@ class reactivedemo {
     Observable
       .fromEvent(button.on.click)
       .apply((_) => ++inc) //pass incremented count to the next method
-      .subscribe((c) => buttonStatus.text = "$c clicks have occurred.");
+      .observe((c) => buttonStatus.text = "$c clicks have occurred.");
   }
   
   

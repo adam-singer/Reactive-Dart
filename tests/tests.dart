@@ -1,5 +1,5 @@
 #import('dart:html');
-#import('../lib/reactive_lib.dart');
+#import('../reactive_client.dart');
 
 // NOTE: You will need to point the path below to wherever your 
 // location of the Dart source code is located.
@@ -11,13 +11,10 @@
  * Unit Tests for Reactive Dart library
 */
 
-
-
 main(){  
   useHtmlEnhancedConfiguration();
   
   group("Observable constructors", (){
-    usingNew();
     usingCreate();
   });
   
@@ -37,14 +34,12 @@ main(){
     returnValue();
     range();
     unfold();
-    group('TEST GROUP', (){
-      throttle();
-      timeout();
-      timestamp();
-      toList();
-      fromEvent();
-      throwE();      
-    });
+    throttle();
+    timeout();
+    timestamp();
+    toList();
+    fromEvent();
+    throwE();      
     count();
     apply();
     distinctUntilNot();
@@ -74,7 +69,7 @@ concat() {
     
     Observable
     .concat([o1, o2])
-    .subscribe((v){
+    .observe((v){
       Expect.equals(i++, v);
       callbackDone();
     });
@@ -91,7 +86,7 @@ buffer(){
     Observable
     .range(1, 10)
     .buffer(size:2) //buffer the sequence into chunks of 2
-    .subscribe((v){
+    .observe((v){
       Expect.isTrue(v is List);
       Expect.equals(2, v.length);
       Expect.equals(i++, v[0]);
@@ -108,7 +103,7 @@ any(){
     Observable
       .empty()
       .any()
-      .subscribe((v){
+      .observe((v){
         Expect.isFalse(v);
         callbackDone();
       });
@@ -119,7 +114,7 @@ any(){
     Observable
       .returnValue("foo")
       .any()
-      .subscribe((v){
+      .observe((v){
         Expect.isTrue(v);
         callbackDone();
       });
@@ -135,7 +130,7 @@ fold() {
     Observable
       .range(1, 10)
       .fold((acc, v) => v + acc, 1)
-      .subscribe(
+      .observe(
         (v){
           i += c++; //match the fold operation
           Expect.equals(i, v);
@@ -153,7 +148,7 @@ empty(){
     
     Observable
     .empty()
-    .subscribe((_){
+    .observe((_){
       isEmpty = false;
     },
     (){
@@ -170,7 +165,7 @@ contains(){
     Observable
     .range(1, 10)
     .contains(5)
-    .subscribe((v){
+    .observe((v){
       c = v;
     },
       (){
@@ -187,7 +182,7 @@ delay() {
     Observable
     .range(1, 10)
     .delay(300)
-    .subscribe((v){}, (){
+    .observe((v){}, (){
       sw.stop();
       Expect.isTrue(sw.elapsedInMs() >= 300);
       callbackDone();
@@ -205,7 +200,7 @@ distinct() {
     Observable
     .merge([o1, o2])
     .distinct()
-    .subscribe((v){
+    .observe((v){
       Expect.equals(i++, v);
       callbackDone();
     }, ()
@@ -225,7 +220,7 @@ merge() {
     Observable
     .merge([o1, o2])
     .count()
-    .subscribe((v){
+    .observe((v){
       Expect.equals(10, v);
       callbackDone();
     });
@@ -240,7 +235,7 @@ zip() {
     
     Observable
     .zip(o1, o2, (v1, v2) => v1 * v2) //yield product (squares)
-    .subscribe((v){
+    .observe((v){
       Expect.equals(i * i++, v);
       callbackDone();
     });
@@ -253,7 +248,7 @@ where() => asyncTest('.where()', 5, (){
   Observable
   .range(1, 10)
   .where((num v) => v % 2 == 0) //filter for even numbers
-  .subscribe((v){
+  .observe((v){
     Expect.equals(i, v);
     i += 2;
     callbackDone();
@@ -268,7 +263,7 @@ distinctUntilNot() => asyncTest('.distinctUntilNot()', 1, (){
   .fromList(repeatingList)
   .distinctUntilNot()
   .count()
-  .subscribe((v){
+  .observe((v){
     Expect.equals(5, v);
     callbackDone();
   });
@@ -280,7 +275,7 @@ apply() => asyncTest('.apply()', 5, (){
   Observable
   .range(1, 5)
   .apply((v) => 'number: $v')
-  .subscribe((v){
+  .observe((v){
     Expect.isTrue(v is String);
     Expect.isTrue(v.contains('${i++}'));
     callbackDone();
@@ -296,7 +291,7 @@ throwE() => asyncTest('.throwE()', 1, (){
   
   Observable
   .throwE(new Exception('hello world.'))
-  .subscribe(
+  .observe(
     (v) => Expect.fail('should not emit value'),
     () => Expect.fail('should not terminate'),
     (e){
@@ -314,7 +309,7 @@ fromEvent() => asyncTest('.fromEvent()', 1, (){
   
   Observable
   .fromEvent(element.on.click)
-  .subscribe((v){
+  .observe((v){
     Expect.isTrue(v is Event);
     callbackDone();
   });
@@ -328,7 +323,7 @@ toList() => asyncTest('.toList()', 1, (){
   Observable
   .randomInt(1, 10, howMany:5)
   .toList()
-  .subscribe((v){
+  .observe((v){
     Expect.isTrue(v is List);
     Expect.equals(5, v.length);
     callbackDone();
@@ -340,7 +335,7 @@ timestamp() => asyncTest('.timestamp()', 1, (){
   Observable
   .returnValue(10)
   .timestamp()
-  .subscribe((v){
+  .observe((v){
     Expect.isTrue(v is Date);
     callbackDone();
   });
@@ -352,7 +347,7 @@ timeout() => asyncTest('.timeout()', 2, (){
     .range(1, 5)
     .pace(100)
     .timeout(50)
-    .subscribe(
+    .observe(
       (v) => callbackDone(),
       () => Expect.fail('Should never terminate.'),
       (e) { 
@@ -369,7 +364,7 @@ throttle() => asyncTest('.throttle()', 2, (){
   Observable
     .range(1, 5)
     .throttle(100)
-    .subscribe((v){
+    .observe((v){
       Expect.fail('throttle failed.');
     },(){
       callbackDone();
@@ -381,7 +376,7 @@ throttle() => asyncTest('.throttle()', 2, (){
     .pace(20)
     .throttle(10)
     .count()
-    .subscribe((v){
+    .observe((v){
       Expect.equals(5, v);
       callbackDone();
     });
@@ -394,7 +389,7 @@ unfold() => asyncTest('.unfold()', 10, (){
   //unfold from 1 to 10
   Observable
   .unfold(1, (v) => v <= 10, (v) => v += 1, (v) => v)
-  .subscribe((v){
+  .observe((v){
     Expect.equals(i++, v);
     callbackDone();
   });
@@ -407,7 +402,7 @@ range(){
     
     Observable
     .range(1, 10, step:2)
-    .subscribe((v){
+    .observe((v){
       Expect.equals(i++, v);
       i++;
       callbackDone();
@@ -419,7 +414,7 @@ range(){
     
     Observable
     .range(10, 1, step:2)
-    .subscribe((v){
+    .observe((v){
       Expect.equals(i--, v);
       i--;
       callbackDone();
@@ -433,7 +428,7 @@ returnValue() => asyncTest('.returnValue()', 1, (){
   
   Observable
   .returnValue("hello")
-  .subscribe((v){
+  .observe((v){
     Expect.equals("hello", v);
     callbackDone();
   });
@@ -446,7 +441,7 @@ first() => asyncTest('.first()', 2, (){
   Observable
   .range(1, 5)
   .first()
-  .subscribe((v){
+  .observe((v){
     Expect.isFalse(gotValue);
     gotValue = true;
     Expect.equals(1, v);
@@ -464,7 +459,7 @@ take() => asyncTest('.take()', 4, (){
   Observable
     .range(1, 5)
     .take(4)
-    .subscribe((v){
+    .observe((v){
       Expect.equals(i++, v);
       callbackDone();
     });
@@ -476,7 +471,7 @@ takeWhile() => asyncTest('.takeWhile()', 1, (){
     .range(1, 5)
     .takeWhile((v) => v < 3)
     .count()
-    .subscribe((v){
+    .observe((v){
       Expect.equals(2, v);
       callbackDone();
     });
@@ -484,12 +479,12 @@ takeWhile() => asyncTest('.takeWhile()', 1, (){
 
 fromXMLHttpRequest() => asyncTest('.fromXMLHttpRequest()', 1, (){
   var uri = 'tests.html'; //this should work if running locally...
-  var testFileLength = 403; // the length of test.html if unmodified.
+  var testFileLength = 416; // the length of test.html if unmodified.
   
   Observable
     .fromXMLHttpRequest(uri, 'Accept', 'text/plain')
     .single() //using single to enforce no additional values other than the data we requested...
-    .subscribe(
+    .observe(
       (v){
         Expect.isTrue(v is String);
         Expect.equals(testFileLength, v.length);  //the length of unmodified test.html
@@ -514,7 +509,7 @@ random() => asyncTest('.random()', 1, (){
     return v;
   })
   .count()
-  .subscribe((v){
+  .observe((v){
     Expect.equals(10, v); //should produce 10 values
     callbackDone();
   });
@@ -532,7 +527,7 @@ randomInt() => asyncTest('.randomInt()', 1, (){
     return v;
   })
   .count()
-  .subscribe((v){
+  .observe((v){
     Expect.equals(10, v); //should produce 10 values
     callbackDone();
   });
@@ -544,7 +539,7 @@ sample() => asyncTest('.sample()', 1, (){
     .range(1, 5)
     .sample(2) //sample rate of 2 from the list should yield 2 results
     .count()
-    .subscribe((n) {
+    .observe((n) {
       Expect.equals(2, n);
       callbackDone();
     });
@@ -558,7 +553,7 @@ firstOf() => asyncTest('.firstOf()', 10, (){
   // o1 should emit first since it is first in the list.
   Observable
     .firstOf([o1, o2])
-    .subscribe((n) {
+    .observe((n) {
       Expect.isTrue(n is num);
       callbackDone();
     });
@@ -569,7 +564,7 @@ firstOf() => asyncTest('.firstOf()', 10, (){
   // o2 should emit first since o1 is delayed.
   Observable
     .firstOf([o1.delay(50), o2])
-    .subscribe((n) {
+    .observe((n) {
       Expect.isTrue(n is String);
       callbackDone();
     });
@@ -582,7 +577,7 @@ skip() => asyncTest('.skip()', 1, (){
     .range(1, 5)
     .skip(2) // removes the first two elements from the list
     .count()
-    .subscribe((n){
+    .observe((n){
       Expect.equals(3, n);
       callbackDone();
     });
@@ -595,7 +590,7 @@ skipWhile() => asyncTest('.skipWhile()', 1, (){
     .range(1, 5)
     .skipWhile((v) => v < 3) // removes the first two elements from the list that are < 3
     .count()
-    .subscribe((n){
+    .observe((n){
       Expect.equals(3, n);
       callbackDone();
     });
@@ -610,7 +605,7 @@ pace() => asyncTest('.pace()', 1, (){
   Observable
     .range(1, 5)
     .pace(interval)
-    .subscribe((_){}, (){
+    .observe((_){}, (){
       sw.stop();
       Expect.isTrue(sw.elapsedInMs() > 4 * interval);
       sw.reset();
@@ -628,7 +623,7 @@ fromFuture() => asyncTest('.fromFuture()', 2, (){
   
   Observable
     .fromFuture(f)
-    .subscribe((v){
+    .observe((v){
       Expect.isTrue(v is ElementRect);
       callbackDone();
     });
@@ -645,22 +640,7 @@ usingCreate() => asyncTest('Observable.create() creates and returns correct obje
   Expect.isTrue(obs is IObservable);
   Expect.isTrue(obs is ChainableIObservable);
   
-  obs.subscribe((v){
-    Expect.equals(5, v);
-    callbackDone();
-  });
-});
-
-usingNew() => asyncTest('new Observable() creates and returns correct object', 1, (){
-  var obs = new Observable((IObserver o){
-    o.next(5);
-    o.complete();
-  });
-  
-  Expect.isTrue(obs is IObservable);
-  Expect.isTrue(obs is ChainableIObservable);
-  
-  obs.subscribe((v){
+  obs.observe((v){
     Expect.equals(5, v);
     callbackDone();
   });
@@ -671,7 +651,7 @@ fromListGetsAllElements() => asyncTest('.fromList() Emits all elements', 5, (){
   var i = 1;
   Observable
     .range(1, 5)
-    .subscribe((n) {
+    .observe((n) {
       Expect.equals(i++, n);
       callbackDone();
     });
@@ -682,7 +662,7 @@ nullCountIsZero() => asyncTest('.count() Null count is 0', 1, (){
   Observable
     .fromList([])
     .count()
-    .subscribe((total){
+    .observe((total){
       Expect.equals(0, total);
       callbackDone();
       });
@@ -694,7 +674,7 @@ countEqualsExpected() => asyncTest('.count() Count equals expected', 1, (){
   Observable
     .range(1, 5)
     .count()
-    .subscribe((total){
+    .observe((total){
       Expect.equals(5, total);
       callbackDone();
       });
@@ -706,7 +686,7 @@ timer() => asyncTest('.timer() validate tick count', 1, (){
   Observable
     .timer(300, 5)
     .count()
-    .subscribe((total){
+    .observe((total){
       Expect.equals(5, total);
       callbackDone();
       });
