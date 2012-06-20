@@ -160,5 +160,7 @@ class _ChainableIObservableImplementation<T> implements ChainableIObservable<T>,
   fromFuture(Future f) => Observable.fromFuture(f, continuation:this);
   
   pace(int paceInMilliseconds) => Observable.pace(this, paceInMilliseconds);
+  
+  directoryList(String dir) => Observable.directoryList(dir, continuation:this);
 }
 

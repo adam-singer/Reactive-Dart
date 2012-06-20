@@ -30,7 +30,7 @@ class Observable
   static ChainableIObservable create(f(IObserver o)) => new ChainableIObservable(f);
   
   /// Takes output from a [Future] and returns it in an observable sequence.
- static ChainableIObservable fromFuture(Future f, [IObservable continuation]){
+  static ChainableIObservable fromFuture(Future f, [IObservable continuation]){
    return Observable.create((IObserver o){
      makeit(){
        if (f.isComplete){
@@ -48,6 +48,32 @@ class Observable
            o.error(e);  
          });
        }
+     }
+     
+     if (continuation == null){
+       makeit();
+     }else{
+       continuation.observe((_){},() => makeit(), (e) => o.error(e));
+     }
+   });
+ }
+ 
+ /** Emits a sequences of [File] objects from a given directory. */
+ static ChainableIObservable directoryList(String dir, [IObservable continuation]){
+   return Observable.create((IObserver o){
+     makeit(){
+       var lister = new Directory(dir).list(true);
+       
+       lister.onError = (e) => o.error(e);
+       lister.onDone = (success){
+         if (success){
+           o.complete();
+         }else{
+           o.error(new FileIOException('Operation did not complete.'));
+         }
+       };
+       
+       lister.onFile = (String file) => o.next(new File(file));
      }
      
      if (continuation == null){
