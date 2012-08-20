@@ -1,7 +1,7 @@
 #import('dart:html');
 #import('../reactive_client.dart');
 
-// NOTE: You will need to point the path below to wherever your 
+// NOTE: You will need to point the path below to wherever your
 // location of the Dart source code is located.
 #import('../../../src/lib/unittest/unittest.dart');
 #import('../../../src/lib/unittest/html_enhanced_config.dart');
@@ -11,13 +11,13 @@
  * Unit Tests for Reactive Dart library
 */
 
-main(){  
+main(){
   useHtmlEnhancedConfiguration();
-  
+
   group("Observable constructors", (){
     usingCreate();
   });
-  
+
   group("Operators", (){
     fromFuture();
     pace();
@@ -39,7 +39,7 @@ main(){
     timestamp();
     toList();
     fromEvent();
-    throwE();      
+    throwE();
     count();
     apply();
     distinctUntilNot();
@@ -66,7 +66,7 @@ concat() {
     var i = 1;
     var o1 = Observable.range(1, 5);
     var o2 = Observable.range(6, 10);
-    
+
     Observable
     .concat([o1, o2])
     .observe((v){
@@ -82,7 +82,7 @@ concat() {
 buffer(){
     asyncTest('.buffer()', 5, (){
     var i = 1;
-   
+
     Observable
     .range(1, 10)
     .buffer(size:2) //buffer the sequence into chunks of 2
@@ -97,9 +97,9 @@ buffer(){
 }
 
 any(){
-  
+
   asyncTest('.any() none', 1, (){
-    
+
     Observable
       .empty()
       .any()
@@ -108,9 +108,9 @@ any(){
         callbackDone();
       });
   });
-  
+
   asyncTest('.any() some', 1, (){
-    
+
     Observable
       .returnValue("foo")
       .any()
@@ -119,14 +119,14 @@ any(){
         callbackDone();
       });
   });
-  
+
 }
 
-fold() { 
+fold() {
   asyncTest('.fold()', 10, (){
     var c = 1;
     var i = 1;
-    
+
     Observable
       .range(1, 10)
       .fold((acc, v) => v + acc, 1)
@@ -145,7 +145,7 @@ fold() {
 empty(){
   asyncTest('.empty()', 1, (){
     var isEmpty = true;
-    
+
     Observable
     .empty()
     .observe((_){
@@ -161,7 +161,7 @@ empty(){
 contains(){
   asyncTest('.contains()', 1, (){
     var c = false;
-    
+
     Observable
     .range(1, 10)
     .contains(5)
@@ -174,11 +174,11 @@ contains(){
     });
   });
 }
-  
-delay() { 
+
+delay() {
   asyncTest('.delay()', 1, (){
     Stopwatch sw = new Stopwatch.start();
-    
+
     Observable
     .range(1, 10)
     .delay(300)
@@ -196,7 +196,7 @@ distinct() {
     var o1 = Observable.range(1, 5);
     var o2 = Observable.range(1, 5);
     var i = 1;
-    
+
     Observable
     .merge([o1, o2])
     .distinct()
@@ -204,7 +204,7 @@ distinct() {
       Expect.equals(i++, v);
       callbackDone();
     }, ()
-    { 
+    {
       Expect.equals(6, i);
       callbackDone();
       });
@@ -216,7 +216,7 @@ merge() {
   asyncTest('.merge()', 1, (){
     var o1 = Observable.range(1, 5);
     var o2 = Observable.range(1, 5);
-    
+
     Observable
     .merge([o1, o2])
     .count()
@@ -227,12 +227,12 @@ merge() {
   });
 }
 
-zip() { 
+zip() {
   asyncTest('.zip()', 5, (){
     var o1 = Observable.range(1, 5);
     var o2 = Observable.range(1, 5);
     var i = 1;
-    
+
     Observable
     .zip(o1, o2, (v1, v2) => v1 * v2) //yield product (squares)
     .observe((v){
@@ -244,7 +244,7 @@ zip() {
 
 where() => asyncTest('.where()', 5, (){
   var i = 2;
-  
+
   Observable
   .range(1, 10)
   .where((num v) => v % 2 == 0) //filter for even numbers
@@ -256,9 +256,9 @@ where() => asyncTest('.where()', 5, (){
 });
 
 distinctUntilNot() => asyncTest('.distinctUntilNot()', 1, (){
-  
+
   var repeatingList = [1,2,3,4,5,1,2,3,4,5];
-  
+
   Observable
   .fromList(repeatingList)
   .distinctUntilNot()
@@ -271,7 +271,7 @@ distinctUntilNot() => asyncTest('.distinctUntilNot()', 1, (){
 
 apply() => asyncTest('.apply()', 5, (){
   var i = 1;
-  
+
   Observable
   .range(1, 5)
   .apply((v) => 'number: $v')
@@ -288,7 +288,7 @@ count(){
 }
 
 throwE() => asyncTest('.throwE()', 1, (){
-  
+
   Observable
   .throwE(new Exception('hello world.'))
   .observe(
@@ -302,24 +302,24 @@ throwE() => asyncTest('.throwE()', 1, (){
 });
 
 fromEvent() => asyncTest('.fromEvent()', 1, (){
-  
+
   Element element = document.query('#status');
-  
+
   Expect.isNotNull(element);
-  
+
   Observable
   .fromEvent(element.on.click)
   .observe((v){
     Expect.isTrue(v is Event);
     callbackDone();
   });
-  
+
   //fire an event
   element.on.click.dispatch(new Event('click'));
 });
 
 toList() => asyncTest('.toList()', 1, (){
-  
+
   Observable
   .randomInt(1, 10, howMany:5)
   .toList()
@@ -331,7 +331,7 @@ toList() => asyncTest('.toList()', 1, (){
 });
 
 timestamp() => asyncTest('.timestamp()', 1, (){
-  
+
   Observable
   .returnValue(10)
   .timestamp()
@@ -342,7 +342,7 @@ timestamp() => asyncTest('.timestamp()', 1, (){
 });
 
 timeout() => asyncTest('.timeout()', 2, (){
-  
+
   Observable
     .range(1, 5)
     .pace(100)
@@ -350,16 +350,16 @@ timeout() => asyncTest('.timeout()', 2, (){
     .observe(
       (v) => callbackDone(),
       () => Expect.fail('Should never terminate.'),
-      (e) { 
+      (e) {
         Expect.isTrue(e is ObservableException);
         callbackDone();
       }
       );
-  
+
 });
 
 throttle() => asyncTest('.throttle()', 2, (){
-  
+
   //should emit no values
   Observable
     .range(1, 5)
@@ -369,7 +369,7 @@ throttle() => asyncTest('.throttle()', 2, (){
     },(){
       callbackDone();
     });
-  
+
   //should emit 5 values
   Observable
     .range(1, 5)
@@ -380,12 +380,12 @@ throttle() => asyncTest('.throttle()', 2, (){
       Expect.equals(5, v);
       callbackDone();
     });
-  
+
 });
 
 unfold() => asyncTest('.unfold()', 10, (){
   int i = 1;
-  
+
   //unfold from 1 to 10
   Observable
   .unfold(1, (v) => v <= 10, (v) => v += 1, (v) => v)
@@ -399,7 +399,7 @@ unfold() => asyncTest('.unfold()', 10, (){
 range(){
   asyncTest('.range() Low To High', 5, (){
     int i = 1;
-    
+
     Observable
     .range(1, 10, step:2)
     .observe((v){
@@ -408,10 +408,10 @@ range(){
       callbackDone();
     });
   });
-  
+
   asyncTest('.range() High To Low', 5, (){
     int i = 10;
-    
+
     Observable
     .range(10, 1, step:2)
     .observe((v){
@@ -420,12 +420,12 @@ range(){
       callbackDone();
     });
   });
-  
+
 }
 
 
 returnValue() => asyncTest('.returnValue()', 1, (){
-  
+
   Observable
   .returnValue("hello")
   .observe((v){
@@ -437,7 +437,7 @@ returnValue() => asyncTest('.returnValue()', 1, (){
 
 first() => asyncTest('.first()', 2, (){
   var gotValue = false;
-  
+
   Observable
   .range(1, 5)
   .first()
@@ -447,7 +447,7 @@ first() => asyncTest('.first()', 2, (){
     Expect.equals(1, v);
     callbackDone();
   });
-  
+
   callbackDone();
 });
 
@@ -455,7 +455,7 @@ first() => asyncTest('.first()', 2, (){
 take() => asyncTest('.take()', 4, (){
 
   var i = 1;
-  
+
   Observable
     .range(1, 5)
     .take(4)
@@ -466,7 +466,7 @@ take() => asyncTest('.take()', 4, (){
 });
 
 takeWhile() => asyncTest('.takeWhile()', 1, (){
-  
+
   Observable
     .range(1, 5)
     .takeWhile((v) => v < 3)
@@ -480,17 +480,17 @@ takeWhile() => asyncTest('.takeWhile()', 1, (){
 fromXMLHttpRequest() => asyncTest('.fromXMLHttpRequest()', 1, (){
   var uri = 'tests.html'; //this should work if running locally...
   var testFileLength = 416; // the length of test.html if unmodified.
-  
+
   Observable
-    .fromXMLHttpRequest(uri, 'Accept', 'text/plain')
+    .fromHttpRequest(uri, 'Accept', 'text/plain')
     .single() //using single to enforce no additional values other than the data we requested...
     .observe(
       (v){
         Expect.isTrue(v is String);
         Expect.equals(testFileLength, v.length);  //the length of unmodified test.html
         callbackDone();
-      }, 
-      (){}, 
+      },
+      (){},
       (e) {
         Expect.fail("exception thrown $e");
         callbackDone();
@@ -498,10 +498,10 @@ fromXMLHttpRequest() => asyncTest('.fromXMLHttpRequest()', 1, (){
 });
 
 random() => asyncTest('.random()', 1, (){
-  
+
   //TODO test for invalid ranges
   //TODO test random intervals
-  
+
   Observable
   .random(1, 10, howMany:10)
   .apply((v){
@@ -516,10 +516,10 @@ random() => asyncTest('.random()', 1, (){
 });
 
 randomInt() => asyncTest('.randomInt()', 1, (){
-  
+
   //TODO test for invalid ranges
   //TODO test random intervals
-  
+
   Observable
   .randomInt(1, 10, howMany:10)
   .apply((v){
@@ -534,7 +534,7 @@ randomInt() => asyncTest('.randomInt()', 1, (){
 });
 
 sample() => asyncTest('.sample()', 1, (){
-  
+
   Observable
     .range(1, 5)
     .sample(2) //sample rate of 2 from the list should yield 2 results
@@ -549,7 +549,7 @@ firstOf() => asyncTest('.firstOf()', 10, (){
   var tListStrings = const ['apple', 'pear', 'orange', 'grape', 'strawberry'];
   var o1 = Observable.range(1, 5);
   var o2 = Observable.fromList(tListStrings);
-  
+
   // o1 should emit first since it is first in the list.
   Observable
     .firstOf([o1, o2])
@@ -557,10 +557,10 @@ firstOf() => asyncTest('.firstOf()', 10, (){
       Expect.isTrue(n is num);
       callbackDone();
     });
-  
+
   o1 = Observable.range(1, 5);
   o2 = Observable.fromList(tListStrings);
-  
+
   // o2 should emit first since o1 is delayed.
   Observable
     .firstOf([o1.delay(50), o2])
@@ -568,11 +568,11 @@ firstOf() => asyncTest('.firstOf()', 10, (){
       Expect.isTrue(n is String);
       callbackDone();
     });
-  
+
 });
 
 skip() => asyncTest('.skip()', 1, (){
-  
+
   Observable
     .range(1, 5)
     .skip(2) // removes the first two elements from the list
@@ -581,11 +581,11 @@ skip() => asyncTest('.skip()', 1, (){
       Expect.equals(3, n);
       callbackDone();
     });
-  
+
 });
 
 skipWhile() => asyncTest('.skipWhile()', 1, (){
-  
+
   Observable
     .range(1, 5)
     .skipWhile((v) => v < 3) // removes the first two elements from the list that are < 3
@@ -594,14 +594,14 @@ skipWhile() => asyncTest('.skipWhile()', 1, (){
       Expect.equals(3, n);
       callbackDone();
     });
-  
+
 });
 
 pace() => asyncTest('.pace()', 1, (){
-  
+
   var sw = new Stopwatch.start();
   var interval = 30;
-  
+
   Observable
     .range(1, 5)
     .pace(interval)
@@ -611,23 +611,23 @@ pace() => asyncTest('.pace()', 1, (){
       sw.reset();
       callbackDone();
     });
-  
+
 });
 
 fromFuture() => asyncTest('.fromFuture()', 2, (){
   Element e = document.query('#status');
   Expect.isNotNull(e);
-  
+
   //get a future
   Future f = e.rect;
-  
+
   Observable
     .fromFuture(f)
     .observe((v){
       Expect.isTrue(v is ElementRect);
       callbackDone();
     });
-  
+
   callbackDone();
 });
 
@@ -636,10 +636,10 @@ usingCreate() => asyncTest('Observable.create() creates and returns correct obje
     o.next(5);
     o.complete();
   });
-  
+
   Expect.isTrue(obs is IObservable);
   Expect.isTrue(obs is ChainableIObservable);
-  
+
   obs.observe((v){
     Expect.equals(5, v);
     callbackDone();
@@ -666,7 +666,7 @@ nullCountIsZero() => asyncTest('.count() Null count is 0', 1, (){
       Expect.equals(0, total);
       callbackDone();
       });
-  
+
 });
 
 /// Checks if a sequence of elements returns the correct total via Observable.count.

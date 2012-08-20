@@ -22,6 +22,8 @@
 #library('Reactive Dart - Client');
 
 #import('dart:io');
+#import('dart:isolate');
+#import('dart:math');
 
 #source('common/IDisposable.dart');
 #source('common/IObserver.dart');

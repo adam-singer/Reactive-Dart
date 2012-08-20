@@ -17,10 +17,10 @@
 /**
 * Represents an [IObservable] that provides extended methods for
 * chaining of multiple operations.
-*/ 
+*/
 interface ChainableIObservable<T> extends IObservable<T> default _ChainableIObservableImplementation
 {
-  
+
   ChainableIObservable(Function oFunc);
 
   // this is more about the tooling than anything else.
@@ -51,7 +51,7 @@ interface ChainableIObservable<T> extends IObservable<T> default _ChainableIObse
   ChainableIObservable<T> sample(int sampleFrequency);
   ChainableIObservable<T> skip(int skip);
   ChainableIObservable<T> skipWhile(isTrue(v));
-  ChainableIObservable<T> fromXMLHttpRequest(String uri, String requestHeader, String requestValue);
+  ChainableIObservable<T> fromHttpRequest(String uri, String requestHeader, String requestValue);
   ChainableIObservable<T> fromList(List l);
   ChainableIObservable<T> timer(int milliseconds, [int ticks]);
   ChainableIObservable<T> unfold(initialstate, conditional(state), iterate(state), result(state));

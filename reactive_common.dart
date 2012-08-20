@@ -24,6 +24,8 @@
 */
 #library('Reactive Dart - Common');
 
+#import('dart:math');
+
 #source('common/IDisposable.dart');
 #source('common/IObserver.dart');
 #source('common/IObservable.dart');
