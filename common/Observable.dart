@@ -266,7 +266,7 @@ class Observable
            s = iterate(s);
          }
          o.complete();
-       }catch(Exception e){
+       }on Exception catch(e){
          o.error(e);
        }
      }

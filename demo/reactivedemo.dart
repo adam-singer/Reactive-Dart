@@ -24,6 +24,7 @@
 #import('dart:html');
 #import('../reactive_client.dart');
 #import('dart:isolate');
+#import('dart:math');
 
 
 class reactivedemo {

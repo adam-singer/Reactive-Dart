@@ -22,7 +22,7 @@
 #library('Reactive Dart - Client');
 
 #import('dart:html');
-#import('dart:math');
+#import('dart:math', prefix:'mlib');
 
 #source('common/IDisposable.dart');
 #source('common/IObserver.dart');

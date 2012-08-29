@@ -1,4 +1,5 @@
 #import('dart:html');
+#import('dart:math');
 #import('../../reactive_client.dart');
 
 class AlphabetInvasion {
@@ -144,7 +145,7 @@ class AlphabetInvasion {
      generator = Observable
                  .randomInt(0, 25, intervalLow:config[LAUNCH_RATE], intervalHigh:config[LAUNCH_RATE], howMany: enemiesThisLevel)
                  .apply((v) => v.toInt())
-                 .apply((v) => Math.random() <= capitalLetterProbability ? lookup[v - 1] : lookup[v - 1].toUpperCase())
+                 .apply((v) => new Random().nextDouble() <= capitalLetterProbability ? lookup[v - 1] : lookup[v - 1].toUpperCase())
                  .observe((v) => launchNewEnemy(v), () => allEnemiesLaunched = true);
    }
 
@@ -256,14 +257,16 @@ class AlphabetInvasion {
   }
 
   // helper to retrieve the numeric equivalent of Element.style.top
-  int getTopValue(Element e) => Math.parseInt(e.style.top.toString().replaceAll('px',''));
+  int getTopValue(Element e) => parseInt(e.style.top.toString().replaceAll('px',''));
 
   //
   void launchNewEnemy(String v){
+    final rnd = new Random();
+
     //randomize a color, not too dark
-    int r = (Math.random() * 100 + 155).toInt();
-    int g = (Math.random() * 100 + 155).toInt();
-    int b = (Math.random() * 100 + 155).toInt();
+    int r = (rnd.nextDouble() * 100 + 155).toInt();
+    int g = (rnd.nextDouble() * 100 + 155).toInt();
+    int b = (rnd.nextDouble() * 100 + 155).toInt();
 
     // build the enemy and set it's initial position
     Element l = new Element.tag("div");
@@ -272,7 +275,7 @@ class AlphabetInvasion {
     l.style.color = 'rgb($r,$g,$b)';
     l.text = v;
     l.style.top = '${playfieldDimensions.bounding.top}px';
-    l.style.left = '${Math.random() * (playfieldDimensions.client.width - 25)}px';
+    l.style.left = '${rnd.nextDouble() * (playfieldDimensions.client.width - 25)}px';
 
     // update the tracking queue and add the enemy to the DOM
     enemies.add(l);
@@ -280,10 +283,10 @@ class AlphabetInvasion {
   }
 
   void addToScore(int amount){
-    int newScore = (Math.parseInt(score.text) + amount);
+    int newScore = (parseInt(score.text) + amount);
     score.text = newScore.toString();
 
-    if (newScore > Math.parseDouble(highScore.text).toInt() ){
+    if (newScore > parseDouble(highScore.text).toInt() ){
       highScore.text = newScore.toString();
       window.localStorage[HIGH_SCORE_STORAGE_KEY] = newScore.toString();
     }

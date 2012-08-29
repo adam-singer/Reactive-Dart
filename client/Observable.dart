@@ -267,14 +267,16 @@ class Observable
    num intervalDelta = intervalHigh - intervalLow;
    num ticks = 0;
 
+   final r = new mlib.Random();
+
    Function iFunc = (intervalDelta == 0)
                     ? () => intervalLow
-                    : () => (Math.random() * intervalDelta) + intervalLow;
+                    : () => (r.nextDouble() * intervalDelta) + intervalLow;
 
    return Observable.create((IObserver o){
      makeit(){
        void nextNum(){
-         o.next((Math.random() * delta) + low);
+         o.next((r.nextDouble() * delta) + low);
 
          if (howMany == null){
            window.setTimeout(nextNum, iFunc());
@@ -309,7 +311,7 @@ class Observable
  {
   return Observable.create((IObserver o){
     makeit(){
-      final r = new XMLHttpRequest();
+      final r = new HttpRequest();
 
       Observable
       .fromEvent(r.on.error)
@@ -335,7 +337,7 @@ class Observable
         r.open('GET', uri, true);
         r.setRequestHeader(requestHeader, requestValue);
         r.send();
-      }catch(Exception e){
+      }on Exception catch(e){
         o.error(e);
       }
       catch(var e){
@@ -468,7 +470,7 @@ class Observable
            s = iterate(s);
          }
          o.complete();
-       }catch(Exception e){
+       }on Exception catch(e){
          o.error(e);
        }
      }
