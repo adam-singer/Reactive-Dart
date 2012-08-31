@@ -24,12 +24,11 @@
 #import('dart:html');
 #import('dart:math', prefix:'mlib');
 
-#source('common/IDisposable.dart');
-#source('common/IObserver.dart');
-#source('common/IObservable.dart');
-#source('client/Observable.dart');
-#source('client/_ChainableIObservableImplementation.dart');
-#source('common/_UnsubscriberWrapper.dart');
-#source('common/_DefaultObserver.dart');
-#source('client/ChainableIObservable.dart');
-#source('common/ObservableException.dart');
+#source('lib/common/i_disposable.dart');
+#source('lib/common/i_observer.dart');
+#source('lib/common/i_observable.dart');
+#source('lib/client/observable.dart');
+#source('lib/client/_chainable_i_observable_implementation.dart');
+#source('lib/common/_UnsubscriberWrapper.dart');
+#source('lib/client/chainable_i_observable.dart');
+#source('lib/common/observable_exception.dart');

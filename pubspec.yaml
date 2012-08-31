@@ -1,0 +1,6 @@
+name: reactive_dart
+description: An implementation of the observer pattern on sequences.
+version: 0.0.1
+dependencies:
+  unittest:
+    sdk: unittest

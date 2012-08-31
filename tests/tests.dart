@@ -1,15 +1,14 @@
 #import('dart:html');
 #import('../reactive_client.dart');
 
-// NOTE: You will need to point the path below to wherever your
-// location of the Dart source code is located.
-#import('../../../src/lib/unittest/unittest.dart');
-#import('../../../src/lib/unittest/html_enhanced_config.dart');
-
+#import('package:unittest/unittest.dart');
+#import('package:unittest/html_enhanced_config.dart');
 
 /*
  * Unit Tests for Reactive Dart library
 */
+
+//TODO migrate to the new async API...
 
 main(){
   useHtmlEnhancedConfiguration();

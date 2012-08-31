@@ -1,25 +1,9 @@
-//   Copyright (c) 2012, John Evans
-//
-//   John: https://plus.google.com/u/0/115427174005651655317/about
-//
-//   Licensed under the Apache License, Version 2.0 (the "License");
-//   you may not use this file except in compliance with the License.
-//   You may obtain a copy of the License at
-//
-//       http://www.apache.org/licenses/LICENSE-2.0
-//
-//   Unless required by applicable law or agreed to in writing, software
-//   distributed under the License is distributed on an "AS IS" BASIS,
-//   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-//   See the License for the specific language governing permissions and
-//   limitations under the License.
-
-
-// Instantiates a general purpose IObservable with chaining helper methods.
-// This implementation treats the sequences as a shared stream among all 
-// subscribers.  Only the first subscriber is guaranteed to get all elements
-// in a static sequence (lists, etc).
-//
+/**
+ * Instantiates a general purpose IObservable with chaining helper methods.
+ * This implementation treats the sequences as a shared stream among all 
+ * subscribers.  Only the first subscriber is guaranteed to get all elements
+ * in a static sequence (lists, etc).
+ */
 class _ChainableIObservableImplementation<T> implements ChainableIObservable<T>, IDisposable, _FactoryObservable{
   final Function oFunc;
   IObserver<T> mainObserver;
@@ -29,7 +13,7 @@ class _ChainableIObservableImplementation<T> implements ChainableIObservable<T>,
   _ChainableIObservableImplementation(Function this.oFunc) 
   : observers = new List<IObserver<T>>()
   {
-    mainObserver = new _DefaultObserver(
+    mainObserver = new IObserver<T>(
       (n) =>  observers.forEach((o) => o.next(n)),
       () {
         observers.forEach((o) => o.complete());
@@ -58,7 +42,7 @@ class _ChainableIObservableImplementation<T> implements ChainableIObservable<T>,
     
     if (next is Function){
       //create a wrapper observer
-      return _addObserver(new _DefaultObserver(next, complete, error));
+      return _addObserver(new IObserver<T>(next, complete, error));
     }
     else if (next is IObserver<T>)
     {

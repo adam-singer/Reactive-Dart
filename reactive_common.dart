@@ -26,12 +26,11 @@
 
 #import('dart:math');
 
-#source('common/IDisposable.dart');
-#source('common/IObserver.dart');
-#source('common/IObservable.dart');
-#source('common/Observable.dart');
-#source('common/_ChainableIObservableImplementation.dart');
-#source('common/_UnsubscriberWrapper.dart');
-#source('common/_DefaultObserver.dart');
-#source('common/ChainableIObservable.dart');
-#source('common/ObservableException.dart');
+#source('lib/common/i_disposable.dart');
+#source('lib/common/i_observer.dart');
+#source('lib/common/i_observable.dart');
+#source('lib/common/observable.dart');
+#source('lib/common/_chainable_i_observable_implementation.dart');
+#source('lib/common/_UnsubscriberWrapper.dart');
+#source('lib/common/chainable_i_observable.dart');
+#source('lib/common/observable_exception.dart');
