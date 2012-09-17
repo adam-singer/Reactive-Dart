@@ -7,9 +7,9 @@ RD formalizes the idea that everything in the environment is just a sequence
 of data being pushed at the application.
 
 ## More Information ##
-See the [getting_started.md](doc/getting_started.md) file.
+See the [getting_started.md](https://github.com/prujohn/Reactive-Dart/blob/master/doc/getting_started.md) file.
 
-For a list of operators, see the [operator_list](doc/operator_list.md) file.
+For a list of operators, see the [operator_list](https://github.com/prujohn/Reactive-Dart/blob/master/doc/operator_list.md) file.
 
 ## License ##
 Apache 2.0
