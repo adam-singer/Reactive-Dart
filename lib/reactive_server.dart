@@ -16,19 +16,20 @@
 
 /**
 * This library implements reactive operators that can be used in
-* client-side operations.  Use reactive_client or reactive_server if
+* server-side operations.  Use reactive_client or reactive_server if
 * you want to use functionality specific to those environments.
 */
 #library('Reactive Dart - Client');
 
-#import('dart:html');
-#import('dart:math', prefix:'mlib');
+#import('dart:io');
+#import('dart:isolate');
+#import('dart:math');
 
-#source('lib/common/i_disposable.dart');
-#source('lib/common/i_observer.dart');
-#source('lib/common/i_observable.dart');
-#source('lib/client/observable.dart');
-#source('lib/client/_chainable_i_observable_implementation.dart');
-#source('lib/common/_UnsubscriberWrapper.dart');
-#source('lib/client/chainable_i_observable.dart');
-#source('lib/common/observable_exception.dart');
+#source('src/common/i_disposable.dart');
+#source('src/common/i_observer.dart');
+#source('src/common/i_observable.dart');
+#source('src/server/observable.dart');
+#source('src/server/_chainable_i_observable_implementation.dart');
+#source('src/common/_UnsubscriberWrapper.dart');
+#source('src/server/chainable_i_observable.dart');
+#source('src/common/observable_exception.dart');

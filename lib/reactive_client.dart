@@ -15,22 +15,20 @@
 //   limitations under the License.
 
 /**
-* This library implements reactive operators that can be used in server and
+* This library implements reactive operators that can be used in
 * client-side operations.  Use reactive_client or reactive_server if
 * you want to use functionality specific to those environments.
-*
-* This library will go away once Dart supports a Timer object
-* in the core.
 */
-#library('Reactive Dart - Common');
+#library('Reactive Dart - Client');
 
-#import('dart:math');
+#import('dart:html');
+#import('dart:math', prefix:'mlib');
 
-#source('lib/common/i_disposable.dart');
-#source('lib/common/i_observer.dart');
-#source('lib/common/i_observable.dart');
-#source('lib/common/observable.dart');
-#source('lib/common/_chainable_i_observable_implementation.dart');
-#source('lib/common/_UnsubscriberWrapper.dart');
-#source('lib/common/chainable_i_observable.dart');
-#source('lib/common/observable_exception.dart');
+#source('src/common/i_disposable.dart');
+#source('src/common/i_observer.dart');
+#source('src/common/i_observable.dart');
+#source('src/client/observable.dart');
+#source('src/client/_chainable_i_observable_implementation.dart');
+#source('src/common/_UnsubscriberWrapper.dart');
+#source('src/client/chainable_i_observable.dart');
+#source('src/common/observable_exception.dart');

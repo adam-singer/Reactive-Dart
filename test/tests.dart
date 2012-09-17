@@ -1,5 +1,5 @@
 #import('dart:html');
-#import('../reactive_client.dart');
+#import('package:reactive_dart/reactive_client.dart');
 
 #import('package:unittest/unittest.dart');
 #import('package:unittest/html_enhanced_config.dart');
@@ -176,8 +176,10 @@ contains(){
 
 delay() {
   asyncTest('.delay()', 1, (){
-    Stopwatch sw = new Stopwatch.start();
+    Stopwatch sw = new Stopwatch();
 
+    sw.start();
+    
     Observable
     .range(1, 10)
     .delay(300)
@@ -598,7 +600,8 @@ skipWhile() => asyncTest('.skipWhile()', 1, (){
 
 pace() => asyncTest('.pace()', 1, (){
 
-  var sw = new Stopwatch.start();
+  var sw = new Stopwatch();
+  sw.start();
   var interval = 30;
 
   Observable

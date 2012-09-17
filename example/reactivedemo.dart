@@ -5,7 +5,7 @@
 /// Build with frogc.  Open browser console to see results.
 
 #import('dart:html');
-#import('../reactive_client.dart');
+#import('package:reactive_dart/reactive_client.dart');
 #import('dart:isolate');
 #import('dart:math');
 

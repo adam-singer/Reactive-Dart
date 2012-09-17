@@ -1,5 +1,5 @@
 #import('dart:html');
-#import('../../reactive_client.dart');
+#import('package:reactive_dart/reactive_client.dart');
 
 class observablemerge {
 

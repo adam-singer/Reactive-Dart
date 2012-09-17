@@ -20,13 +20,10 @@ of data being pushed at the application.
 Some observable operators, or their implementations, are specific to platform (.fromEvent() is an example of this), so RD offers three library choices:
 
 ### Client (Dartium, JS) ###
-    #import('reactive_client.dart');
+    reactive_client.dart
 
 ### Server (VM) ###
-    #import('reactive_server.dart');
-
-### Common (all platforms) ###
-    #import('reactive_common.dart');
+    reactive_server.dart
 
 ## 40+ Observable Operators to Work With ##
 To see a demonstration of these operators, run **reactivedemo.dart** in the **/demo** directory.

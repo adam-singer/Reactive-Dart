@@ -1,6 +1,6 @@
 #import('dart:html');
 #import('dart:math');
-#import('../../reactive_client.dart');
+#import('package:reactive_dart/reactive_client.dart');
 
 class AlphabetInvasion {
   // DOM element references
