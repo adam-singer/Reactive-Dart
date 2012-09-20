@@ -246,7 +246,7 @@ class AlphabetInvasion {
 
     // iterate the enemy list and make adjustments...
     Observable
-        .fromList(enemies.dynamic)
+        .fromList(enemies as List)
         .observe((Element enemy){
           int newPos = (getTopValue(enemy) + factor);
           enemy.style.top = '${newPos}px';

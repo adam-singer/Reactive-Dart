@@ -26,7 +26,7 @@ main(){
     sample();
     randomInt();
     random();
-    fromXMLHttpRequest();
+    fromHttpRequest();
     takeWhile();
     take();
     first();
@@ -179,7 +179,7 @@ delay() {
     Stopwatch sw = new Stopwatch();
 
     sw.start();
-    
+
     Observable
     .range(1, 10)
     .delay(300)
@@ -478,9 +478,9 @@ takeWhile() => asyncTest('.takeWhile()', 1, (){
     });
 });
 
-fromXMLHttpRequest() => asyncTest('.fromXMLHttpRequest()', 1, (){
+fromHttpRequest() => asyncTest('.fromHttpRequest()', 1, (){
   var uri = 'tests.html'; //this should work if running locally...
-  var testFileLength = 416; // the length of test.html if unmodified.
+  var testFileLength = 403; // the length of test.html if unmodified.
 
   Observable
     .fromHttpRequest(uri, 'Accept', 'text/plain')
