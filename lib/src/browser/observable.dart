@@ -37,21 +37,21 @@ class Observable
      makeit(){
        if (interval == 0){
          loop(int time){
-           window.webkitRequestAnimationFrame(loop);
+           window.requestAnimationFrame(loop);
            o.next(time);
          }
-         window.webkitRequestAnimationFrame(loop);
+         window.requestAnimationFrame(loop);
        }else{
          var lastTime = 0;
 
          loopInterval(int time){
-           window.webkitRequestAnimationFrame(loopInterval);
+           window.requestAnimationFrame(loopInterval);
            if (time - lastTime >= interval){
              o.next(time);
              lastTime = time;
            }
          }
-         window.webkitRequestAnimationFrame(loopInterval);
+         window.requestAnimationFrame(loopInterval);
        }
      }
 
@@ -498,7 +498,7 @@ class Observable
      void checker() {
        ignoreValue = false;
        if (last != null) o.next(last);
-       }
+     }
 
      source.observe(
        (v) {
@@ -888,8 +888,8 @@ class Observable
  }
 
 
- /// Returns an observable sequence from a given [List]
- static ChainableIObservable fromList(List l, [IObservable continuation]){
+ /// Returns an observable sequence from a given [Collection]
+ static ChainableIObservable fromList(Collection l, [IObservable continuation]){
    if (l == null) return Observable.throwE(const NullPointerException());
 
    return Observable.create((IObserver o){
@@ -916,7 +916,7 @@ class Observable
    return Observable.create((IObserver o){
      makeit(){
        if (ticks <= 0){
-         window.setInterval(() => o.next(null), milliseconds);
+         window.setInterval(() => o.next(0), milliseconds);
        }else{
          var handler;
          var tickCount = 0;

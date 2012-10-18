@@ -14,10 +14,10 @@ Some observable operators, or their implementations, are specific to platform
 (.fromEvent() is an example of this), so RD offers three library choices:
 
 ### Client (Dartium, JS) ###
-    reactive_client.dart
+    reactive_browser.dart
 
 ### Server (VM) ###
-    reactive_server.dart
+    reactive_console.dart
 
 ## Consistent Idiom Regardless of Sequence Type ##
 RD sees everything in the same way, so you don't have to remember specific
@@ -154,7 +154,7 @@ Yields
 Notice that the complete() function isn't called by the observable in this case,
 because the termination did not occur in sequence itself.
 
-## Observable chaining ##
+## Composing Observable Operators Together ##
 Any observable that takes an Observable as it's first parameter is also chainable with any other observable. How cool is this:
 
 ### Unchained Example ###
@@ -175,7 +175,7 @@ Both will yield (for each mouse click)
 	You clicked the mouse 3 times.
 	...
 
-Chaining gets really powerful when you start to think about combining observable sequences in different ways...
+Chaining gets really powerful when you start to think about composing observable sequences in different ways...
 
 ### Merging Multiple Observable Streams ###
 	// Three observables yielding 20 ticks at different intervals
@@ -193,9 +193,6 @@ Chaining gets really powerful when you start to think about combining observable
 	o1
 	.merge([o2, o3]) //merging o1 with o2 and o3
 	.observe((v) => print(v));
-	
-You'll have to run the above code yourself to see how it works, but basically it does
-all the hard work of merging elements from the three streams into a single stream.
 	
 ## Some reference material on the reactive model
 * <http://rxwiki.wikidot.com/start> 

@@ -1,6 +1,6 @@
-#import('dart:html');
-#import('dart:math');
-#import('package:reactive_dart/reactive_client.dart');
+import 'dart:html';
+import 'dart:math';
+import 'package:reactive/reactive_browser.dart';
 
 class AlphabetInvasion {
   // DOM element references
@@ -209,7 +209,7 @@ class AlphabetInvasion {
       if (enemy != enemies.first()){
         enemy.text = ":P";
         enemy.classes.add("rotate"); // applies a 90 deg rotation to the text
-        enemy.style.fontSize = 72;   // css3 transition
+        enemy.style.fontSize = '72px';   // css3 transition
       }
     });
 
@@ -226,7 +226,7 @@ class AlphabetInvasion {
     // adjust the enemy visual
     enemy.style.color = 'Red';
     enemy.text = "@";
-    enemy.style.fontSize = '${48}px'; //triggers css3 transition
+    enemy.style.fontSize = '48px'; //triggers css3 transition
 
     // calculate a score
     int v = getTopValue(enemy);
@@ -246,7 +246,7 @@ class AlphabetInvasion {
 
     // iterate the enemy list and make adjustments...
     Observable
-        .fromList(enemies as List)
+        .fromList(enemies as Collection)
         .observe((Element enemy){
           int newPos = (getTopValue(enemy) + factor);
           enemy.style.top = '${newPos}px';

@@ -1,5 +1,5 @@
-#import('dart:html');
-#import('package:reactive_dart/reactive_client.dart');
+import 'dart:html';
+import 'package:reactive/reactive_browser.dart';
 
 /**
 *
@@ -15,9 +15,11 @@
 
 class throttle_demo {
   Element resultsList;
-  final awords =
-    const ['a','apple','arch','able','apparently','about','awkward','always','are','around','any','anyway','allow','allowance','allowable',
-           'alas','azure','android','aloof','ardent','abduct','ardvaark','abode','abort','an','and','all','abroad','aboard','assail','arbor'];
+  const awords =
+    const ['a','apple','arch','able','apparently','about','awkward','always',
+           'are','around','any','anyway','allow','allowance','allowable',
+           'alas','azure','android','aloof','ardent','abduct','ardvaark',
+           'abode','abort','an','and','all','abroad','aboard','assail','arbor'];
 
   throttle_demo() {
     resultsList = document.query("#searchresults");
@@ -50,13 +52,12 @@ class throttle_demo {
     }
 
     Observable
-    .fromList(awords)
-    .where((String w) => w.startsWith(beginsWith))
-    .observe(
-      (String word) => s.add('<li>$word</li>'), // .next(v) function
-      ()=> resultsList.innerHTML = s.toString() // .complete() function
-      );
-
+      .fromList(awords)
+      .where((String w) => w.startsWith(beginsWith))
+      .observe(
+        (String word) => s.add('<li>$word</li>'), // .next(v) function
+        ()=> resultsList.innerHTML = s.toString() // .complete() function
+        );
   }
 }
 

@@ -1,8 +1,7 @@
-#import('dart:html');
-#import('package:reactive_dart/reactive_client.dart');
-
-#import('package:unittest/unittest.dart');
-#import('package:unittest/html_enhanced_config.dart');
+import 'dart:html';
+import 'package:reactive/reactive_browser.dart';
+import 'package:unittest/unittest.dart';
+import 'package:unittest/html_enhanced_config.dart';
 
 /*
  * Unit Tests for Reactive Dart library
@@ -480,10 +479,10 @@ takeWhile() => asyncTest('.takeWhile()', 1, (){
 
 fromHttpRequest() => asyncTest('.fromHttpRequest()', 1, (){
   var uri = 'tests.html'; //this should work if running locally...
-  var testFileLength = 403; // the length of test.html if unmodified.
+  var testFileLength = 416; // the length of test.html if unmodified.
 
   Observable
-    .fromHttpRequest(uri, 'Accept', 'text/plain')
+    .fromHttpRequest(uri, 'Accept', 'text/html')
     .single() //using single to enforce no additional values other than the data we requested...
     .observe(
       (v){
