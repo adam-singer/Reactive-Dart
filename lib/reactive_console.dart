@@ -19,7 +19,7 @@
 * server-side operations.  Use reactive_client or reactive_server if
 * you want to use functionality specific to those environments.
 */
-library reactive_browser;
+library reactive_console;
 
 import 'dart:io';
 import 'dart:isolate';
