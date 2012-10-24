@@ -1,3 +1,5 @@
+part of reactive_console;
+
 /**
 * Represents an [IObservable] that provides extended methods for
 * chaining of multiple operations.

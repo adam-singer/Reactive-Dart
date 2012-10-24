@@ -257,7 +257,7 @@ class AlphabetInvasion {
   }
 
   // helper to retrieve the numeric equivalent of Element.style.top
-  int getTopValue(Element e) => parseInt(e.style.top.toString().replaceAll('px',''));
+  int getTopValue(Element e) => int.parse(e.style.top.toString().replaceAll('px',''));
 
   //
   void launchNewEnemy(String v){
@@ -283,10 +283,10 @@ class AlphabetInvasion {
   }
 
   void addToScore(int amount){
-    int newScore = (parseInt(score.text) + amount);
+    int newScore = (int.parse(score.text) + amount);
     score.text = newScore.toString();
 
-    if (newScore > parseDouble(highScore.text).toInt() ){
+    if (newScore > double.parse(highScore.text).toInt() ){
       highScore.text = newScore.toString();
       window.localStorage[HIGH_SCORE_STORAGE_KEY] = newScore.toString();
     }

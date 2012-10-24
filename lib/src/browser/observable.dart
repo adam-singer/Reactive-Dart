@@ -1,3 +1,5 @@
+part of reactive_browser;
+
 //   Copyright (c) 2012, John Evans
 //
 //   John: https://plus.google.com/u/0/115427174005651655317/about
@@ -64,7 +66,7 @@ class Observable
  }
 
   /// Takes output from a [Future] and returns it in an observable sequence.
- static ChainableIObservable fromFuture(Future f, [IObservable continuation]){
+ static ChainableIObservable fromFuture(Future f, {IObservable continuation}){
    return Observable.create((IObserver o){
      makeit(){
        if (f.isComplete){
@@ -307,7 +309,7 @@ class Observable
 
  /// Executes a simple GET request with the given header/request type and returns the result
  /// in an observable sequence of a single value (the data).
- static ChainableIObservable fromHttpRequest(String uri, String requestHeader, String requestValue, [IObservable continuation])
+ static ChainableIObservable fromHttpRequest(String uri, String requestHeader, String requestValue, {IObservable continuation})
  {
   return Observable.create((IObserver o){
     makeit(){
@@ -428,7 +430,7 @@ class Observable
  }
 
  /// Returns a single value as an observable sequence.
- static ChainableIObservable returnValue(value, [IObservable continuation]){
+ static ChainableIObservable returnValue(value, {IObservable continuation}){
    return Observable.create((IObserver o){
      makeit(){
        o.next(value);
@@ -579,7 +581,7 @@ class Observable
  ///     Observable
  ///         .fromEvent(myElement.on.click)
  ///         .observe((e) => print('clicked!'));
- static ChainableIObservable<Event> fromEvent(EventListenerList event, [IObservable continuation]){
+ static ChainableIObservable<Event> fromEvent(EventListenerList event, {IObservable continuation}){
    return Observable.create((IObserver o) {
      makeit() => event.add((e) => o.next(e));
 
@@ -889,7 +891,7 @@ class Observable
 
 
  /// Returns an observable sequence from a given [Collection]
- static ChainableIObservable fromList(Collection l, [IObservable continuation]){
+ static ChainableIObservable fromList(Collection l, {IObservable continuation}){
    if (l == null) return Observable.throwE(const NullPointerException());
 
    return Observable.create((IObserver o){

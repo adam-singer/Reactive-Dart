@@ -13,13 +13,14 @@ class _UnsubscriberWrapper implements IDisposable
 {
   final _FactoryObservable factoryObservableReference;
   final IObserver observer;
-  
+
   _UnsubscriberWrapper(this.factoryObservableReference, this.observer);
-  
+
   void dispose(){
-    if (factoryObservableReference.observers.indexOf(observer) != -1)
+    if (factoryObservableReference.observers.indexOf(observer) != -1) {
       factoryObservableReference
         .observers
         .removeRange(factoryObservableReference.observers.indexOf(observer), 1);
+    }
   }
 }

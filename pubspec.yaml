@@ -3,7 +3,7 @@ description: >
   Reactive is an implementation of the observer pattern on sequences.  It contains
   a collection of composable operators that provides for a clean, declarative
   approach to working with sequences of data.
-version: 0.9.0
+version: 0.9.1
 author: John Evans <prujohn@gmail.com>
 homepage: https://github.com/prujohn/Reactive-Dart
 dependencies:

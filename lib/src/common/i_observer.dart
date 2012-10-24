@@ -1,3 +1,5 @@
+part of reactive_console;
+
 /**
 * Interface which represents an observer in the reactive model.
 */

@@ -1,3 +1,5 @@
+part of reactive_browser;
+
 //   Copyright (c) 2012, John Evans
 //
 //   John: https://plus.google.com/u/0/115427174005651655317/about

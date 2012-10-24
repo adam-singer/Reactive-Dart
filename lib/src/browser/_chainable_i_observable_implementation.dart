@@ -1,3 +1,5 @@
+part of reactive_browser;
+
 /**
  * Instantiates a general purpose IObservable with chaining helper methods.
  * This implementation treats the sequences as a shared stream among all

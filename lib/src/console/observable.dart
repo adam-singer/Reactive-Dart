@@ -1,3 +1,5 @@
+part of reactive_console;
+
 /**
 * Observable<T> is a helper class for the reactive model.  It is recommended
 * to use this class, rather than trying to implement [IObservable<T>] directly.
@@ -13,7 +15,7 @@ class Observable
   static ChainableIObservable create(f(IObserver o)) => new ChainableIObservable(f);
 
   /// Takes output from a [Future] and returns it in an observable sequence.
-  static ChainableIObservable fromFuture(Future f, [IObservable continuation]){
+  static ChainableIObservable fromFuture(Future f, {IObservable continuation}){
    return Observable.create((IObserver o){
      makeit(){
        if (f.isComplete){
@@ -42,7 +44,7 @@ class Observable
  }
 
  /** Emits a sequences of [File] objects from a given directory. */
- static ChainableIObservable directoryList(String dir, [IObservable continuation]){
+ static ChainableIObservable directoryList(String dir, {IObservable continuation}){
    return Observable.create((IObserver o){
      makeit(){
        var lister = new Directory(dir).list(true);
@@ -354,7 +356,7 @@ class Observable
  }
 
  /// Returns a single value as an observable sequence.
- static ChainableIObservable returnValue(value, [IObservable continuation]){
+ static ChainableIObservable returnValue(value, {IObservable continuation}){
    return Observable.create((IObserver o){
      makeit(){
        o.next(value);
@@ -796,7 +798,7 @@ class Observable
 
 
  /// Returns an observable sequence from a given [List]
- static ChainableIObservable fromList(List l, [IObservable continuation]){
+ static ChainableIObservable fromList(List l, {IObservable continuation}){
    if (l == null) return Observable.throwE(const NullPointerException());
 
    return Observable.create((IObserver o){
