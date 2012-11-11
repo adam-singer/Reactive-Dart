@@ -82,7 +82,7 @@ class AlphabetInvasion {
 
     // retreive the high score if one exists
     String hs = window.localStorage[HIGH_SCORE_STORAGE_KEY];
-    if (hs != null && !hs.isEmpty()) highScore.text = hs;
+    if (hs != null && !hs.isEmpty) highScore.text = hs;
   }
 
 
@@ -90,7 +90,7 @@ class AlphabetInvasion {
 
    if (generator != null) generator.dispose();
 
-   String title = levels.getKeys().filter((k) => k.contains(currentLevel.toString())).iterator().next();
+   String title = levels.keys.filter((k) => k.contains(currentLevel.toString())).iterator().next();
    List config = levels[title];
 
    gameState = GameState.Playing;
@@ -115,17 +115,17 @@ class AlphabetInvasion {
 
      // Start the game loop, which updates the enemies.
      gameloop = Observable
-       .animationFrame(interval:config[CURRENT_SPEED])
+       .animationFrame(interval: config[CURRENT_SPEED])
        .observe((__) => updatePlayfield());
 
 
      // set another subscriber to the keyboardObservable
      // which handles play input during each level
      keyboard = keyboardObservable.observe((e){
-       if (enemies.isEmpty()) return;
+       if (enemies.isEmpty) return;
 
        // we are only concerned about the enemy closest to the ground...
-       if (e.charCode == enemies.first().text.charCodeAt(0)){
+       if (e.charCode == enemies.first.text.charCodeAt(0)){
 
         // enemy killed, so remove from tracking queue and
         // update visuals
@@ -134,7 +134,7 @@ class AlphabetInvasion {
         remainingEnemies.text = (enemiesThisLevel - ++killed).toString();
 
         // all enemies cleared, move on to the next level
-        if (enemies.isEmpty() && allEnemiesLaunched){
+        if (enemies.isEmpty && allEnemiesLaunched){
           nextLevel();
         }
        }
@@ -143,7 +143,7 @@ class AlphabetInvasion {
      // Generate enemies for this Level.
      // 10% chance for uppercase enemy
      generator = Observable
-                 .randomInt(0, 25, intervalLow:config[LAUNCH_RATE], intervalHigh:config[LAUNCH_RATE], howMany: enemiesThisLevel)
+                 .randomInt(0, 25, intervalLow: config[LAUNCH_RATE], intervalHigh: config[LAUNCH_RATE], howMany: enemiesThisLevel)
                  .apply((v) => v.toInt())
                  .apply((v) => new Random().nextDouble() <= capitalLetterProbability ? lookup[v - 1] : lookup[v - 1].toUpperCase())
                  .observe((v) => launchNewEnemy(v), () => allEnemiesLaunched = true);
@@ -153,7 +153,7 @@ class AlphabetInvasion {
    // after which we call the nested play() method to start
    // the level.
    Observable
-    .timer(2500, 1)
+    .timer(2500, ticks: 1)
     .observe((_) => play());
   }
 
@@ -170,7 +170,7 @@ class AlphabetInvasion {
     currentLevel++;
 
     Observable
-    .timer(4000, 1)
+    .timer(4000, ticks: 1)
     .observe((_) => playLevel());
   }
 
@@ -188,7 +188,7 @@ class AlphabetInvasion {
 
     // reset the game after 5.5 seconds
     Observable
-    .timer(5500, 1)
+    .timer(5500, ticks: 1)
     .observe((_) => resetGame());
   }
 
@@ -206,7 +206,7 @@ class AlphabetInvasion {
     // adjust all enemies except the one that landed
     // to look like :P
     enemies.forEach((enemy) {
-      if (enemy != enemies.first()){
+      if (enemy != enemies.first){
         enemy.text = ":P";
         enemy.classes.add("rotate"); // applies a 90 deg rotation to the text
         enemy.style.fontSize = '72px';   // css3 transition
@@ -217,7 +217,7 @@ class AlphabetInvasion {
 
     // reset the game after 4.5 seconds
     Observable
-    .timer(4500, 1)
+    .timer(4500, ticks: 1)
     .observe((_) => resetGame());
   }
 
@@ -234,7 +234,7 @@ class AlphabetInvasion {
 
     // remove the enemy from the DOM after 750ms
     Observable
-      .timer(750, 1)
+      .timer(750, ticks: 1)
       .observe((_) => enemy.remove());
   }
 
@@ -356,7 +356,7 @@ class AlphabetInvasion {
     // use that to update the element each time until the entire message
     // is shown.
     Observable
-      .timer(30, msg.length)
+      .timer(30, ticks: msg.length)
       .observe((v) => message.text = msg.substring(0, v));
 
   }

@@ -83,7 +83,7 @@ buffer(){
 
     Observable
     .range(1, 10)
-    .buffer(size:2) //buffer the sequence into chunks of 2
+    .buffer(size: 2) //buffer the sequence into chunks of 2
     .observe((v){
       Expect.isTrue(v is List);
       Expect.equals(2, v.length);
@@ -184,7 +184,7 @@ delay() {
     .delay(300)
     .observe((v){}, (){
       sw.stop();
-      Expect.isTrue(sw.elapsedInMs() >= 300);
+      Expect.isTrue(sw.elapsedMilliseconds >= 300);
       callbackDone();
     });
   });
@@ -608,7 +608,7 @@ pace() => asyncTest('.pace()', 1, (){
     .pace(interval)
     .observe((_){}, (){
       sw.stop();
-      Expect.isTrue(sw.elapsedInMs() > 4 * interval);
+      Expect.isTrue(sw.elapsedMilliseconds > 4 * interval);
       sw.reset();
       callbackDone();
     });
@@ -685,7 +685,7 @@ countEqualsExpected() => asyncTest('.count() Count equals expected', 1, (){
 /// Validates that Observable.timer emits the correct number of ticks.
 timer() => asyncTest('.timer() validate tick count', 1, (){
   Observable
-    .timer(300, 5)
+    .timer(300, ticks: 5)
     .count()
     .observe((total){
       Expect.equals(5, total);

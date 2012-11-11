@@ -20,10 +20,9 @@ part of reactive_browser;
 * Represents an [IObservable] that provides extended methods for
 * chaining of multiple operations.
 */
-interface ChainableIObservable<T> extends IObservable<T> default _ChainableIObservableImplementation
-{
+abstract class ChainableIObservable<T> extends IObservable<T> {
 
-  ChainableIObservable(Function oFunc);
+  factory ChainableIObservable(Function oFunc) = _ChainableIObservableImplementation;
 
   // this is more about the tooling than anything else.
   // we want to surface these methods in the IDE
@@ -33,7 +32,7 @@ interface ChainableIObservable<T> extends IObservable<T> default _ChainableIObse
   ChainableIObservable<T> concat(List<IObservable> list);
   ChainableIObservable<T> fold(f(v,n), startingValue);
   ChainableIObservable<T> any();
-  ChainableIObservable<T> buffer([size]);
+  ChainableIObservable<T> buffer({size});
   ChainableIObservable<T> delay(int milliseconds);
   ChainableIObservable<T> distinct();
   ChainableIObservable<T> distinctUntilNot();
@@ -55,12 +54,12 @@ interface ChainableIObservable<T> extends IObservable<T> default _ChainableIObse
   ChainableIObservable<T> skipWhile(isTrue(v));
   ChainableIObservable<T> fromHttpRequest(String uri, String requestHeader, String requestValue);
   ChainableIObservable<T> fromList(List l);
-  ChainableIObservable<T> timer(int milliseconds, [int ticks]);
+  ChainableIObservable<T> timer(int milliseconds, {int ticks});
   ChainableIObservable<T> unfold(initialstate, conditional(state), iterate(state), result(state));
   ChainableIObservable<T> fromEvent(EventListenerList event);
   ChainableIObservable<T> returnValue(value);
-  ChainableIObservable<T> range(num start, num finish, [step]);
+  ChainableIObservable<T> range(num start, num finish, {step});
   ChainableIObservable<T> fromFuture(Future f);
   ChainableIObservable<T> pace(int paceInMilliseconds);
-  ChainableIObservable<T> animationFrame([int interval]);
+  ChainableIObservable<T> animationFrame({int interval});
 }

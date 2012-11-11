@@ -188,7 +188,7 @@ void firstOf(){
 random(){
   header("Observable.randomInt() (and also Observable.random() for Real numbers) generates a range of randum numbers at optionally random time intervals.");
   Observable
-  .randomInt(0, 10, 1, 1000, 20) //generating ints from 1 - 10 at intervals between 100 & 1000ms for 20 ticks.
+  .randomInt(0, 10, intervalLow: 1, intervalHigh: 1000, howMany: 20) //generating ints from 1 - 10 at intervals between 100 & 1000ms for 20 ticks.
   .observe((v) => print('$v'));
 }
 
@@ -293,12 +293,12 @@ void range(){
 
   print('1 to 5 in .5 step');
   Observable
-    .range(1, 5, .5)
+    .range(1, 5, step: .5)
     .observe((v) => print(v));
 
   print('5 to 1 in .5 step');
   Observable
-    .range(5, 1, .5)
+    .range(5, 1, step: .5)
     .observe((v) => print(v));
 }
 
@@ -338,7 +338,7 @@ void timeout(){
 
   print('These shouldn\'t time out');
   Observable
-    .timer(500, 4)
+    .timer(500, ticks: 4)
     .timeout(501)  //adjust this lower than 500 to see the exception throw.
     .observe((t) => print('Tick: $t'), (){}, (e)=> print('error!'));
 }
@@ -351,7 +351,7 @@ void timestamp(){
   header("Observable.timestamp() Returns a sequence of Date timestamps representing the arrival of each element in a given sequence.");
 
   Observable
-    .timer(1300, 4)
+    .timer(1300, ticks: 4)
     .timestamp()
     .observe((Date t) => print('Stamp: $t'),()=>print('Sequence Complete.'));
 
@@ -395,8 +395,8 @@ void zip(){
   header("Observable.zip() Returns the value of a function applied to pairs of two observable sequences.");
 
   // setups some timers that tick at different intervals
-  var o1 = Observable.timer(100, 10);
-  var o2 = Observable.timer(1500, 20);
+  var o1 = Observable.timer(100, ticks: 10);
+  var o2 = Observable.timer(1500, ticks: 20);
 
   // zip should 'synchronize' the ticks and emit them as pairs.
   // only 10 pairs should yield from the sequence, because o1's
@@ -499,7 +499,7 @@ void buffer(){
   header("Observable.buffer() Returns sequences as a series of buffered lists, based on buffer size provided.");
   Observable
     .fromList(testlist)
-    .buffer(2)
+    .buffer(size: 2)
     .observe((v)=> print("Received buffered list of size ${v.length} with elements: ${v[0]}, ${v[1]}."));
 }
 
@@ -524,9 +524,9 @@ void distinct(){
 void merge(){
   header("Observable.merge() Takes n sequences and merges elements into a single stream.");
 
-  var o1 = Observable.timer(100, 10).apply((v) => 'Timer 1, tick $v');
-  var o2 = Observable.timer(200, 10).apply((v) => 'Timer 2, tick $v');
-  var o3 = Observable.timer(300, 10).apply((v) => 'Timer 3, tick $v');
+  var o1 = Observable.timer(100, ticks: 10).apply((v) => 'Timer 1, tick $v');
+  var o2 = Observable.timer(200, ticks: 10).apply((v) => 'Timer 2, tick $v');
+  var o3 = Observable.timer(300, ticks: 10).apply((v) => 'Timer 3, tick $v');
 
   o1.merge([o2, o3]) //merges o1 with o2 and o3...
     .observe((v) => print(v));
@@ -538,7 +538,7 @@ void timer(){
 
   //Timer
   Observable
-  .timer(1000, 20)
+  .timer(1000, ticks: 20)
   .observe((t) => status.text = '${++counter}',
     () => status.text = "Complete.");
 }

@@ -47,7 +47,7 @@ class Observable
  static ChainableIObservable directoryList(String dir, {IObservable continuation}){
    return Observable.create((IObserver o){
      makeit(){
-       var lister = new Directory(dir).list(true);
+       var lister = new Directory(dir).list(recursive: true);
 
        lister.onError = (e) => o.error(e);
        lister.onDone = (success){
@@ -82,7 +82,7 @@ class Observable
      bool isComplete = false;
 
      void paceIt(foo){
-       if (buff.isEmpty()){
+       if (buff.isEmpty){
          if (isComplete){
            o.complete();
            return;
@@ -209,11 +209,11 @@ class Observable
  /// Intervals can also be randomized by providing optional intervalLow/intervalHigh values.
  ///
  /// This observable generator is a more specific implementation of [Observable.random()].
- static ChainableIObservable randomInt(int low, int high, [int intervalLow = 1, int intervalHigh = 1, int howMany, IObservable continuation]){
+ static ChainableIObservable randomInt(int low, int high, {int intervalLow : 1, int intervalHigh : 1, int howMany, IObservable continuation}){
    return Observable.create((IObserver o){
      makeit(){
       Observable
-        .random(low, high, intervalLow, intervalHigh, howMany)
+        .random(low, high, intervalLow: intervalLow, intervalHigh: intervalHigh, howMany: howMany)
         .apply((v) => v.ceil())
         .observe(
           (v) => o.next(v),
@@ -235,7 +235,7 @@ class Observable
  /// in the given low(inclusive)/high(exclusive) range at (default) 1ms intervals.
  ///
  /// Intervals can also be randomized by providing optional intervalLow/intervalHigh values.
- static ChainableIObservable random(num low, num high, [int intervalLow = 1, int intervalHigh = 1, int howMany, IObservable continuation]){
+ static ChainableIObservable random(num low, num high, {int intervalLow : 1, int intervalHigh : 1, int howMany, IObservable continuation}){
    if (high <= low) return Observable.throwE(const ObservableException('Parameter "high" must be > parameter "low"'));
    if (intervalHigh < intervalLow) return Observable.throwE(const ObservableException('Parameter "intervalHigh" must be > parameter "intervalLow"'));
    if (intervalLow < 1 || intervalHigh < 1) return Observable.throwE(const ObservableException('timer interval parameters must be >= 1'));
@@ -373,21 +373,21 @@ class Observable
 
  /// Returns a numerica range from a given start to a given finish, with optional stepping
  /// (default step is 1).  If start > finish then range will be high to low.
- static ChainableIObservable range(num start, num finish, [step = 1, IObservable continuation]){
+ static ChainableIObservable range(num start, num finish, {step : 1, IObservable continuation}){
    if (step == 0) return Observable.throwE(const ObservableException('Invalid step.  Cannot <= 0'));
 
    if (start == finish) return Observable.returnValue(start);
 
    return (start < finish)
-           ? Observable.unfold(start, (v) => v <= finish, (v) => v += step, (v) => v, continuation)
-           : Observable.unfold(start, (v) => v >= finish, (v) => v -= step, (v) => v, continuation);
+           ? Observable.unfold(start, (v) => v <= finish, (v) => v += step, (v) => v, continuation: continuation)
+           : Observable.unfold(start, (v) => v >= finish, (v) => v -= step, (v) => v, continuation: continuation);
 
  }
 
  /// Unfolds a given initialstate until conditional() returns false;
  /// Each successful iteration is passed to result() which then returns
  /// returns the element sent to the sequence.
- static ChainableIObservable unfold(initialstate, conditional(state), iterate(state), result(state), [IObservable continuation]){
+ static ChainableIObservable unfold(initialstate, conditional(state), iterate(state), result(state), {IObservable continuation}){
    return Observable.create((IObserver o){
      makeit(){
        var s = initialstate;
@@ -581,10 +581,10 @@ class Observable
      ld = left.observe(
        (v){
          lq.add(v);
-         if (!rq.isEmpty()) o.next(f(lq.removeFirst(), rq.removeFirst()));
+         if (!rq.isEmpty) o.next(f(lq.removeFirst(), rq.removeFirst()));
        },
        (){
-         if (lq.isEmpty()){
+         if (lq.isEmpty){
            o.complete();
            rd.dispose();
          }
@@ -594,10 +594,10 @@ class Observable
      rd = right.observe(
        (v){
          rq.add(v);
-         if (!lq.isEmpty()) o.next(f(lq.removeFirst(), rq.removeFirst()));
+         if (!lq.isEmpty) o.next(f(lq.removeFirst(), rq.removeFirst()));
        },
        (){
-         if (rq.isEmpty()){
+         if (rq.isEmpty){
            o.complete();
            ld.dispose();
          }
@@ -647,7 +647,7 @@ class Observable
    bool delaying = true;
 
    var t = Observable
-    .timer(milliseconds, 1);
+    .timer(milliseconds, ticks: 1);
 
    t.observe((v) =>{}, () => delaying = false);
 
@@ -656,7 +656,7 @@ class Observable
      source.observe(
      (v){
        if (!delaying){
-         if (!buff.isEmpty()){
+         if (!buff.isEmpty){
            buff.forEach((b) => o.next(b));
            buff.clear();
          }else{
@@ -668,7 +668,7 @@ class Observable
      },
      (){
         t.observe((v)=>{},(){
-          if (!buff.isEmpty()){
+          if (!buff.isEmpty){
             buff.forEach((b) => o.next(b));
             buff.clear();
           }
@@ -746,7 +746,7 @@ class Observable
 
  //TODO Add buffering options with time/timeout constraints
  /// Buffers the sequence into non-overlapping lists based on a given size (default 10)
- static ChainableIObservable buffer(IObservable source, [int size = 10]){
+ static ChainableIObservable buffer(IObservable source, {int size : 10}){
    List buff = new List();
    return Observable.create((IObserver o)
    {source.observe(
@@ -758,7 +758,7 @@ class Observable
        }
      },
      (){
-       if (!buff.isEmpty()){
+       if (!buff.isEmpty){
          o.next(buff);
          buff.clear();
        }
@@ -773,7 +773,7 @@ class Observable
  /// Returns an concatentated sequence of a list of IObservables.
  static ChainableIObservable concat(List<IObservable> oList){
 
-   if (oList == null || oList.isEmpty()) return Observable.empty();
+   if (oList == null || oList.isEmpty) return Observable.empty();
 
    return Observable.create((IObserver o){
      void _concatInternal(IObserver obs, List<IObservable> ol, int index){
@@ -818,7 +818,7 @@ class Observable
  ///
  /// The sequence can be made self-terminating by setting the optional [ticks]
  /// parameter to a positive integer value.
- static ChainableIObservable timer(int milliseconds, [int ticks = -1, IObservable continuation]){
+ static ChainableIObservable timer(int milliseconds, {int ticks : -1, IObservable continuation}){
 
    if (milliseconds < 1) return Observable.throwE(const ObservableException("Invalid milliseconds value."));
 

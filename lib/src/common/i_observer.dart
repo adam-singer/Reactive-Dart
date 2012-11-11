@@ -1,4 +1,4 @@
-part of reactive_console;
+part of reactive_common;
 
 /**
 * Interface which represents an observer in the reactive model.
@@ -28,5 +28,5 @@ class IObserver<T>
   static int _hashNum = 0;
   final int _assignedHash;
 
-  hashCode() => _assignedHash;
+  get hashCode => _assignedHash;
 }

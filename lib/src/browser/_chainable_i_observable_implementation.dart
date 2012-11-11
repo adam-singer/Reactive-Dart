@@ -4,9 +4,11 @@ part of reactive_browser;
  * Instantiates a general purpose IObservable with chaining helper methods.
  * This implementation treats the sequences as a shared stream among all
  * subscribers.  Only the first subscriber is guaranteed to get all elements
- * in a static sequence (lists, etc). 
+ * in a static sequence (lists, etc).
  */
-class _ChainableIObservableImplementation<T> implements ChainableIObservable<T>, IDisposable, _FactoryObservable{
+class _ChainableIObservableImplementation<T>
+implements ChainableIObservable<T>, IDisposable, FactoryObservable
+{
   final Function oFunc;
   IObserver<T> mainObserver;
   final List<IObserver<T>> observers;
@@ -60,7 +62,7 @@ class _ChainableIObservableImplementation<T> implements ChainableIObservable<T>,
     // don't initiate the main observer on the sequence until the
     // first observer arrives.
     if (observers.length == 1) oFunc(mainObserver);
-    return new _UnsubscriberWrapper(this, o);
+    return new UnsubscriberWrapper(this, o);
   }
 
   void dispose(){
@@ -87,7 +89,7 @@ class _ChainableIObservableImplementation<T> implements ChainableIObservable<T>,
 
   any() => Observable.any(this);
 
-  buffer([size = 10]) => Observable.buffer(this, size);
+  buffer({size: 10}) => Observable.buffer(this, size: size);
 
   delay(int milliseconds) => Observable.delay(this, milliseconds);
 
@@ -137,7 +139,7 @@ class _ChainableIObservableImplementation<T> implements ChainableIObservable<T>,
 
   fromList(List l) => Observable.fromList(l, continuation:this);
 
-  timer(int milliseconds, [int ticks = -1]) => Observable.timer(milliseconds, ticks, continuation:this);
+  timer(int milliseconds, {int ticks: -1}) => Observable.timer(milliseconds, ticks: ticks, continuation:this);
 
   unfold(initialstate, conditional(state), iterate(state), result(state)) => Observable.unfold(initialstate, conditional, iterate, result, continuation:this);
 
@@ -145,12 +147,12 @@ class _ChainableIObservableImplementation<T> implements ChainableIObservable<T>,
 
   returnValue(value) => Observable.returnValue(value, continuation:this);
 
-  range(num start, num finish, [step = 1]) => Observable.range(start, finish, step, continuation:this);
+  range(num start, num finish, {step : 1}) => Observable.range(start, finish, step: step, continuation: this);
 
   fromFuture(Future f) => Observable.fromFuture(f, continuation:this);
 
   pace(int paceInMilliseconds) => Observable.pace(this, paceInMilliseconds);
 
-  animationFrame([int interval = 0]) => Observable.animationFrame(interval, continuation:this);
+  animationFrame({int interval: 0}) => Observable.animationFrame(interval : interval, continuation: this);
 }
 

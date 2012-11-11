@@ -46,7 +46,7 @@ class throttle_demo {
     //open the browser console to see what throttle is emitting.
     print('$beginsWith');
 
-    if (beginsWith.isEmpty()){
+    if (beginsWith.isEmpty){
       resultsList.innerHTML = "<li></li>";
       return;
     }
