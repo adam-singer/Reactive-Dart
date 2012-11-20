@@ -22,7 +22,6 @@ class AlphabetInvasion {
   final String HIGH_SCORE_STORAGE_KEY = '_alphabet_attack_high_score_';
   final Queue<Element> enemies;
 
-  static ElementRect playfieldDimensions;
   static num playfieldheight = 0;
 
   static final String lookup = 'abcdefghijklmnopqrstuvwxyz';
@@ -230,7 +229,7 @@ class AlphabetInvasion {
 
     // calculate a score
     int v = getTopValue(enemy);
-    addToScore(((playfieldDimensions.bounding.height - v) * currentLevel).toInt());
+    addToScore(((playfield.getBoundingClientRect().height - v) * currentLevel).toInt());
 
     // remove the enemy from the DOM after 750ms
     Observable
@@ -274,8 +273,8 @@ class AlphabetInvasion {
     l.classes.add('enemy');
     l.style.color = 'rgb($r,$g,$b)';
     l.text = v;
-    l.style.top = '${playfieldDimensions.bounding.top}px';
-    l.style.left = '${rnd.nextDouble() * (playfieldDimensions.client.width - 25)}px';
+    l.style.top = '${playfield.getBoundingClientRect().top}px';
+    l.style.left = '${rnd.nextDouble() * (playfield.clientWidth - 25)}px';
 
     // update the tracking queue and add the enemy to the DOM
     enemies.add(l);
@@ -327,14 +326,7 @@ class AlphabetInvasion {
   // Update the measurement of the playfield, usually in response to a browser size change.
   void updatePlayfieldHeight()
   {
-    playfield
-    .rect
-    .then((ElementRect r)
-        {
-          playfieldDimensions = r;
-
-          playfieldheight = r.client.top + r.client.height;
-        });
+    playfieldheight = playfield.clientTop + playfield.clientLeft;
   }
 
   void clearPlayfield() {

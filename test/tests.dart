@@ -619,13 +619,10 @@ fromFuture() => asyncTest('.fromFuture()', 2, (){
   Element e = document.query('#status');
   Expect.isNotNull(e);
 
-  //get a future
-  Future f = e.rect;
-
   Observable
-    .fromFuture(f)
+    .fromFuture(new Future.immediate(true))
     .observe((v){
-      Expect.isTrue(v is ElementRect);
+      Expect.isTrue(v is bool);
       callbackDone();
     });
 

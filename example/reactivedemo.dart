@@ -104,9 +104,9 @@ void fromFuture(){
   header('Observable.fromFuture() provides a value returned by a Future in an observable sequence.');
 
   Observable
-    .fromFuture(document.body.rect) // get the dimensions of the DOM <body> tag (rect returns a Future<ElementRect>)
+    .fromFuture(new Future.immediate(42)) // get the dimensions of the DOM <body> tag (rect returns a Future<ElementRect>)
     .observe(
-      (ElementRect v) => print('<body> dimensions: width: ${v.bounding.width}, height: ${v.bounding.height}'),
+      (v) => print('Received from future: $v'),
       () => print('Sequence Complete.')
     );
 
