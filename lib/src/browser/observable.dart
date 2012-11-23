@@ -530,7 +530,9 @@ class Observable
 
      source.observe(
        (v) {
-         window.clearTimeout(handler);
+         if (handler != null){
+           window.clearTimeout(handler);
+         }
          o.next(v);
          handler = window.setTimeout(checker, timeoutInMilliseconds);
        },
