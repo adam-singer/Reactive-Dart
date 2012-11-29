@@ -894,7 +894,7 @@ class Observable
 
  /// Returns an observable sequence from a given [Collection]
  static ChainableIObservable fromList(Collection l, {IObservable continuation}){
-   if (l == null) return Observable.throwE(const NullPointerException());
+   if (l == null) return Observable.throwE(new Exception());
 
    return Observable.create((IObserver o){
      makeit(){

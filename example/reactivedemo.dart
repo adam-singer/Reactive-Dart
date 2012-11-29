@@ -199,7 +199,7 @@ throwE(){
   header("Observable.throwE() Propagates an given Exception.");
 
   Observable
-  .throwE(const Exception('Here is an exception.'))
+  .throwE(new Exception('Here is an exception.'))
   .observe((e){}, (){}, (e)=> print('Error! $e'));
 }
 
