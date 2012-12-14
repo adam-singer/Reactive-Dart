@@ -1,0 +1,18 @@
+{
+  "manifest_version": 2,
+  "name": "Alphabet Invasion",
+  "version": "1",
+  "minimum_chrome_version": "23",
+  "icons": {"128": "dart_icon.png"},
+    "permissions": [
+    "unlimitedStorage",
+    "storage",
+    "notifications",
+    "bluetooth"
+  ],
+  "app": {
+    "background": {
+      "scripts": ["main.js"]
+    }
+  }
+}

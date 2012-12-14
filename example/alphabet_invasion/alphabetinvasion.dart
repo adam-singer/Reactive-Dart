@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:reactive/reactive_browser.dart';
 
 class AlphabetInvasion {
+  var _localStorage = new Map();
   // DOM element references
   Element modalBox, message, score, playfield, level, remainingEnemies, highScore;
 
@@ -80,7 +81,7 @@ class AlphabetInvasion {
     });
 
     // retreive the high score if one exists
-    String hs = window.localStorage[HIGH_SCORE_STORAGE_KEY];
+    String hs = _localStorage[HIGH_SCORE_STORAGE_KEY];
     if (hs != null && !hs.isEmpty) highScore.text = hs;
   }
 
@@ -278,7 +279,7 @@ class AlphabetInvasion {
 
     // update the tracking queue and add the enemy to the DOM
     enemies.add(l);
-    playfield.elements.add(l);
+    playfield.children.add(l);
   }
 
   void addToScore(int amount){
@@ -287,7 +288,7 @@ class AlphabetInvasion {
 
     if (newScore > double.parse(highScore.text).toInt() ){
       highScore.text = newScore.toString();
-      window.localStorage[HIGH_SCORE_STORAGE_KEY] = newScore.toString();
+      _localStorage[HIGH_SCORE_STORAGE_KEY] = newScore.toString();
     }
   }
 
@@ -326,7 +327,7 @@ class AlphabetInvasion {
   // Update the measurement of the playfield, usually in response to a browser size change.
   void updatePlayfieldHeight()
   {
-    playfieldheight = playfield.clientTop + playfield.clientLeft;
+    playfieldheight = playfield.clientTop + playfield.clientHeight;
   }
 
   void clearPlayfield() {
